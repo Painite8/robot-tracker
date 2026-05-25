@@ -8,185 +8,219 @@
   @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
 
   :root {
-    --ink: #1f1b18;
-    --paper: #fbf6f0;
-    --card: #ffffff;
-    --coral: #f0432b;
-    --coral-soft: #fde4df;
-    --teal: #1aa7a0;
-    --teal-soft: #d6f0ee;
-    --amber: #e9962f;
-    --line: #e7ddd2;
-    --muted: #8b8178;
-    --display: 'Bricolage Grotesque', 'Trebuchet MS', sans-serif;
-    --body: 'DM Sans', -apple-system, sans-serif;
+    --ink:#1f1b18; --paper:#fbf6f0; --card:#ffffff;
+    --coral:#f0432b; --coral-soft:#fde4df;
+    --teal:#1aa7a0; --teal-soft:#d6f0ee;
+    --amber:#e9962f; --line:#e7ddd2; --muted:#8b8178;
+    --display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+    --body:'DM Sans',-apple-system,sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--paper); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:var(--paper); }
 
   #app {
-    font-family: var(--body);
-    color: var(--ink);
+    font-family:var(--body); color:var(--ink);
     background:
       radial-gradient(900px 500px at 12% -5%, var(--coral-soft) 0%, transparent 60%),
       radial-gradient(800px 600px at 95% 0%, var(--teal-soft) 0%, transparent 55%),
       var(--paper);
-    min-height: 100vh;
-    padding: 26px clamp(14px, 4vw, 48px) 60px;
+    min-height:100vh; padding:26px clamp(14px,4vw,48px) 60px;
   }
 
-  .masthead { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px 28px; padding-bottom: 22px; border-bottom: 2px solid var(--ink); }
-  .brand { flex: 1 1 320px; }
-  .eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--coral); font-weight: 700; }
-  h1.title { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4.4vw, 44px); line-height: 1.02; letter-spacing: -0.02em; margin-top: 4px; }
-  h1.title em { font-style: normal; color: var(--coral); }
-  .subtitle { color: var(--muted); font-size: 13.5px; margin-top: 6px; max-width: 52ch; }
+  .masthead { display:flex; flex-wrap:wrap; align-items:flex-end; gap:18px 28px; padding-bottom:22px; border-bottom:2px solid var(--ink); }
+  .brand { flex:1 1 320px; }
+  .eyebrow { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--coral); font-weight:700; }
+  h1.title { font-family:var(--display); font-weight:800; font-size:clamp(26px,4.4vw,44px); line-height:1.02; letter-spacing:-.02em; margin-top:4px; }
+  h1.title em { font-style:normal; color:var(--coral); }
+  .subtitle { color:var(--muted); font-size:13.5px; margin-top:6px; max-width:52ch; }
 
-  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
-  .ctl { background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px; padding: 7px 11px; display: flex; flex-direction: column; gap: 2px; }
-  .ctl label { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-  .ctl select { font-family: var(--body); font-weight: 600; font-size: 13px; border: none; background: transparent; color: var(--ink); outline: none; cursor: pointer; }
-  .savechip { display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: var(--muted); align-self: center; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
-  .dot.saving { background: var(--amber); animation: pulse 1s infinite; }
-  .dot.err { background: var(--coral); }
-  .dot.warn { background: var(--amber); }
-  @keyframes pulse { 50% { opacity: .25; } }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:stretch; }
+  .ctl { background:var(--card); border:1.5px solid var(--ink); border-radius:10px; padding:7px 11px; display:flex; flex-direction:column; gap:2px; }
+  .ctl.click { cursor:pointer; }
+  .ctl.click:hover { background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  .ctl label { font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .ctl .val { font-family:var(--display); font-weight:700; font-size:13.5px; }
+  .ctl .val .sw { font-weight:500; font-size:11px; color:var(--coral); margin-left:6px; }
+  .savechip { display:flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:var(--muted); align-self:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--teal); }
+  .dot.saving { background:var(--amber); animation:pulse 1s infinite; }
+  .dot.err { background:var(--coral); }
+  .dot.warn { background:var(--amber); }
+  @keyframes pulse { 50% { opacity:.25; } }
 
-  .tabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 22px 0 20px; }
-  .tab { font-family: var(--display); font-weight: 600; font-size: 14px; padding: 9px 16px; border: 1.5px solid var(--line); background: var(--card); border-radius: 999px; cursor: pointer; transition: all .15s; color: var(--muted); }
-  .tab:hover { border-color: var(--ink); color: var(--ink); }
-  .tab.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .tabs { display:flex; flex-wrap:wrap; gap:4px; margin:22px 0 18px; }
+  .tab { font-family:var(--display); font-weight:600; font-size:14px; padding:9px 16px; border:1.5px solid var(--line); background:var(--card); border-radius:999px; cursor:pointer; transition:all .15s; color:var(--muted); }
+  .tab:hover { border-color:var(--ink); color:var(--ink); }
+  .tab.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
 
-  .grid { display: grid; gap: 16px; }
-  .card { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 18px; }
-  .card h3 { font-family: var(--display); font-weight: 700; font-size: 15px; margin-bottom: 3px; }
-  .card .hint { font-size: 11.5px; color: var(--muted); }
-  .section-label { font-family: var(--display); font-weight: 800; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: var(--coral); margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
-  .section-label:first-child { margin-top: 4px; }
-  .section-label::after { content: ''; flex: 1; height: 1.5px; background: var(--line); }
+  /* week strip */
+  .weekstrip { background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:18px; }
+  .ws-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-bottom:10px; }
+  .ws-week { font-family:var(--display); font-weight:800; font-size:22px; color:var(--coral); }
+  .ws-of { font-size:12px; color:var(--muted); font-weight:600; }
+  .ws-range { font-size:12.5px; font-weight:600; }
+  .ws-next { margin-left:auto; font-size:12px; font-weight:700; color:var(--ink); background:var(--coral-soft); border-radius:999px; padding:4px 12px; }
+  .ws-pips { display:flex; gap:3px; align-items:flex-end; }
+  .pip { flex:1; height:10px; border-radius:3px; background:#ece3d8; }
+  .pip.past { background:var(--teal); }
+  .pip.now { height:16px; background:var(--coral); }
+  .pip.ms { box-shadow:0 0 0 2px var(--ink) inset; }
 
-  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
-  .stat { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px; }
-  .stat .num { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; }
-  .stat .lab { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-top: 6px; }
-  .stat.accent { background: var(--ink); color: var(--paper); }
-  .stat.accent .lab { color: #c9beb3; }
+  .grid { display:grid; gap:16px; }
+  .card { background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:18px; }
+  .card .hint { font-size:11.5px; color:var(--muted); }
+  .section-label { font-family:var(--display); font-weight:800; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--coral); margin:24px 0 12px; display:flex; align-items:center; gap:10px; }
+  .section-label .sl-btn { margin-left:auto; }
+  .section-label .ln { flex:1; height:1.5px; background:var(--line); }
 
-  .ring-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 14px; }
-  .ring-card { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px 12px; text-align: center; }
-  .ring { position: relative; width: 92px; height: 92px; margin: 0 auto 8px; }
-  .ring svg { transform: rotate(-90deg); }
-  .ring .pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 800; font-size: 19px; }
-  .ring-card .name { font-weight: 700; font-size: 12.5px; }
-  .ring-card .sub { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
+  .stat { background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:16px; }
+  .stat .num { font-family:var(--display); font-weight:800; font-size:34px; line-height:1; }
+  .stat .lab { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-top:6px; }
+  .stat.accent { background:var(--ink); color:var(--paper); }
+  .stat.accent .lab { color:#c9beb3; }
 
-  .milestone { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); margin-bottom: 9px; }
-  .milestone .wk { font-family: var(--display); font-weight: 800; font-size: 15px; background: var(--coral-soft); color: var(--coral); border-radius: 9px; padding: 8px 10px; min-width: 58px; text-align: center; }
-  .milestone .wk.past { background: var(--teal-soft); color: var(--teal); }
-  .milestone .wk.now { background: var(--ink); color: var(--paper); }
-  .milestone .mname { font-family: var(--display); font-weight: 700; font-size: 14px; }
-  .milestone .mmeta { font-size: 11.5px; color: var(--muted); }
-  .milestone .countdown { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--coral); }
+  .ring-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(135px,1fr)); gap:14px; }
+  .ring-card { background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:16px 12px; text-align:center; }
+  .ring { position:relative; width:92px; height:92px; margin:0 auto 8px; }
+  .ring svg { transform:rotate(-90deg); }
+  .ring .pct { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:800; font-size:19px; }
+  .ring-card .name { font-weight:700; font-size:12.5px; }
+  .ring-card .sub { font-size:10.5px; color:var(--muted); margin-top:2px; }
 
-  .idea-add { display: flex; gap: 8px; margin-bottom: 12px; }
-  .idea-add input { flex: 1; font-family: var(--body); font-size: 13px; padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 9px; outline: none; }
-  .idea-add input:focus { border-color: var(--coral); }
-  .btn { font-family: var(--display); font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 9px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; transition: transform .1s; }
-  .btn:hover { transform: translateY(-1px); }
-  .btn.sm { padding: 6px 12px; font-size: 12px; }
-  .idea { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; margin-bottom: 7px; background: var(--card); }
-  .idea .bullet { color: var(--coral); font-weight: 800; }
-  .idea .txt { flex: 1; font-size: 13px; }
-  .idea .by { font-size: 10.5px; color: var(--muted); }
-  .idea .x { cursor: pointer; color: var(--muted); font-weight: 800; font-size: 16px; line-height: 1; padding: 0 4px; }
-  .idea .x:hover { color: var(--coral); }
+  .milestone { display:flex; align-items:center; gap:14px; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; background:var(--card); margin-bottom:9px; }
+  .milestone .wk { font-family:var(--display); font-weight:800; font-size:15px; background:var(--coral-soft); color:var(--coral); border-radius:9px; padding:8px 10px; min-width:58px; text-align:center; }
+  .milestone .wk.past { background:var(--teal-soft); color:var(--teal); }
+  .milestone .wk.now { background:var(--ink); color:var(--paper); }
+  .milestone .mname { font-family:var(--display); font-weight:700; font-size:14px; }
+  .milestone .mmeta { font-size:11.5px; color:var(--muted); }
+  .milestone .countdown { margin-left:auto; font-size:12px; font-weight:700; color:var(--coral); }
 
-  .phase-head { display: flex; align-items: center; gap: 12px; margin: 22px 0 10px; }
-  .phase-head .pdot { width: 13px; height: 13px; border-radius: 4px; }
-  .phase-head .pname { font-family: var(--display); font-weight: 800; font-size: 16px; }
-  .phase-head .pprog { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .idea-add { display:flex; gap:8px; margin-bottom:12px; }
+  .idea-add input { flex:1; font-family:var(--body); font-size:13px; padding:9px 12px; border:1.5px solid var(--line); border-radius:9px; outline:none; }
+  .idea-add input:focus { border-color:var(--coral); }
+  .btn { font-family:var(--display); font-weight:700; font-size:13px; padding:9px 16px; border-radius:9px; border:1.5px solid var(--ink); background:var(--ink); color:var(--paper); cursor:pointer; transition:transform .1s; }
+  .btn:hover { transform:translateY(-1px); }
+  .btn.ghost { background:var(--card); color:var(--ink); }
+  .btn.sm { padding:6px 13px; font-size:12px; }
+  .idea { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1.5px solid var(--line); border-radius:10px; margin-bottom:7px; background:var(--card); }
+  .idea .bullet { color:var(--coral); font-weight:800; }
+  .idea .txt { flex:1; font-size:13px; }
+  .idea .by { font-size:10.5px; color:var(--muted); }
+  .idea .x { cursor:pointer; color:var(--muted); font-weight:800; font-size:16px; line-height:1; padding:0 4px; }
+  .idea .x:hover { color:var(--coral); }
 
-  .task { background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 13px 15px; margin-bottom: 8px; border-left-width: 5px; }
-  .task-top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
-  .task .tname { font-weight: 700; font-size: 13.5px; flex: 1 1 220px; }
-  .badge { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
-  .badge.wk { background: var(--paper); border: 1.5px solid var(--line); color: var(--muted); }
-  .badge.own { background: var(--teal-soft); color: var(--teal); }
-  .task select.status { font-family: var(--body); font-weight: 700; font-size: 11.5px; padding: 4px 8px; border-radius: 7px; border: 1.5px solid var(--line); cursor: pointer; outline: none; }
-  .task-bar { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
-  .task-bar input[type=range] { flex: 1; accent-color: var(--coral); cursor: pointer; }
-  .task-bar .pv { font-family: var(--display); font-weight: 800; font-size: 12.5px; min-width: 38px; text-align: right; }
-  .task textarea { width: 100%; margin-top: 9px; font-family: var(--body); font-size: 12px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; resize: vertical; min-height: 34px; outline: none; }
-  .task textarea:focus { border-color: var(--coral); }
-  .task .updby { font-size: 10px; color: var(--muted); margin-top: 5px; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin:22px 0 10px; }
+  .phase-head .pdot { width:13px; height:13px; border-radius:4px; }
+  .phase-head .pname { font-family:var(--display); font-weight:800; font-size:16px; }
+  .phase-head .pprog { margin-left:auto; font-size:12px; font-weight:700; color:var(--muted); }
 
-  /* Plan tab */
-  .action { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--card); margin-bottom: 8px; }
-  .action input[type=checkbox] { width: 19px; height: 19px; accent-color: var(--teal); cursor: pointer; margin-top: 1px; flex-shrink: 0; }
-  .action .atext { flex: 1; font-size: 13px; font-weight: 600; }
-  .action.done .atext { text-decoration: line-through; color: var(--muted); }
-  .decision { background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 15px; margin-bottom: 10px; border-left: 5px solid var(--amber); }
-  .decision.resolved { border-left-color: var(--teal); }
-  .decision .dhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .decision .dtitle { font-family: var(--display); font-weight: 700; font-size: 14px; flex: 1 1 200px; }
-  .decision .dctx { font-size: 12px; color: var(--muted); margin: 8px 0; line-height: 1.5; }
-  .decision textarea { width: 100%; font-family: var(--body); font-size: 12.5px; padding: 9px 11px; border: 1.5px solid var(--line); border-radius: 8px; resize: vertical; min-height: 46px; outline: none; }
-  .decision textarea:focus { border-color: var(--coral); }
-  .pill-btn { font-family: var(--display); font-weight: 700; font-size: 11px; padding: 5px 12px; border-radius: 999px; border: 1.5px solid; cursor: pointer; white-space: nowrap; }
-  .pill-btn.open { background: #fff3df; border-color: var(--amber); color: #9a6510; }
-  .pill-btn.resolved { background: var(--teal-soft); border-color: var(--teal); color: var(--teal); }
+  .task { background:var(--card); border:1.5px solid var(--line); border-radius:12px; padding:13px 15px; margin-bottom:8px; border-left-width:5px; }
+  .task-top { display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; }
+  .task .tname { font-weight:700; font-size:13.5px; flex:1 1 200px; }
+  .badge { font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .badge.wk { background:var(--paper); border:1.5px solid var(--line); color:var(--muted); }
+  .badge.own { background:var(--teal-soft); color:var(--teal); }
+  .badge.late { background:var(--coral-soft); border:1.5px solid var(--coral); color:var(--coral); }
+  .task select.status { font-family:var(--body); font-weight:700; font-size:11.5px; padding:4px 8px; border-radius:7px; border:1.5px solid var(--line); cursor:pointer; outline:none; }
+  .task-bar { display:flex; align-items:center; gap:10px; margin-top:9px; }
+  .task-bar input[type=range] { flex:1; accent-color:var(--coral); cursor:pointer; }
+  .task-bar .pv { font-family:var(--display); font-weight:800; font-size:12.5px; min-width:38px; text-align:right; }
+  .task textarea { width:100%; margin-top:9px; font-family:var(--body); font-size:12px; padding:8px 10px; border:1.5px solid var(--line); border-radius:8px; resize:vertical; min-height:34px; outline:none; }
+  .task textarea:focus { border-color:var(--coral); }
+  .task .updby { font-size:10px; color:var(--muted); margin-top:5px; }
+  .iconbtn { width:27px; height:27px; border-radius:7px; border:1.5px solid var(--line); background:#fff; cursor:pointer; font-size:12px; color:var(--muted); line-height:1; }
+  .iconbtn:hover { border-color:var(--ink); color:var(--ink); }
+  .iconbtn.del:hover { border-color:var(--coral); color:var(--coral); }
 
-  /* BOM tab */
-  .bom-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .bom-table th { font-family: var(--display); font-weight: 700; font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 8px; border-bottom: 2px solid var(--line); }
-  .bom-table td { padding: 8px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  .bom-table tr.bought td { background: #f3faf8; }
-  .bom-table .sub { font-family: var(--display); font-weight: 800; font-size: 11px; color: var(--coral); text-transform: uppercase; letter-spacing: .04em; }
-  .bom-table input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--teal); cursor: pointer; }
-  .bom-table input.actual { width: 72px; font-family: var(--body); font-size: 12px; padding: 4px 6px; border: 1.5px solid var(--line); border-radius: 6px; outline: none; }
-  .bom-table input.actual:focus { border-color: var(--coral); }
-  .bom-table .num { text-align: right; font-variant-numeric: tabular-nums; }
-  .bom-wrap { overflow-x: auto; }
+  /* edit form */
+  .editform { background:#fff; border:2px solid var(--ink); border-radius:13px; padding:16px; margin-bottom:16px; }
+  .ef-title { font-family:var(--display); font-weight:800; font-size:15px; margin-bottom:12px; }
+  .ef-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:11px; }
+  .ef-field { display:flex; flex-direction:column; gap:4px; }
+  .ef-field.wide { grid-column:1 / -1; }
+  .ef-field label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .fin { width:100%; padding:8px 10px; border:1.5px solid var(--line); border-radius:8px; font-family:var(--body); font-size:13px; outline:none; background:#fff; }
+  .fin:focus { border-color:var(--coral); }
+  textarea.fin { resize:vertical; min-height:54px; }
+  .ef-actions { display:flex; gap:8px; margin-top:13px; }
+  .ef-err { color:var(--coral); font-size:11.5px; font-weight:700; margin-top:8px; }
 
-  .member { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px; }
-  .member-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .avatar { width: 42px; height: 42px; border-radius: 11px; background: var(--ink); color: var(--paper); font-family: var(--display); font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; }
-  .member-head .mn { font-family: var(--display); font-weight: 700; font-size: 15px; }
-  .member-head .mr { font-size: 11px; color: var(--muted); }
-  .member-head .mp { margin-left: auto; font-family: var(--display); font-weight: 800; font-size: 22px; }
-  .progbar { height: 7px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 12px; }
-  .progbar > div { height: 100%; background: var(--coral); border-radius: 99px; transition: width .4s; }
-  .mtask { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
-  .mtask:last-child { border-bottom: none; }
-  .mtask .sdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .mtask .mt-name { flex: 1; }
-  .mtask .mt-st { font-size: 10px; color: var(--muted); font-weight: 700; }
+  /* plan */
+  .action { display:flex; align-items:center; gap:11px; padding:11px 13px; border:1.5px solid var(--line); border-radius:11px; background:var(--card); margin-bottom:8px; }
+  .action input[type=checkbox] { width:19px; height:19px; accent-color:var(--teal); cursor:pointer; flex-shrink:0; }
+  .action .atext { flex:1; font-size:13px; font-weight:600; }
+  .action.done .atext { text-decoration:line-through; color:var(--muted); }
+  .decision { background:var(--card); border:1.5px solid var(--line); border-radius:12px; padding:15px; margin-bottom:10px; border-left:5px solid var(--amber); }
+  .decision.resolved { border-left-color:var(--teal); }
+  .decision .dhead { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .decision .dtitle { font-family:var(--display); font-weight:700; font-size:14px; flex:1 1 200px; }
+  .decision .dctx { font-size:12px; color:var(--muted); margin:8px 0; line-height:1.5; }
+  .decision textarea { width:100%; font-family:var(--body); font-size:12.5px; padding:9px 11px; border:1.5px solid var(--line); border-radius:8px; resize:vertical; min-height:46px; outline:none; }
+  .decision textarea:focus { border-color:var(--coral); }
+  .pill-btn { font-family:var(--display); font-weight:700; font-size:11px; padding:5px 12px; border-radius:999px; border:1.5px solid; cursor:pointer; white-space:nowrap; }
+  .pill-btn.open { background:#fff3df; border-color:var(--amber); color:#9a6510; }
+  .pill-btn.resolved { background:var(--teal-soft); border-color:var(--teal); color:var(--teal); }
 
-  /* Mind map */
-  .mm-scroll { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; overflow: auto; max-height: 660px; }
-  .mm-canvas { position: relative; width: 1600px; height: 1040px; }
-  .mm-canvas svg.conns { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .mm-node { position: absolute; width: 152px; min-height: 46px; border-radius: 11px; padding: 9px 30px 9px 11px;
-             font-size: 11.5px; font-weight: 600; cursor: grab; user-select: none; -webkit-user-select: none;
-             box-shadow: 0 2px 7px rgba(0,0,0,.13); display: flex; align-items: center; line-height: 1.3; }
-  .mm-node.dragging { cursor: grabbing; z-index: 60; box-shadow: 0 7px 18px rgba(0,0,0,.25); }
-  .mm-node.center { font-family: var(--display); font-weight: 800; font-size: 13px; }
-  .mm-btns { position: absolute; top: 3px; right: 3px; display: flex; gap: 3px; }
-  .mm-btn { width: 18px; height: 18px; border-radius: 5px; border: none; font-size: 12px; font-weight: 800;
-            cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,.85); color: #444; }
-  .mm-btn:hover { background: #fff; }
-  .mm-btn.del:hover { color: var(--coral); }
+  /* bom */
+  .bom-wrap { overflow-x:auto; }
+  .bom-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .bom-table th { font-family:var(--display); font-weight:700; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); text-align:left; padding:8px; border-bottom:2px solid var(--line); }
+  .bom-table td { padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  .bom-table tr.bought td { background:#f3faf8; }
+  .bom-table .sub { font-family:var(--display); font-weight:800; font-size:11px; color:var(--coral); text-transform:uppercase; letter-spacing:.04em; }
+  .bom-table input[type=checkbox] { width:17px; height:17px; accent-color:var(--teal); cursor:pointer; }
+  .bom-table input.actual { width:74px; font-family:var(--body); font-size:12px; padding:4px 6px; border:1.5px solid var(--line); border-radius:6px; outline:none; }
+  .bom-table input.actual:focus { border-color:var(--coral); }
+  .bom-table .num { text-align:right; font-variant-numeric:tabular-nums; }
 
-  .loading { text-align: center; padding: 80px 20px; color: var(--muted); font-family: var(--display); font-weight: 600; }
-  .banner { border-radius: 11px; padding: 11px 14px; margin-bottom: 16px; font-size: 12.5px; font-weight: 600; line-height: 1.45; }
-  .banner.warn { background: #fff3df; border: 1.5px solid var(--amber); color: #9a6510; }
-  .banner.info { background: var(--teal-soft); border: 1.5px solid var(--teal); color: #0f6f6a; }
+  .member { background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:16px; }
+  .member-head { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+  .avatar { width:42px; height:42px; border-radius:11px; background:var(--ink); color:var(--paper); font-family:var(--display); font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; }
+  .member-head .mn { font-family:var(--display); font-weight:700; font-size:15px; }
+  .member-head .mr { font-size:11px; color:var(--muted); }
+  .member-head .mp { margin-left:auto; font-family:var(--display); font-weight:800; font-size:22px; }
+  .progbar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .progbar > div { height:100%; background:var(--coral); border-radius:99px; transition:width .4s; }
+  .mtask { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--line); font-size:12px; }
+  .mtask:last-child { border-bottom:none; }
+  .mtask .sdot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .mtask .mt-name { flex:1; }
+  .mtask .mt-st { font-size:10px; color:var(--muted); font-weight:700; }
+  .mtask .iconbtn { width:22px; height:22px; font-size:10px; }
 
-  @media (max-width: 560px) {
-    .controls { width: 100%; }
-    .task .tname { flex-basis: 100%; }
+  /* mind map */
+  .mm-scroll { background:var(--card); border:1.5px solid var(--line); border-radius:14px; overflow:auto; max-height:660px; }
+  .mm-canvas { position:relative; width:1600px; height:1040px; }
+  .mm-canvas svg.conns { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .mm-node { position:absolute; width:152px; min-height:46px; border-radius:11px; padding:9px 30px 9px 11px;
+             font-size:11.5px; font-weight:600; cursor:grab; user-select:none; -webkit-user-select:none;
+             box-shadow:0 2px 7px rgba(0,0,0,.13); display:flex; align-items:center; line-height:1.3; }
+  .mm-node.dragging { cursor:grabbing; z-index:60; box-shadow:0 7px 18px rgba(0,0,0,.25); }
+  .mm-node.center { font-family:var(--display); font-weight:800; font-size:13px; }
+  .mm-btns { position:absolute; top:3px; right:3px; display:flex; gap:3px; }
+  .mm-btn { width:18px; height:18px; border-radius:5px; border:none; font-size:12px; font-weight:800; cursor:pointer; line-height:1; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.85); color:#444; }
+  .mm-btn:hover { background:#fff; }
+  .mm-btn.del:hover { color:var(--coral); }
+
+  .loading { text-align:center; padding:80px 20px; color:var(--muted); font-family:var(--display); font-weight:600; }
+  .banner { border-radius:11px; padding:11px 14px; margin-bottom:16px; font-size:12.5px; font-weight:600; line-height:1.45; }
+  .banner.warn { background:#fff3df; border:1.5px solid var(--amber); color:#9a6510; }
+  .banner.info { background:var(--teal-soft); border:1.5px solid var(--teal); color:#0f6f6a; }
+
+  /* gate */
+  .gate { position:fixed; inset:0; background:rgba(31,27,24,.72); display:flex; align-items:center; justify-content:center; z-index:200; padding:20px; }
+  .gate-card { background:var(--paper); border:2px solid var(--ink); border-radius:18px; padding:26px; max-width:420px; width:100%; }
+  .gate-title { font-family:var(--display); font-weight:800; font-size:21px; }
+  .gate-sub { font-size:12.5px; color:var(--muted); margin:6px 0 16px; line-height:1.5; }
+  .gate-btns { display:flex; flex-direction:column; gap:8px; }
+  .gate-btn { font-family:var(--display); font-weight:700; font-size:14px; padding:12px 14px; border-radius:11px; border:1.5px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer; text-align:left; transition:all .12s; }
+  .gate-btn:hover { background:var(--ink); color:var(--paper); transform:translateX(3px); }
+
+  @media (max-width:560px) {
+    .controls { width:100%; }
+    .task .tname { flex-basis:100%; }
+    .ws-next { margin-left:0; }
   }
 </style>
 </head>
@@ -196,16 +230,12 @@
     <div class="brand">
       <div class="eyebrow">Final Year Project &middot; Command Centre</div>
       <h1 class="title">AI Companion <em>Robot</em></h1>
-      <div class="subtitle">Autonomous patient-monitoring robot with assistive lifting mechanism. Live shared tracker &mdash; every teammate's edits sync in real time.</div>
+      <div class="subtitle">Autonomous patient-monitoring robot with assistive lifting mechanism. Live shared tracker &mdash; everyone's edits sync in real time.</div>
     </div>
     <div class="controls">
-      <div class="ctl">
+      <div class="ctl click" id="userCtl">
         <label>You are</label>
-        <select id="userSel"></select>
-      </div>
-      <div class="ctl">
-        <label>Project week</label>
-        <div id="weekDisp" style="font-weight:700;font-size:13px;font-family:var(--display)">Week —</div>
+        <div class="val" id="userDisp">— pick name —</div>
       </div>
       <div class="savechip"><span class="dot saving" id="saveDot"></span><span id="saveTxt">Connecting…</span></div>
     </div>
@@ -222,829 +252,1002 @@
   var FB_BASE = "https://www.gstatic.com/firebasejs/10.12.0/";
 
   // Project Week 1 began Monday 11 May 2026; weeks run Mon–Sun.
-  // (If your real Week 1 started on a different date, change this line.)
   var PROJECT_START = new Date(2026, 4, 11);
+  var TOTAL_WEEKS = 14;
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function computeWeek() {
-    var wk = Math.floor((Date.now() - PROJECT_START.getTime()) / (7 * 24 * 3600 * 1000)) + 1;
-    return Math.max(1, Math.min(14, wk));
+    var wk = Math.floor((Date.now() - PROJECT_START.getTime()) / (7 * 864e5)) + 1;
+    return Math.max(1, Math.min(TOTAL_WEEKS, wk));
+  }
+  function weekStart(w) { var d = new Date(PROJECT_START.getTime()); d.setDate(d.getDate() + (w - 1) * 7); return d; }
+  function fmtRange(w) {
+    var s = weekStart(w), e = new Date(s.getTime()); e.setDate(e.getDate() + 6);
+    if (s.getMonth() === e.getMonth())
+      return s.getDate() + "–" + e.getDate() + " " + MON[s.getMonth()] + " " + s.getFullYear();
+    return s.getDate() + " " + MON[s.getMonth()] + " – " + e.getDate() + " " + MON[e.getMonth()] + " " + e.getFullYear();
   }
 
-  // ===================== STATIC REFERENCE DATA =====================
+  // ===================== REFERENCE DATA =====================
   var MEMBERS = [
-    { id: "lee", name: "Lee Ming Huei", role: "Vision & Documentation Lead", short: "Lee" },
-    { id: "jon", name: "Jonathan Aliwarga", role: "Navigation & Architecture", short: "Jon" },
-    { id: "chung", name: "Chung Zi Da", role: "Drive & Sensors", short: "Chung" },
-    { id: "murt", name: "Murtaza Hussein", role: "Hardware & Power", short: "Murt" },
-    { id: "ali", name: "Ali A. Madari", role: "Lifting Mechanism & Dashboard", short: "Ali" },
-    { id: "all", name: "All Members", role: "Whole team", short: "Team" }
+    { id:"lee", name:"Lee Ming Huei", role:"Vision & Documentation Lead", short:"Lee" },
+    { id:"jon", name:"Jonathan Aliwarga", role:"Navigation & Architecture", short:"Jon" },
+    { id:"chung", name:"Chung Zi Da", role:"Drive & Sensors", short:"Chung" },
+    { id:"murt", name:"Murtaza Hussein", role:"Hardware & Power", short:"Murt" },
+    { id:"ali", name:"Ali A. Madari", role:"Lifting Mechanism & Dashboard", short:"Ali" },
+    { id:"all", name:"All Members", role:"Whole team", short:"Team" }
   ];
-
   var PHASES = [
-    { id: "plan",  name: "Planning & Design",      color: "#3f7bd6" },
-    { id: "hw",    name: "Hardware Development",    color: "#2f9e54" },
-    { id: "sw",    name: "Software Development",    color: "#7a55c9" },
-    { id: "test",  name: "Integration & Testing",  color: "#e9962f" },
-    { id: "final", name: "Finalization",           color: "#f0432b" }
+    { id:"plan",  name:"Planning & Design",     color:"#3f7bd6" },
+    { id:"hw",    name:"Hardware Development",   color:"#2f9e54" },
+    { id:"sw",    name:"Software Development",   color:"#7a55c9" },
+    { id:"test",  name:"Integration & Testing", color:"#e9962f" },
+    { id:"final", name:"Finalization",          color:"#f0432b" }
   ];
-
   var DEFAULT_TASKS = [
-    { id: "t1",  ph: "plan",  name: "Project kick-off & scope definition",          owner: "all",  sw: 1,  ew: 1 },
-    { id: "t2",  ph: "plan",  name: "Requirements gathering & analysis",            owner: "lee",  sw: 1,  ew: 2 },
-    { id: "t3",  ph: "plan",  name: "System architecture design",                  owner: "jon",  sw: 1,  ew: 2 },
-    { id: "t4",  ph: "plan",  name: "Hardware component selection & procurement",   owner: "murt", sw: 2,  ew: 3 },
-    { id: "t5",  ph: "plan",  name: "Budget & resource planning (BOM)",             owner: "lee",  sw: 1,  ew: 1 },
-    { id: "t6",  ph: "hw",    name: "Chassis & frame fabrication",                 owner: "murt", sw: 3,  ew: 5 },
-    { id: "t7",  ph: "hw",    name: "Drive system (motors + wheels) setup",         owner: "chung",sw: 3,  ew: 4 },
-    { id: "t8",  ph: "hw",    name: "Lifting mechanism — mechanical design",        owner: "ali",  sw: 3,  ew: 5 },
-    { id: "t9",  ph: "hw",    name: "Lifting mechanism — fabrication & bench test", owner: "ali",  sw: 5,  ew: 7 },
-    { id: "t10", ph: "hw",    name: "Sensor suite integration (ultrasonic, IR, IMU)",owner: "chung",sw: 4, ew: 6 },
-    { id: "t11", ph: "hw",    name: "Camera & vision hardware mounting",            owner: "jon",  sw: 4,  ew: 5 },
-    { id: "t12", ph: "hw",    name: "Power system & battery management",            owner: "murt", sw: 5,  ew: 6 },
-    { id: "t13", ph: "sw",    name: "Autonomous navigation & path planning",        owner: "jon",  sw: 3,  ew: 6 },
-    { id: "t14", ph: "sw",    name: "Indoor localisation & patient-following logic",owner: "jon",  sw: 5,  ew: 7 },
-    { id: "t15", ph: "sw",    name: "Obstacle avoidance algorithm",                 owner: "chung",sw: 4,  ew: 6 },
-    { id: "t16", ph: "sw",    name: "Computer vision model — fall detection",       owner: "lee",  sw: 4,  ew: 7 },
-    { id: "t17", ph: "sw",    name: "Emergency detection & real-time alerting",     owner: "lee",  sw: 6,  ew: 8 },
-    { id: "t18", ph: "sw",    name: "Medication reminder scheduling system",        owner: "murt", sw: 5,  ew: 7 },
-    { id: "t19", ph: "sw",    name: "Caregiver dashboard — frontend UI",            owner: "ali",  sw: 5,  ew: 8 },
-    { id: "t20", ph: "sw",    name: "Caregiver dashboard — backend & API",          owner: "ali",  sw: 6,  ew: 9 },
-    { id: "t21", ph: "sw",    name: "Remote monitoring & notification pipeline",    owner: "lee",  sw: 7,  ew: 9 },
-    { id: "t22", ph: "test",  name: "Hardware–software integration",               owner: "all",  sw: 8,  ew: 10 },
-    { id: "t23", ph: "test",  name: "Navigation & obstacle avoidance testing",      owner: "jon",  sw: 9,  ew: 10 },
-    { id: "t24", ph: "test",  name: "Fall detection accuracy testing",              owner: "lee",  sw: 9,  ew: 10 },
-    { id: "t25", ph: "test",  name: "Lifting mechanism functional testing",         owner: "ali",  sw: 9,  ew: 10 },
-    { id: "t26", ph: "test",  name: "Medication reminder end-to-end testing",       owner: "murt", sw: 9,  ew: 10 },
-    { id: "t27", ph: "test",  name: "Caregiver dashboard integration testing",      owner: "chung",sw: 10, ew: 11 },
-    { id: "t28", ph: "test",  name: "Full system regression & stress testing",      owner: "all",  sw: 10, ew: 11 },
-    { id: "t29", ph: "final", name: "Bug fixes & performance refinements",          owner: "all",  sw: 11, ew: 12 },
-    { id: "t30", ph: "final", name: "User / pilot run evaluation",                  owner: "all",  sw: 11, ew: 12 },
-    { id: "t31", ph: "final", name: "Technical documentation & report writing",     owner: "lee",  sw: 11, ew: 13 },
-    { id: "t32", ph: "final", name: "Presentation deck preparation",                owner: "chung",sw: 12, ew: 13 },
-    { id: "t33", ph: "final", name: "Final project demo & submission",              owner: "all",  sw: 13, ew: 14 }
+    { id:"t1",ph:"plan",name:"Project kick-off & scope definition",owner:"all",sw:1,ew:1 },
+    { id:"t2",ph:"plan",name:"Requirements gathering & analysis",owner:"lee",sw:1,ew:2 },
+    { id:"t3",ph:"plan",name:"System architecture design",owner:"jon",sw:1,ew:2 },
+    { id:"t4",ph:"plan",name:"Hardware component selection & procurement",owner:"murt",sw:2,ew:3 },
+    { id:"t5",ph:"plan",name:"Budget & resource planning (BOM)",owner:"lee",sw:1,ew:1 },
+    { id:"t6",ph:"hw",name:"Chassis & frame fabrication",owner:"murt",sw:3,ew:5 },
+    { id:"t7",ph:"hw",name:"Drive system (motors + wheels) setup",owner:"chung",sw:3,ew:4 },
+    { id:"t8",ph:"hw",name:"Lifting mechanism — mechanical design",owner:"ali",sw:3,ew:5 },
+    { id:"t9",ph:"hw",name:"Lifting mechanism — fabrication & bench test",owner:"ali",sw:5,ew:7 },
+    { id:"t10",ph:"hw",name:"Sensor suite integration (ultrasonic, IR, IMU)",owner:"chung",sw:4,ew:6 },
+    { id:"t11",ph:"hw",name:"Camera & vision hardware mounting",owner:"jon",sw:4,ew:5 },
+    { id:"t12",ph:"hw",name:"Power system & battery management",owner:"murt",sw:5,ew:6 },
+    { id:"t13",ph:"sw",name:"Autonomous navigation & path planning",owner:"jon",sw:3,ew:6 },
+    { id:"t14",ph:"sw",name:"Indoor localisation & patient-following logic",owner:"jon",sw:5,ew:7 },
+    { id:"t15",ph:"sw",name:"Obstacle avoidance algorithm",owner:"chung",sw:4,ew:6 },
+    { id:"t16",ph:"sw",name:"Computer vision model — fall detection",owner:"lee",sw:4,ew:7 },
+    { id:"t17",ph:"sw",name:"Emergency detection & real-time alerting",owner:"lee",sw:6,ew:8 },
+    { id:"t18",ph:"sw",name:"Medication reminder scheduling system",owner:"murt",sw:5,ew:7 },
+    { id:"t19",ph:"sw",name:"Caregiver dashboard — frontend UI",owner:"ali",sw:5,ew:8 },
+    { id:"t20",ph:"sw",name:"Caregiver dashboard — backend & API",owner:"ali",sw:6,ew:9 },
+    { id:"t21",ph:"sw",name:"Remote monitoring & notification pipeline",owner:"lee",sw:7,ew:9 },
+    { id:"t22",ph:"test",name:"Hardware–software integration",owner:"all",sw:8,ew:10 },
+    { id:"t23",ph:"test",name:"Navigation & obstacle avoidance testing",owner:"jon",sw:9,ew:10 },
+    { id:"t24",ph:"test",name:"Fall detection accuracy testing",owner:"lee",sw:9,ew:10 },
+    { id:"t25",ph:"test",name:"Lifting mechanism functional testing",owner:"ali",sw:9,ew:10 },
+    { id:"t26",ph:"test",name:"Medication reminder end-to-end testing",owner:"murt",sw:9,ew:10 },
+    { id:"t27",ph:"test",name:"Caregiver dashboard integration testing",owner:"chung",sw:10,ew:11 },
+    { id:"t28",ph:"test",name:"Full system regression & stress testing",owner:"all",sw:10,ew:11 },
+    { id:"t29",ph:"final",name:"Bug fixes & performance refinements",owner:"all",sw:11,ew:12 },
+    { id:"t30",ph:"final",name:"User / pilot run evaluation",owner:"all",sw:11,ew:12 },
+    { id:"t31",ph:"final",name:"Technical documentation & report writing",owner:"lee",sw:11,ew:13 },
+    { id:"t32",ph:"final",name:"Presentation deck preparation",owner:"chung",sw:12,ew:13 },
+    { id:"t33",ph:"final",name:"Final project demo & submission",owner:"all",sw:13,ew:14 }
   ];
-
   var MILESTONES = [
-    { wk: 3,  name: "Proposal Presentation", meta: "Aim, objectives, lit review, methodology" },
-    { wk: 7,  name: "Midpoint Presentation", meta: "Working subsystems demonstrated" },
-    { wk: 13, name: "Final Presentation",    meta: "Full integrated system demo" },
-    { wk: 14, name: "Poster Presentation",   meta: "Project showcase & submission" }
+    { wk:3,name:"Proposal Presentation",meta:"Aim, objectives, lit review, methodology" },
+    { wk:7,name:"Midpoint Presentation",meta:"Working subsystems demonstrated" },
+    { wk:13,name:"Final Presentation",meta:"Full integrated system demo" },
+    { wk:14,name:"Poster Presentation",meta:"Project showcase & submission" }
   ];
-
-  // Immediate actions — the "what must be done now" checklist
-  var ACTIONS = [
-    { id: "a1", text: "Complete the Bill of Materials — itemised, with RM prices", owner: "lee" },
-    { id: "a2", text: "Power budget calculation — size the battery and verify the 8-hour runtime claim", owner: "murt" },
-    { id: "a3", text: "Refined hardware / electrical block diagram (what connects to what)", owner: "jon" },
-    { id: "a4", text: "Technical drawings — lift mechanism CAD / dimensioned sketch", owner: "ali" },
-    { id: "a5", text: "Procurement — order long-lead components once the BOM is locked", owner: "murt" }
+  var DEFAULT_ACTIONS = [
+    { id:"a1",text:"Complete the Bill of Materials — itemised, with RM prices",owner:"lee" },
+    { id:"a2",text:"Power budget calculation — size the battery, verify the 8-hour runtime claim",owner:"murt" },
+    { id:"a3",text:"Refined hardware / electrical block diagram (what connects to what)",owner:"jon" },
+    { id:"a4",text:"Technical drawings — lift mechanism CAD / dimensioned sketch",owner:"ali" },
+    { id:"a5",text:"Procurement — order long-lead components once the BOM is locked",owner:"murt" }
   ];
-
-  // Open design decisions that still need resolving
-  var DECISIONS = [
-    { id: "d1", title: "Patient-following & localisation method",
-      ctx: "The Word doc says a GPS watch; the proposal says Wi-Fi RSSI. Wi-Fi RSSI indoor localisation is unreliable — room-level accuracy at best. Likely resolution: camera-based person-following for actually trailing the patient, with Wi-Fi RSSI used only for coarse room-level location." },
-    { id: "d2", title: "Lift actuation method",
-      ctx: "12V linear actuator (~RM130) vs a servo-driven scissor linkage (~RM35). The payload (a pill bottle plus a cup of water) is light — about 0.3 to 0.5 kg — so a servo linkage is likely sufficient and saves roughly RM95." },
-    { id: "d3", title: "Dedicated touchscreen vs dashboard-only",
-      ctx: "The concept art shows an onboard touch display (~RM60+). It may be droppable — a small OLED for status plus the caregiver web dashboard could cover the same need at lower cost." }
+  var DEFAULT_DECISIONS = [
+    { id:"d1",title:"Patient-following & localisation method",
+      ctx:"The Word doc says a GPS watch; the proposal says Wi-Fi RSSI. Wi-Fi RSSI indoor localisation is unreliable — room-level accuracy at best. Likely resolution: camera-based person-following for trailing the patient, with Wi-Fi RSSI used only for coarse room-level location." },
+    { id:"d2",title:"Lift actuation method",
+      ctx:"12V linear actuator (~RM130) vs a servo-driven scissor linkage (~RM35). Payload (pill bottle + cup of water) is light, about 0.3–0.5 kg, so a servo linkage is likely sufficient and saves roughly RM95." },
+    { id:"d3",title:"Dedicated touchscreen vs dashboard-only",
+      ctx:"The concept art shows an onboard touch display (~RM60+). It may be droppable — a small OLED for status plus the caregiver web dashboard could cover the same need at lower cost." }
   ];
-
-  // Bill of Materials — estimated Malaysian retail prices (verify at purchase)
-  var BOM = [
-    { id: "b1",  grp: "Compute & AI",        item: "Raspberry Pi 4 (4GB)",                       qty: 1, unit: 300 },
-    { id: "b2",  grp: "Compute & AI",        item: "MicroSD card 32GB",                          qty: 1, unit: 25 },
-    { id: "b3",  grp: "Compute & AI",        item: "USB camera (1080p webcam)",                  qty: 1, unit: 55 },
-    { id: "b4",  grp: "Control & Mobility",  item: "ESP32 dev board (motor / sensor control)",   qty: 1, unit: 30 },
-    { id: "b5",  grp: "Control & Mobility",  item: "4WD chassis + TT motors + wheels",           qty: 1, unit: 80 },
-    { id: "b6",  grp: "Control & Mobility",  item: "Motor driver set (L298N x2 / dual H-bridge)",qty: 1, unit: 25 },
-    { id: "b7",  grp: "Lifting Mechanism",   item: "12V linear actuator (100–150mm stroke)",     qty: 1, unit: 130 },
-    { id: "b8",  grp: "Lifting Mechanism",   item: "Lift platform, brackets, hardware",          qty: 1, unit: 55 },
-    { id: "b9",  grp: "Sensors",             item: "Ultrasonic sensor HC-SR04",                  qty: 5, unit: 6 },
-    { id: "b10", grp: "Sensors",             item: "IMU module (MPU6050)",                       qty: 1, unit: 13 },
-    { id: "b11", grp: "Sensors",             item: "IR cliff sensor",                            qty: 3, unit: 4 },
-    { id: "b12", grp: "Interaction",         item: "USB speaker",                                qty: 1, unit: 20 },
-    { id: "b13", grp: "Interaction",         item: "USB microphone",                             qty: 1, unit: 22 },
-    { id: "b14", grp: "Interaction",         item: "3.5\" touchscreen (optional)",               qty: 1, unit: 60 },
-    { id: "b15", grp: "Power",               item: "Battery pack (3S Li-ion, ~5000mAh)",         qty: 1, unit: 110 },
-    { id: "b16", grp: "Power",               item: "Buck converter (12V → 5V)",                  qty: 2, unit: 9 },
-    { id: "b17", grp: "Power",               item: "Charger module + balance charger",           qty: 1, unit: 40 },
-    { id: "b18", grp: "Power",               item: "Switch, fuse, wiring loom",                  qty: 1, unit: 30 },
-    { id: "b19", grp: "Fabrication & Misc",  item: "3D printing filament (1kg PLA)",             qty: 1, unit: 55 },
-    { id: "b20", grp: "Fabrication & Misc",  item: "Pill dispenser parts + servo",               qty: 1, unit: 30 },
-    { id: "b21", grp: "Fabrication & Misc",  item: "Jumper wires, perfboard, standoffs, connectors", qty: 1, unit: 40 }
+  var DEFAULT_BOM = [
+    { id:"b1",grp:"Compute & AI",item:"Raspberry Pi 4 (4GB)",qty:1,unit:300 },
+    { id:"b2",grp:"Compute & AI",item:"MicroSD card 32GB",qty:1,unit:25 },
+    { id:"b3",grp:"Compute & AI",item:"USB camera (1080p webcam)",qty:1,unit:55 },
+    { id:"b4",grp:"Control & Mobility",item:"ESP32 dev board (motor / sensor control)",qty:1,unit:30 },
+    { id:"b5",grp:"Control & Mobility",item:"4WD chassis + TT motors + wheels",qty:1,unit:80 },
+    { id:"b6",grp:"Control & Mobility",item:"Motor driver set (L298N x2 / dual H-bridge)",qty:1,unit:25 },
+    { id:"b7",grp:"Lifting Mechanism",item:"12V linear actuator (100–150mm stroke)",qty:1,unit:130 },
+    { id:"b8",grp:"Lifting Mechanism",item:"Lift platform, brackets, hardware",qty:1,unit:55 },
+    { id:"b9",grp:"Sensors",item:"Ultrasonic sensor HC-SR04",qty:5,unit:6 },
+    { id:"b10",grp:"Sensors",item:"IMU module (MPU6050)",qty:1,unit:13 },
+    { id:"b11",grp:"Sensors",item:"IR cliff sensor",qty:3,unit:4 },
+    { id:"b12",grp:"Interaction",item:"USB speaker",qty:1,unit:20 },
+    { id:"b13",grp:"Interaction",item:"USB microphone",qty:1,unit:22 },
+    { id:"b14",grp:"Interaction",item:"3.5\" touchscreen (optional)",qty:1,unit:60 },
+    { id:"b15",grp:"Power",item:"Battery pack (3S Li-ion, ~5000mAh)",qty:1,unit:110 },
+    { id:"b16",grp:"Power",item:"Buck converter (12V to 5V)",qty:2,unit:9 },
+    { id:"b17",grp:"Power",item:"Charger module + balance charger",qty:1,unit:40 },
+    { id:"b18",grp:"Power",item:"Switch, fuse, wiring loom",qty:1,unit:30 },
+    { id:"b19",grp:"Fabrication & Misc",item:"3D printing filament (1kg PLA)",qty:1,unit:55 },
+    { id:"b20",grp:"Fabrication & Misc",item:"Pill dispenser parts + servo",qty:1,unit:30 },
+    { id:"b21",grp:"Fabrication & Misc",item:"Jumper wires, perfboard, standoffs, connectors",qty:1,unit:40 }
   ];
+  var DEF_TASK={}, DEF_ACT={}, DEF_DEC={}, DEF_BOM={};
+  DEFAULT_TASKS.forEach(function(t){DEF_TASK[t.id]=t;});
+  DEFAULT_ACTIONS.forEach(function(a){DEF_ACT[a.id]=a;});
+  DEFAULT_DECISIONS.forEach(function(d){DEF_DEC[d.id]=d;});
+  DEFAULT_BOM.forEach(function(b){DEF_BOM[b.id]=b;});
 
   var STATUS = {
-    todo:    { label: "Not started", color: "#b4aaa0" },
-    active:  { label: "In progress", color: "#e9962f" },
-    blocked: { label: "Blocked",     color: "#f0432b" },
-    done:    { label: "Done",        color: "#1aa7a0" }
+    todo:{label:"Not started",color:"#b4aaa0"},
+    active:{label:"In progress",color:"#e9962f"},
+    blocked:{label:"Blocked",color:"#f0432b"},
+    done:{label:"Done",color:"#1aa7a0"}
   };
-
   var TABS = [
-    { id: "overview", label: "Overview" },
-    { id: "tasks",    label: "Tasks" },
-    { id: "plan",     label: "Plan" },
-    { id: "bom",      label: "BOM" },
-    { id: "team",     label: "Team" },
-    { id: "map",      label: "Mind Map" },
-    { id: "timeline", label: "Timeline" }
+    {id:"overview",label:"Overview"},{id:"tasks",label:"Tasks"},{id:"plan",label:"Plan"},
+    {id:"bom",label:"BOM"},{id:"team",label:"Team"},{id:"map",label:"Mind Map"},{id:"timeline",label:"Timeline"}
   ];
 
-  // Default mind map (fixed IDs so concurrent seeding is harmless)
   function defaultMindmap() {
-    var mm = {};
-    var cx = 800, cy = 510;
-    mm.c0 = { text: "AI Companion Robot", x: cx, y: cy, parent: null, color: "#1f1b18", kind: "center" };
+    var mm = {}, cx = 800, cy = 510;
+    mm.c0 = { text:"AI Companion Robot", x:cx, y:cy, parent:null, color:"#1f1b18", kind:"center" };
     var branches = [
-      { n: "Mobility & Navigation", c: "#3f7bd6", leaves: ["Differential drive", "Ultrasonic obstacle avoidance", "Wi-Fi RSSI localisation", "Patient-following logic"] },
-      { n: "Lifting Mechanism", c: "#2f9e54", leaves: ["Scissor-lift / actuator", "Pill dispenser delivery", "Water cup delivery", "Load & accuracy testing"] },
-      { n: "AI & Vision", c: "#7a55c9", leaves: ["Fall detection (CV)", "Face recognition", "IMU sensor fusion", "Voice command engine"] },
-      { n: "Alerts & Dashboard", c: "#e9962f", leaves: ["Emergency SMS / app alert", "Caregiver web dashboard", "Medication adherence log", "Activity & event history"] },
-      { n: "Power System", c: "#1aa7a0", leaves: ["Battery sizing (8h runtime)", "Voltage regulation", "Auto-docking", "Low-power standby"] },
-      { n: "Project & Docs", c: "#f0432b", leaves: ["Bill of Materials", "Technical drawings", "EAC documentation", "Testing & evaluation"] }
+      { n:"Mobility & Navigation",c:"#3f7bd6",leaves:["Differential drive","Ultrasonic obstacle avoidance","Wi-Fi RSSI localisation","Patient-following logic"] },
+      { n:"Lifting Mechanism",c:"#2f9e54",leaves:["Scissor-lift / actuator","Pill dispenser delivery","Water cup delivery","Load & accuracy testing"] },
+      { n:"AI & Vision",c:"#7a55c9",leaves:["Fall detection (CV)","Face recognition","IMU sensor fusion","Voice command engine"] },
+      { n:"Alerts & Dashboard",c:"#e9962f",leaves:["Emergency SMS / app alert","Caregiver web dashboard","Medication adherence log","Activity & event history"] },
+      { n:"Power System",c:"#1aa7a0",leaves:["Battery sizing (8h runtime)","Voltage regulation","Auto-docking","Low-power standby"] },
+      { n:"Project & Docs",c:"#f0432b",leaves:["Bill of Materials","Technical drawings","EAC documentation","Testing & evaluation"] }
     ];
     var N = branches.length;
     branches.forEach(function (b, i) {
-      var ang = (i / N) * 2 * Math.PI - Math.PI / 2;
-      var bx = cx + Math.cos(ang) * 300;
-      var by = cy + Math.sin(ang) * 235;
-      var bid = "b" + i;
-      mm[bid] = { text: b.n, x: Math.round(bx), y: Math.round(by), parent: "c0", color: b.c, kind: "branch" };
+      var ang = (i/N)*2*Math.PI - Math.PI/2;
+      var bx = cx + Math.cos(ang)*300, by = cy + Math.sin(ang)*235, bid = "b"+i;
+      mm[bid] = { text:b.n, x:Math.round(bx), y:Math.round(by), parent:"c0", color:b.c, kind:"branch" };
       b.leaves.forEach(function (leaf, j) {
-        var la = ang + (j - (b.leaves.length - 1) / 2) * 0.55;
-        var lx = bx + Math.cos(la) * 215;
-        var ly = by + Math.sin(la) * 175;
-        mm[bid + "l" + j] = { text: leaf, x: Math.round(lx), y: Math.round(ly), parent: bid, color: b.c, kind: "leaf" };
+        var la = ang + (j-(b.leaves.length-1)/2)*0.55;
+        mm[bid+"l"+j] = { text:leaf, x:Math.round(bx+Math.cos(la)*215), y:Math.round(by+Math.sin(la)*175), parent:bid, color:b.c, kind:"leaf" };
       });
     });
     return mm;
   }
 
   // ===================== STATE =====================
-  var data = { tasks: [], ideas: [], week: 1, actions: [], decisions: [], bom: [], mindmap: null };
+  var data = { week:1, tasks:[], actions:[], decisions:[], bom:[], ideas:[], mindmap:null, needsSeed:false, needsFlag:false };
   var currentUser = "";
   var currentTab = "overview";
   var firstRender = false;
   var connMode = "connecting";
   var fb = null, db = null;
-  var mmSeedSent = false;
-  var mmDragging = false;
-  var mmSvg = null;
+  var mmDragging = false, mmSvg = null;
+  var seedSent = false, flagSent = false;
+  var editor = null; // {type, id|null, draft}
 
   // ===================== HELPERS =====================
-  function el(tag, cls, html) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (html !== undefined) e.innerHTML = html;
-    return e;
-  }
-  function memberName(id) { var m = MEMBERS.filter(function (x) { return x.id === id; })[0]; return m ? m.name : id; }
-  function phaseProg(phId) {
-    var ts = data.tasks.filter(function (t) { return t.ph === phId; });
-    if (!ts.length) return 0;
-    return Math.round(ts.reduce(function (a, t) { return a + t.progress; }, 0) / ts.length);
-  }
-  function overallProg() {
-    if (!data.tasks.length) return 0;
-    return Math.round(data.tasks.reduce(function (a, t) { return a + t.progress; }, 0) / data.tasks.length);
-  }
-  function memberProg(mid) {
-    var ts = data.tasks.filter(function (t) { return t.owner === mid; });
-    if (!ts.length) return 0;
-    return Math.round(ts.reduce(function (a, t) { return a + t.progress; }, 0) / ts.length);
-  }
-  function esc(s) { return (s || "").replace(/[&<>"]/g, function (c) {
-    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function whoami() { return currentUser ? memberName(currentUser) : "someone"; }
-  function uid(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function el(tag, cls, html) { var e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; }
+  function memberName(id){ var m=MEMBERS.filter(function(x){return x.id===id;})[0]; return m?m.name:id; }
+  function esc(s){ return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function whoami(){ return currentUser ? memberName(currentUser) : "someone"; }
+  function uid(p){ return p + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function mapToArr(m){ m=m||{}; return Object.keys(m).map(function(k){ var o=m[k]||{}; var c={}; for(var x in o)c[x]=o[x]; c.id=k; return c; }); }
 
-  // ===================== SNAPSHOT -> LOCAL DATA =====================
-  function buildTasks(stateMap) {
-    stateMap = stateMap || {};
-    return DEFAULT_TASKS.map(function (d) {
-      var s = stateMap[d.id] || {};
-      return { id: d.id, ph: d.ph, name: d.name, owner: d.owner, sw: d.sw, ew: d.ew,
-               status: s.status || "todo",
-               progress: typeof s.progress === "number" ? s.progress : 0,
-               notes: s.notes || "", updby: s.updby || "" };
+  function phaseProg(ph){ var ts=data.tasks.filter(function(t){return t.ph===ph;}); if(!ts.length)return 0; return Math.round(ts.reduce(function(a,t){return a+t.progress;},0)/ts.length); }
+  function overallProg(){ if(!data.tasks.length)return 0; return Math.round(data.tasks.reduce(function(a,t){return a+t.progress;},0)/data.tasks.length); }
+  function memberProg(mid){ var ts=data.tasks.filter(function(t){return t.owner===mid;}); if(!ts.length)return 0; return Math.round(ts.reduce(function(a,t){return a+t.progress;},0)/ts.length); }
+  function sortedTasks(){
+    var po={}; PHASES.forEach(function(p,i){po[p.id]=i;});
+    return data.tasks.slice().sort(function(a,b){
+      if(po[a.ph]!==po[b.ph])return (po[a.ph]||0)-(po[b.ph]||0);
+      if(a.sw!==b.sw)return a.sw-b.sw;
+      if(a.ew!==b.ew)return a.ew-b.ew;
+      return (a.name||"").localeCompare(b.name||"");
     });
   }
-  function buildActions(stateMap) {
-    stateMap = stateMap || {};
-    return ACTIONS.map(function (a) {
-      var s = stateMap[a.id] || {};
-      return { id: a.id, text: a.text, owner: a.owner, done: !!s.done, updby: s.updby || "" };
-    });
+
+  // ===================== USER GATE =====================
+  function loadUser(){ try{ return localStorage.getItem("aicr_user")||""; }catch(e){ return ""; } }
+  function saveUser(id){ try{ localStorage.setItem("aicr_user",id); }catch(e){} }
+  function updateUserDisp(){
+    var d=document.getElementById("userDisp");
+    if(d) d.textContent = currentUser ? memberName(currentUser) : "— pick name —";
   }
-  function buildDecisions(stateMap) {
-    stateMap = stateMap || {};
-    return DECISIONS.map(function (d) {
-      var s = stateMap[d.id] || {};
-      return { id: d.id, title: d.title, ctx: d.ctx,
-               status: s.status === "resolved" ? "resolved" : "open",
-               resolution: s.resolution || "", updby: s.updby || "" };
+  function showGate(){
+    if(document.getElementById("gate")) return;
+    var g=el("div","gate"); g.id="gate";
+    var card=el("div","gate-card");
+    card.innerHTML='<div class="gate-title">Who are you?</div>'+
+      '<div class="gate-sub">Pick your name to start. Every edit you make is tagged with this name so the team can see who changed what.</div>';
+    var btns=el("div","gate-btns");
+    MEMBERS.filter(function(m){return m.id!=="all";}).forEach(function(m){
+      var b=el("button","gate-btn",m.name+" — "+m.role);
+      b.onclick=function(){ currentUser=m.id; saveUser(m.id); updateUserDisp(); g.remove(); render(); };
+      btns.appendChild(b);
     });
+    card.appendChild(btns); g.appendChild(card); document.body.appendChild(g);
   }
-  function buildBom(stateMap) {
-    stateMap = stateMap || {};
-    return BOM.map(function (b) {
-      var s = stateMap[b.id] || {};
-      return { id: b.id, grp: b.grp, item: b.item, qty: b.qty, unit: b.unit,
-               bought: !!s.bought,
-               actual: typeof s.actual === "number" ? s.actual : null,
-               updby: s.updby || "" };
-    });
-  }
-  function applySnapshot(val) {
+  function requireUser(){ if(!currentUser){ showGate(); return false; } return true; }
+
+  // ===================== SNAPSHOT -> DATA =====================
+  function fillTask(k,s){ s=s||{}; var d=DEF_TASK[k]||{};
+    return { id:k, ph:s.ph||d.ph||"plan", name:s.name||d.name||"Untitled task", owner:s.owner||d.owner||"all",
+      sw:typeof s.sw==="number"?s.sw:(d.sw||1), ew:typeof s.ew==="number"?s.ew:(d.ew||1),
+      status:s.status||"todo", progress:typeof s.progress==="number"?s.progress:0, notes:s.notes||"", updby:s.updby||"" }; }
+  function fillAction(k,s){ s=s||{}; var d=DEF_ACT[k]||{};
+    return { id:k, text:s.text||d.text||"Untitled action", owner:s.owner||d.owner||"all", done:!!s.done, updby:s.updby||"" }; }
+  function fillDecision(k,s){ s=s||{}; var d=DEF_DEC[k]||{};
+    return { id:k, title:s.title||d.title||"Untitled decision", ctx:s.ctx||d.ctx||"",
+      status:s.status==="resolved"?"resolved":"open", resolution:s.resolution||"", updby:s.updby||"" }; }
+  function fillBom(k,s){ s=s||{}; var d=DEF_BOM[k]||{};
+    return { id:k, grp:s.grp||d.grp||"Misc", item:s.item||d.item||"Untitled item",
+      qty:typeof s.qty==="number"?s.qty:(d.qty||1), unit:typeof s.unit==="number"?s.unit:(d.unit||0),
+      bought:!!s.bought, actual:typeof s.actual==="number"?s.actual:null, updby:s.updby||"" }; }
+
+  function applySnapshot(val){
     val = val || {};
     data.week = computeWeek();
-    data.tasks = buildTasks(val.tasks);
-    data.actions = buildActions(val.actions);
-    data.decisions = buildDecisions(val.decisions);
-    data.bom = buildBom(val.bom);
-    var ideas = [];
-    var io = val.ideas || {};
-    Object.keys(io).forEach(function (k) {
-      var v = io[k] || {};
-      ideas.push({ key: k, text: v.text || "", by: v.by || "anon", at: v.at || 0 });
-    });
-    ideas.sort(function (a, b) { return b.at - a.at; });
+    var seeded = !!(val.meta && val.meta.seeded);
+    var tm=val.tasks||{}, am=val.actions||{}, dm=val.decisions||{}, bm=val.bom||{};
+    var any = Object.keys(tm).length||Object.keys(am).length||Object.keys(dm).length||Object.keys(bm).length;
+    data.needsSeed = !seeded && !any;          // truly empty -> seed defaults
+    data.needsFlag = !seeded && any;           // old data exists -> just set the flag
+
+    data.tasks = Object.keys(tm).map(function(k){return fillTask(k,tm[k]);});
+    data.actions = Object.keys(am).map(function(k){return fillAction(k,am[k]);});
+    data.decisions = Object.keys(dm).map(function(k){return fillDecision(k,dm[k]);});
+    data.bom = Object.keys(bm).map(function(k){return fillBom(k,bm[k]);});
+
+    var ideas=[], io=val.ideas||{};
+    Object.keys(io).forEach(function(k){ var v=io[k]||{}; ideas.push({key:k,text:v.text||"",by:v.by||"anon",at:v.at||0}); });
+    ideas.sort(function(a,b){return b.at-a.at;});
     data.ideas = ideas;
+
     data.mindmap = (val.mindmap && Object.keys(val.mindmap).length) ? val.mindmap : defaultMindmap();
-    return !(val.mindmap && Object.keys(val.mindmap).length); // true => needs seeding
   }
 
   // ===================== WRITES =====================
-  function fbReady() { return !!(fb && db); }
-  function writeTask(t) {
-    if (!fbReady()) return;
-    fb.set(fb.ref(db, "tracker/tasks/" + t.id), { status: t.status, progress: t.progress, notes: t.notes, updby: t.updby });
+  function fbReady(){ return !!(fb&&db); }
+  function ref(p){ return fb.ref(db,p); }
+  function writeTask(t){ if(fbReady()) fb.set(ref("tracker/tasks/"+t.id),{ph:t.ph,name:t.name,owner:t.owner,sw:t.sw,ew:t.ew,status:t.status,progress:t.progress,notes:t.notes,updby:t.updby}); }
+  function removeTask(id){ if(fbReady()) fb.remove(ref("tracker/tasks/"+id)); }
+  function writeAction(a){ if(fbReady()) fb.set(ref("tracker/actions/"+a.id),{text:a.text,owner:a.owner,done:a.done,updby:a.updby}); }
+  function removeAction(id){ if(fbReady()) fb.remove(ref("tracker/actions/"+id)); }
+  function writeDecision(d){ if(fbReady()) fb.set(ref("tracker/decisions/"+d.id),{title:d.title,ctx:d.ctx,status:d.status,resolution:d.resolution,updby:d.updby}); }
+  function removeDecision(id){ if(fbReady()) fb.remove(ref("tracker/decisions/"+id)); }
+  function writeBom(b){ if(fbReady()) fb.set(ref("tracker/bom/"+b.id),{grp:b.grp,item:b.item,qty:b.qty,unit:b.unit,bought:b.bought,actual:b.actual,updby:b.updby}); }
+  function removeBom(id){ if(fbReady()) fb.remove(ref("tracker/bom/"+id)); }
+  function writeIdea(k,o){ if(fbReady()) fb.set(ref("tracker/ideas/"+k),o); }
+  function removeIdea(k){ if(fbReady()) fb.remove(ref("tracker/ideas/"+k)); }
+  function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
+  function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
+
+  function seedAll(){
+    if(!fbReady()) return;
+    var tasks={}; DEFAULT_TASKS.forEach(function(d){ tasks[d.id]={ph:d.ph,name:d.name,owner:d.owner,sw:d.sw,ew:d.ew,status:"todo",progress:0,notes:"",updby:""}; });
+    var actions={}; DEFAULT_ACTIONS.forEach(function(d){ actions[d.id]={text:d.text,owner:d.owner,done:false,updby:""}; });
+    var decisions={}; DEFAULT_DECISIONS.forEach(function(d){ decisions[d.id]={title:d.title,ctx:d.ctx,status:"open",resolution:"",updby:""}; });
+    var bom={}; DEFAULT_BOM.forEach(function(d){ bom[d.id]={grp:d.grp,item:d.item,qty:d.qty,unit:d.unit,bought:false,actual:null,updby:""}; });
+    fb.update(ref("tracker"),{ tasks:tasks, actions:actions, decisions:decisions, bom:bom, mindmap:defaultMindmap(), meta:{seeded:true} });
   }
-  function writeIdea(key, obj) { if (fbReady()) fb.set(fb.ref(db, "tracker/ideas/" + key), obj); }
-  function deleteIdea(key) { if (fbReady()) fb.remove(fb.ref(db, "tracker/ideas/" + key)); }
-  function writeAction(a) { if (fbReady()) fb.set(fb.ref(db, "tracker/actions/" + a.id), { done: a.done, updby: a.updby }); }
-  function writeDecision(d) { if (fbReady()) fb.set(fb.ref(db, "tracker/decisions/" + d.id), { status: d.status, resolution: d.resolution, updby: d.updby }); }
-  function writeBom(b) { if (fbReady()) fb.set(fb.ref(db, "tracker/bom/" + b.id), { bought: b.bought, actual: b.actual, updby: b.updby }); }
-  function writeMindNode(id, n) { if (fbReady()) fb.set(fb.ref(db, "tracker/mindmap/" + id), n); }
-  function writeMindRemoval(ids) {
-    if (!fbReady()) return;
-    var patch = {};
-    ids.forEach(function (i) { patch[i] = null; });
-    fb.update(fb.ref(db, "tracker/mindmap"), patch);
+  function maybeSeed(){
+    if(!fbReady()) return;
+    if(data.needsSeed && !seedSent){ seedSent=true; seedAll(); }
+    else if(data.needsFlag && !flagSent){ flagSent=true; fb.update(ref("tracker/meta"),{seeded:true}); }
   }
-  function seedMindmap() { if (fbReady()) fb.set(fb.ref(db, "tracker/mindmap"), data.mindmap); }
 
   // ===================== STATUS CHIP =====================
-  function updateStatus() {
-    var dot = document.getElementById("saveDot");
-    var txt = document.getElementById("saveTxt");
-    if (!dot) return;
-    if (connMode === "live")        { dot.className = "dot";       txt.textContent = "Live · synced"; }
-    else if (connMode === "offline"){ dot.className = "dot warn";  txt.textContent = "Offline — will sync"; }
-    else if (connMode === "failed") { dot.className = "dot err";   txt.textContent = "Local only"; }
-    else                            { dot.className = "dot saving";txt.textContent = "Connecting…"; }
+  function updateStatus(){
+    var dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
+    if(!dot) return;
+    if(connMode==="live"){ dot.className="dot"; txt.textContent="Live · synced"; }
+    else if(connMode==="offline"){ dot.className="dot warn"; txt.textContent="Offline — will sync"; }
+    else if(connMode==="failed"){ dot.className="dot err"; txt.textContent="Local only"; }
+    else { dot.className="dot saving"; txt.textContent="Connecting…"; }
   }
 
-  function ring(pct, color) {
-    var r = 38, c = 2 * Math.PI * r, off = c * (1 - pct / 100);
-    return '<div class="ring"><svg width="92" height="92" viewBox="0 0 92 92">' +
-      '<circle cx="46" cy="46" r="' + r + '" fill="none" stroke="#ece3d8" stroke-width="9"/>' +
-      '<circle cx="46" cy="46" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="9" ' +
-      'stroke-linecap="round" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '"/>' +
-      '</svg><div class="pct">' + pct + '%</div></div>';
+  function ring(pct,color){
+    var r=38,c=2*Math.PI*r,off=c*(1-pct/100);
+    return '<div class="ring"><svg width="92" height="92" viewBox="0 0 92 92">'+
+      '<circle cx="46" cy="46" r="'+r+'" fill="none" stroke="#ece3d8" stroke-width="9"/>'+
+      '<circle cx="46" cy="46" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/>'+
+      '</svg><div class="pct">'+pct+'%</div></div>';
+  }
+
+  // ===================== WEEK STRIP =====================
+  function weekStrip(){
+    var strip=el("div","weekstrip");
+    var nm=MILESTONES.filter(function(m){return m.wk>=data.week;})[0];
+    var nmTxt = nm ? (nm.wk===data.week ? nm.name+" — this week" : nm.name+" — in "+(nm.wk-data.week)+" wk"+(nm.wk-data.week>1?"s":"")) : "All milestones passed";
+    var top=el("div","ws-top");
+    top.innerHTML='<span class="ws-week">Week '+data.week+'</span>'+
+      '<span class="ws-of">of '+TOTAL_WEEKS+'</span>'+
+      '<span class="ws-range">'+fmtRange(data.week)+'</span>'+
+      '<span class="ws-next">&#9656; '+esc(nmTxt)+'</span>';
+    strip.appendChild(top);
+    var pips=el("div","ws-pips");
+    var msWk={}; MILESTONES.forEach(function(m){msWk[m.wk]=1;});
+    for(var w=1;w<=TOTAL_WEEKS;w++){
+      var cls="pip"+(w<data.week?" past":w===data.week?" now":"")+(msWk[w]?" ms":"");
+      var p=el("div",cls); p.title="Week "+w+(msWk[w]?" · milestone":"");
+      pips.appendChild(p);
+    }
+    strip.appendChild(pips);
+    return strip;
+  }
+
+  // ===================== EDIT FORMS =====================
+  function field(label,inputEl,wide){
+    var f=el("div","ef-field"+(wide?" wide":""));
+    f.appendChild(el("label",null,label));
+    f.appendChild(inputEl);
+    return f;
+  }
+  function selectEl(opts,val){
+    var s=el("select","fin");
+    opts.forEach(function(o){ var op=el("option",null,o.label); op.value=o.value; if(o.value===val)op.selected=true; s.appendChild(op); });
+    return s;
+  }
+  function weekOpts(){ var a=[]; for(var w=1;w<=TOTAL_WEEKS;w++)a.push({value:w,label:"Week "+w}); return a; }
+
+  function taskFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit task":"New task"));
+    var grid=el("div","ef-grid");
+    var nameI=el("input","fin"); nameI.type="text"; nameI.value=d.name; nameI.placeholder="Task name";
+    var phaseS=selectEl(PHASES.map(function(p){return {value:p.id,label:p.name};}),d.ph);
+    var ownS=selectEl(MEMBERS.map(function(m){return {value:m.id,label:m.name};}),d.owner);
+    var swS=selectEl(weekOpts(),d.sw);
+    var ewS=selectEl(weekOpts(),d.ew);
+    grid.appendChild(field("Task name",nameI,true));
+    grid.appendChild(field("Phase",phaseS));
+    grid.appendChild(field("Owner",ownS));
+    grid.appendChild(field("Start week",swS));
+    grid.appendChild(field("End week",ewS));
+    panel.appendChild(grid);
+    var err=el("div","ef-err"); err.style.display="none";
+    panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save task");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+
+    nameI.oninput=function(){d.name=nameI.value;};
+    phaseS.onchange=function(){d.ph=phaseS.value;};
+    ownS.onchange=function(){d.owner=ownS.value;};
+    swS.onchange=function(){d.sw=parseInt(swS.value,10);};
+    ewS.onchange=function(){d.ew=parseInt(ewS.value,10);};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.name.trim()){ err.textContent="Task name can't be empty."; err.style.display="block"; return; }
+      if(d.ew<d.sw){ err.textContent="End week can't be before start week."; err.style.display="block"; return; }
+      var t={ id:editor.id||uid("t"), ph:d.ph, name:d.name.trim(), owner:d.owner, sw:d.sw, ew:d.ew,
+        status:d.status||"todo", progress:typeof d.progress==="number"?d.progress:0, notes:d.notes||"", updby:whoami() };
+      editor=null; render(); writeTask(t);
+    };
+    return panel;
+  }
+
+  function bomFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit BOM item":"New BOM item"));
+    var grid=el("div","ef-grid");
+    var itemI=el("input","fin"); itemI.type="text"; itemI.value=d.item; itemI.placeholder="Component name";
+    var grpI=el("input","fin"); grpI.type="text"; grpI.value=d.grp; grpI.placeholder="Group (e.g. Sensors)"; grpI.setAttribute("list","bomgroups");
+    var dl=el("datalist"); dl.id="bomgroups";
+    var grps={}; data.bom.forEach(function(b){grps[b.grp]=1;});
+    Object.keys(grps).forEach(function(g){ var o=el("option"); o.value=g; dl.appendChild(o); });
+    var qtyI=el("input","fin"); qtyI.type="number"; qtyI.min="1"; qtyI.value=d.qty;
+    var unitI=el("input","fin"); unitI.type="number"; unitI.min="0"; unitI.value=d.unit;
+    grid.appendChild(field("Item",itemI,true));
+    grid.appendChild(field("Group",grpI));
+    grid.appendChild(field("Quantity",qtyI));
+    grid.appendChild(field("Unit cost (RM)",unitI));
+    panel.appendChild(grid);
+    panel.appendChild(dl);
+    var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save item");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+
+    itemI.oninput=function(){d.item=itemI.value;};
+    grpI.oninput=function(){d.grp=grpI.value;};
+    qtyI.oninput=function(){d.qty=Math.max(1,parseInt(qtyI.value,10)||1);};
+    unitI.oninput=function(){d.unit=Math.max(0,parseFloat(unitI.value)||0);};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.item.trim()){ err.textContent="Item name can't be empty."; err.style.display="block"; return; }
+      var b={ id:editor.id||uid("b"), grp:(d.grp.trim()||"Misc"), item:d.item.trim(),
+        qty:d.qty, unit:d.unit, bought:!!d.bought, actual:typeof d.actual==="number"?d.actual:null, updby:whoami() };
+      editor=null; render(); writeBom(b);
+    };
+    return panel;
+  }
+
+  function actionFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit action":"New action"));
+    var grid=el("div","ef-grid");
+    var textI=el("input","fin"); textI.type="text"; textI.value=d.text; textI.placeholder="What needs doing";
+    var ownS=selectEl(MEMBERS.map(function(m){return {value:m.id,label:m.name};}),d.owner);
+    grid.appendChild(field("Action",textI,true));
+    grid.appendChild(field("Owner",ownS));
+    panel.appendChild(grid);
+    var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save action");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+    textI.oninput=function(){d.text=textI.value;};
+    ownS.onchange=function(){d.owner=ownS.value;};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.text.trim()){ err.textContent="Action text can't be empty."; err.style.display="block"; return; }
+      var a={ id:editor.id||uid("a"), text:d.text.trim(), owner:d.owner, done:!!d.done, updby:whoami() };
+      editor=null; render(); writeAction(a);
+    };
+    return panel;
+  }
+
+  function decisionFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit design decision":"New design decision"));
+    var grid=el("div","ef-grid");
+    var titleI=el("input","fin"); titleI.type="text"; titleI.value=d.title; titleI.placeholder="Decision title";
+    var ctxT=el("textarea","fin"); ctxT.value=d.ctx; ctxT.placeholder="Context — the options and trade-offs";
+    grid.appendChild(field("Title",titleI,true));
+    grid.appendChild(field("Context",ctxT,true));
+    panel.appendChild(grid);
+    var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save decision");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+    titleI.oninput=function(){d.title=titleI.value;};
+    ctxT.oninput=function(){d.ctx=ctxT.value;};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.title.trim()){ err.textContent="Title can't be empty."; err.style.display="block"; return; }
+      var dec={ id:editor.id||uid("d"), title:d.title.trim(), ctx:d.ctx.trim(),
+        status:d.status||"open", resolution:d.resolution||"", updby:whoami() };
+      editor=null; render(); writeDecision(dec);
+    };
+    return panel;
+  }
+
+  function openTaskEditor(id,ctx){
+    if(!requireUser())return;
+    if(id){ var t=data.tasks.filter(function(x){return x.id===id;})[0]; if(!t)return;
+      editor={type:"task",id:id,draft:{ph:t.ph,name:t.name,owner:t.owner,sw:t.sw,ew:t.ew,status:t.status,progress:t.progress,notes:t.notes}}; }
+    else { ctx=ctx||{};
+      editor={type:"task",id:null,draft:{ph:ctx.ph||"plan",name:"",owner:ctx.owner||"all",sw:data.week,ew:data.week,status:"todo",progress:0,notes:""}}; }
+    render();
+  }
+  function openBomEditor(id){
+    if(!requireUser())return;
+    if(id){ var b=data.bom.filter(function(x){return x.id===id;})[0]; if(!b)return;
+      editor={type:"bom",id:id,draft:{grp:b.grp,item:b.item,qty:b.qty,unit:b.unit,bought:b.bought,actual:b.actual}}; }
+    else editor={type:"bom",id:null,draft:{grp:"",item:"",qty:1,unit:0,bought:false,actual:null}};
+    render();
+  }
+  function openActionEditor(id){
+    if(!requireUser())return;
+    if(id){ var a=data.actions.filter(function(x){return x.id===id;})[0]; if(!a)return;
+      editor={type:"action",id:id,draft:{text:a.text,owner:a.owner,done:a.done}}; }
+    else editor={type:"action",id:null,draft:{text:"",owner:"all",done:false}};
+    render();
+  }
+  function openDecisionEditor(id){
+    if(!requireUser())return;
+    if(id){ var d=data.decisions.filter(function(x){return x.id===id;})[0]; if(!d)return;
+      editor={type:"decision",id:id,draft:{title:d.title,ctx:d.ctx,status:d.status,resolution:d.resolution}}; }
+    else editor={type:"decision",id:null,draft:{title:"",ctx:"",status:"open",resolution:""}};
+    render();
   }
 
   // ===================== VIEW: OVERVIEW =====================
-  function viewOverview() {
-    var wrap = el("div");
-    var done = data.tasks.filter(function (t) { return t.status === "done"; }).length;
-    var active = data.tasks.filter(function (t) { return t.status === "active"; }).length;
-    var blocked = data.tasks.filter(function (t) { return t.status === "blocked"; }).length;
+  function viewOverview(){
+    var wrap=el("div");
+    var done=data.tasks.filter(function(t){return t.status==="done";}).length;
+    var active=data.tasks.filter(function(t){return t.status==="active";}).length;
+    var blocked=data.tasks.filter(function(t){return t.status==="blocked";}).length;
 
-    var sr = el("div", "stat-row");
-    sr.appendChild(el("div", "stat accent", '<div class="num">' + overallProg() + '%</div><div class="lab">Overall progress</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num">' + done + '<span style="font-size:18px;color:var(--muted)">/' + data.tasks.length + '</span></div><div class="lab">Tasks done</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num">' + active + '</div><div class="lab">In progress</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num" style="color:' + (blocked ? "var(--coral)" : "inherit") + '">' + blocked + '</div><div class="lab">Blocked</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num">W' + data.week + '<span style="font-size:18px;color:var(--muted)">/14</span></div><div class="lab">Current week</div>'));
+    var sr=el("div","stat-row");
+    sr.appendChild(el("div","stat accent",'<div class="num">'+overallProg()+'%</div><div class="lab">Overall progress</div>'));
+    sr.appendChild(el("div","stat",'<div class="num">'+done+'<span style="font-size:18px;color:var(--muted)">/'+data.tasks.length+'</span></div><div class="lab">Tasks done</div>'));
+    sr.appendChild(el("div","stat",'<div class="num">'+active+'</div><div class="lab">In progress</div>'));
+    sr.appendChild(el("div","stat",'<div class="num" style="color:'+(blocked?"var(--coral)":"inherit")+'">'+blocked+'</div><div class="lab">Blocked</div>'));
     wrap.appendChild(sr);
 
-    wrap.appendChild(el("div", "section-label", "Progress by phase"));
-    var rw = el("div", "ring-wrap");
-    PHASES.forEach(function (p) {
-      var n = data.tasks.filter(function (t) { return t.ph === p.id; }).length;
-      var c = el("div", "ring-card");
-      c.innerHTML = ring(phaseProg(p.id), p.color) + '<div class="name">' + p.name + '</div><div class="sub">' + n + ' tasks</div>';
+    var rl=el("div","section-label"); rl.appendChild(el("span",null,"Progress by phase")); rl.appendChild(el("span","ln")); wrap.appendChild(rl);
+    var rw=el("div","ring-wrap");
+    PHASES.forEach(function(p){
+      var n=data.tasks.filter(function(t){return t.ph===p.id;}).length;
+      var c=el("div","ring-card");
+      c.innerHTML=ring(phaseProg(p.id),p.color)+'<div class="name">'+p.name+'</div><div class="sub">'+n+' task'+(n===1?"":"s")+'</div>';
       rw.appendChild(c);
     });
     wrap.appendChild(rw);
 
-    wrap.appendChild(el("div", "section-label", "Milestones"));
-    var mwrap = el("div");
-    MILESTONES.forEach(function (m) {
-      var d = el("div", "milestone");
-      var cls = m.wk < data.week ? "past" : (m.wk === data.week ? "now" : "");
-      var diff = m.wk - data.week;
-      var cd = diff > 0 ? (diff + " week" + (diff > 1 ? "s" : "") + " away") : diff === 0 ? "This week" : "Passed";
-      d.innerHTML = '<div class="wk ' + cls + '">W' + m.wk + '</div>' +
-        '<div><div class="mname">' + m.name + '</div><div class="mmeta">' + m.meta + '</div></div>' +
-        '<div class="countdown">' + cd + '</div>';
+    var ml=el("div","section-label"); ml.appendChild(el("span",null,"Milestones")); ml.appendChild(el("span","ln")); wrap.appendChild(ml);
+    var mwrap=el("div");
+    MILESTONES.forEach(function(m){
+      var d=el("div","milestone");
+      var cls=m.wk<data.week?"past":(m.wk===data.week?"now":"");
+      var diff=m.wk-data.week;
+      var cd=diff>0?(diff+" week"+(diff>1?"s":"")+" away"):diff===0?"This week":"Passed";
+      d.innerHTML='<div class="wk '+cls+'">W'+m.wk+'</div><div><div class="mname">'+m.name+'</div><div class="mmeta">'+m.meta+'</div></div><div class="countdown">'+cd+'</div>';
       mwrap.appendChild(d);
     });
     wrap.appendChild(mwrap);
 
-    var overdue = data.tasks.filter(function (t) { return t.ew < data.week && t.status !== "done"; });
-    if (overdue.length) {
-      wrap.appendChild(el("div", "section-label", "Overdue — behind schedule (" + overdue.length + ")"));
-      var odCard = el("div", "card");
-      odCard.style.borderColor = "var(--coral)";
-      var odHtml = "";
-      overdue.forEach(function (t) {
-        var st = STATUS[t.status];
-        var late = data.week - t.ew;
-        odHtml += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
-          '<span class="mt-name">' + esc(t.name) + '</span>' +
-          '<span class="badge own">' + memberName(t.owner) + '</span>' +
-          '<span class="badge wk" style="border-color:var(--coral);color:var(--coral)">' + late + ' wk late</span>' +
-          '<span class="mt-st">' + st.label + '</span></div>';
+    var overdue=data.tasks.filter(function(t){return t.ew<data.week && t.status!=="done";});
+    if(overdue.length){
+      var ol=el("div","section-label"); ol.appendChild(el("span",null,"Overdue — behind schedule ("+overdue.length+")")); ol.appendChild(el("span","ln")); wrap.appendChild(ol);
+      var od=el("div","card"); od.style.borderColor="var(--coral)";
+      var oh="";
+      overdue.forEach(function(t){
+        var st=STATUS[t.status];
+        oh+='<div class="mtask"><span class="sdot" style="background:'+st.color+'"></span><span class="mt-name">'+esc(t.name)+'</span>'+
+          '<span class="badge own">'+memberName(t.owner)+'</span><span class="badge late">'+(data.week-t.ew)+' wk late</span>'+
+          '<span class="mt-st">'+st.label+'</span></div>';
       });
-      odCard.innerHTML = odHtml;
-      wrap.appendChild(odCard);
+      od.innerHTML=oh; wrap.appendChild(od);
     }
 
-    wrap.appendChild(el("div", "section-label", "Active this week (W" + data.week + ")"));
-    var nowTasks = data.tasks.filter(function (t) { return t.sw <= data.week && t.ew >= data.week && t.status !== "done"; });
-    var nowCard = el("div", "card");
-    if (!nowTasks.length) {
-      nowCard.innerHTML = '<div class="hint">No open tasks scheduled for week ' + data.week + '.</div>';
-    } else {
-      var html = "";
-      nowTasks.forEach(function (t) {
-        var st = STATUS[t.status];
-        html += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
-          '<span class="mt-name">' + esc(t.name) + '</span>' +
-          '<span class="badge own">' + memberName(t.owner) + '</span>' +
-          '<span class="mt-st">' + st.label + '</span></div>';
-      });
-      nowCard.innerHTML = html;
+    var al=el("div","section-label"); al.appendChild(el("span",null,"Active this week (W"+data.week+")")); al.appendChild(el("span","ln")); wrap.appendChild(al);
+    var nowTasks=data.tasks.filter(function(t){return t.sw<=data.week && t.ew>=data.week && t.status!=="done";});
+    var nc=el("div","card");
+    if(!nowTasks.length){ nc.innerHTML='<div class="hint">No open tasks scheduled for week '+data.week+'.</div>'; }
+    else { var h="";
+      nowTasks.forEach(function(t){ var st=STATUS[t.status];
+        h+='<div class="mtask"><span class="sdot" style="background:'+st.color+'"></span><span class="mt-name">'+esc(t.name)+'</span>'+
+          '<span class="badge own">'+memberName(t.owner)+'</span><span class="mt-st">'+st.label+'</span></div>'; });
+      nc.innerHTML=h;
     }
-    wrap.appendChild(nowCard);
+    wrap.appendChild(nc);
 
-    wrap.appendChild(el("div", "section-label", "Ideas & open questions"));
-    var ic = el("div", "card");
-    var add = el("div", "idea-add");
-    add.innerHTML = '<input id="ideaInput" placeholder="Drop an idea, design question, or to-do for the team…" />' +
-      '<button class="btn" id="ideaBtn">Add</button>';
+    var il=el("div","section-label"); il.appendChild(el("span",null,"Ideas & open questions")); il.appendChild(el("span","ln")); wrap.appendChild(il);
+    var ic=el("div","card");
+    var add=el("div","idea-add");
+    add.innerHTML='<input id="ideaInput" placeholder="Drop an idea, design question, or to-do for the team…" /><button class="btn" id="ideaBtn">Add</button>';
     ic.appendChild(add);
-    var list = el("div");
-    if (!data.ideas.length) {
-      list.appendChild(el("div", "hint", "No ideas yet — capture design thoughts, blockers, or questions here so the whole team sees them."));
-    }
-    data.ideas.forEach(function (idea) {
-      var row = el("div", "idea");
-      row.innerHTML = '<span class="bullet">&#9656;</span>' +
-        '<span class="txt">' + esc(idea.text) + '<div class="by">— ' + esc(idea.by || "anon") + '</div></span>' +
-        '<span class="x" data-key="' + idea.key + '">&times;</span>';
+    var list=el("div");
+    if(!data.ideas.length) list.appendChild(el("div","hint","No ideas yet — capture design thoughts, blockers, or questions here."));
+    data.ideas.forEach(function(idea){
+      var row=el("div","idea");
+      row.innerHTML='<span class="bullet">&#9656;</span><span class="txt">'+esc(idea.text)+'<div class="by">— '+esc(idea.by||"anon")+'</div></span><span class="x" data-key="'+idea.key+'">&times;</span>';
       list.appendChild(row);
     });
     ic.appendChild(list);
     wrap.appendChild(ic);
 
-    setTimeout(function () {
-      var inp = document.getElementById("ideaInput");
-      var btn = document.getElementById("ideaBtn");
-      function addIt() {
-        var v = inp.value.trim();
-        if (!v) return;
-        var key = uid("k");
-        var obj = { text: v, by: whoami(), at: Date.now() };
-        data.ideas.unshift({ key: key, text: obj.text, by: obj.by, at: obj.at });
-        render();
-        writeIdea(key, obj);
+    setTimeout(function(){
+      var inp=document.getElementById("ideaInput"), btn=document.getElementById("ideaBtn");
+      function addIt(){
+        if(!requireUser())return;
+        var v=inp.value.trim(); if(!v)return;
+        var key=uid("k"), obj={text:v,by:whoami(),at:Date.now()};
+        data.ideas.unshift({key:key,text:obj.text,by:obj.by,at:obj.at});
+        render(); writeIdea(key,obj);
       }
-      if (btn) btn.onclick = addIt;
-      if (inp) inp.onkeydown = function (e) { if (e.key === "Enter") addIt(); };
-      list.querySelectorAll(".x").forEach(function (x) {
-        x.onclick = function () {
-          var key = x.getAttribute("data-key");
-          data.ideas = data.ideas.filter(function (i) { return i.key !== key; });
-          render();
-          deleteIdea(key);
+      if(btn)btn.onclick=addIt;
+      if(inp)inp.onkeydown=function(e){ if(e.key==="Enter")addIt(); };
+      list.querySelectorAll(".x").forEach(function(x){
+        x.onclick=function(){
+          if(!requireUser())return;
+          var key=x.getAttribute("data-key");
+          data.ideas=data.ideas.filter(function(i){return i.key!==key;});
+          render(); removeIdea(key);
         };
       });
-    }, 0);
+    },0);
     return wrap;
   }
 
   // ===================== VIEW: TASKS =====================
-  function viewTasks() {
-    var wrap = el("div");
-    PHASES.forEach(function (p) {
-      var head = el("div", "phase-head");
-      head.innerHTML = '<span class="pdot" style="background:' + p.color + '"></span>' +
-        '<span class="pname">' + p.name + '</span>' +
-        '<span class="pprog">' + phaseProg(p.id) + '% complete</span>';
+  function taskCard(t){
+    var st=STATUS[t.status];
+    var card=el("div","task");
+    card.style.borderLeftColor=st.color;
+    var optHtml="";
+    Object.keys(STATUS).forEach(function(k){ optHtml+='<option value="'+k+'"'+(k===t.status?" selected":"")+'>'+STATUS[k].label+'</option>'; });
+    var late = (t.ew<data.week && t.status!=="done") ? '<span class="badge late">'+(data.week-t.ew)+' wk late</span>' : '';
+    card.innerHTML=
+      '<div class="task-top">'+
+        '<span class="tname">'+esc(t.name)+'</span>'+
+        '<span class="badge wk">W'+t.sw+'–'+t.ew+'</span>'+
+        '<span class="badge own">'+memberName(t.owner)+'</span>'+ late +
+        '<select class="status">'+optHtml+'</select>'+
+        '<button class="iconbtn edit" title="Edit task">\u270e</button>'+
+        '<button class="iconbtn del" title="Delete task">\u2715</button>'+
+      '</div>'+
+      '<div class="task-bar"><input type="range" min="0" max="100" step="5" value="'+t.progress+'"><span class="pv">'+t.progress+'%</span></div>'+
+      '<textarea placeholder="Notes, blockers, links…">'+esc(t.notes)+'</textarea>'+
+      (t.updby?'<div class="updby">Last updated by '+esc(t.updby)+'</div>':'');
+    var sel=card.querySelector(".status"), rng=card.querySelector("input[type=range]"),
+        pv=card.querySelector(".pv"), ta=card.querySelector("textarea");
+    sel.onchange=function(){
+      if(!requireUser()){ sel.value=t.status; return; }
+      t.status=sel.value;
+      if(t.status==="done")t.progress=100;
+      else if(t.status==="todo")t.progress=0;
+      else if(t.progress===0||t.progress===100)t.progress=25;
+      t.updby=whoami(); render(); writeTask(t);
+    };
+    rng.oninput=function(){ pv.textContent=rng.value+"%"; };
+    rng.onchange=function(){
+      if(!requireUser()){ rng.value=t.progress; pv.textContent=t.progress+"%"; return; }
+      t.progress=parseInt(rng.value,10);
+      if(t.progress===100)t.status="done";
+      else if(t.progress===0)t.status="todo";
+      else if(t.status==="todo"||t.status==="done")t.status="active";
+      t.updby=whoami(); render(); writeTask(t);
+    };
+    ta.onchange=function(){ if(!requireUser())return; t.notes=ta.value; t.updby=whoami(); writeTask(t); };
+    card.querySelector(".edit").onclick=function(){ openTaskEditor(t.id); };
+    card.querySelector(".del").onclick=function(){
+      if(!requireUser())return;
+      if(!window.confirm('Delete task "'+t.name+'"?'))return;
+      data.tasks=data.tasks.filter(function(x){return x.id!==t.id;});
+      render(); removeTask(t.id);
+    };
+    return card;
+  }
+
+  function viewTasks(){
+    var wrap=el("div");
+    if(editor && editor.type==="task") wrap.appendChild(taskFormPanel());
+    var addBar=el("div");
+    addBar.style.marginBottom="6px";
+    var addB=el("button","btn sm","+ Add task");
+    addB.onclick=function(){ openTaskEditor(null,{}); };
+    addBar.appendChild(addB);
+    wrap.appendChild(addBar);
+
+    var tasks=sortedTasks();
+    PHASES.forEach(function(p){
+      var phaseTasks=tasks.filter(function(t){return t.ph===p.id;});
+      var head=el("div","phase-head");
+      head.innerHTML='<span class="pdot" style="background:'+p.color+'"></span><span class="pname">'+p.name+'</span><span class="pprog">'+phaseProg(p.id)+'% · '+phaseTasks.length+' task'+(phaseTasks.length===1?"":"s")+'</span>';
       wrap.appendChild(head);
-
-      data.tasks.filter(function (t) { return t.ph === p.id; }).forEach(function (t) {
-        var st = STATUS[t.status];
-        var card = el("div", "task");
-        card.style.borderLeftColor = st.color;
-        var optHtml = "";
-        Object.keys(STATUS).forEach(function (k) {
-          optHtml += '<option value="' + k + '"' + (k === t.status ? " selected" : "") + '>' + STATUS[k].label + '</option>';
-        });
-        card.innerHTML =
-          '<div class="task-top">' +
-            '<span class="tname">' + esc(t.name) + '</span>' +
-            '<span class="badge wk">W' + t.sw + '–' + t.ew + '</span>' +
-            '<span class="badge own">' + memberName(t.owner) + '</span>' +
-            '<select class="status">' + optHtml + '</select>' +
-          '</div>' +
-          '<div class="task-bar">' +
-            '<input type="range" min="0" max="100" step="5" value="' + t.progress + '">' +
-            '<span class="pv">' + t.progress + '%</span>' +
-          '</div>' +
-          '<textarea placeholder="Notes, blockers, links…">' + esc(t.notes) + '</textarea>' +
-          (t.updby ? '<div class="updby">Last updated by ' + esc(t.updby) + '</div>' : '');
-
-        var sel = card.querySelector(".status");
-        var rng = card.querySelector("input[type=range]");
-        var pv = card.querySelector(".pv");
-        var ta = card.querySelector("textarea");
-
-        sel.onchange = function () {
-          t.status = sel.value;
-          if (t.status === "done") t.progress = 100;
-          else if (t.status === "todo") t.progress = 0;
-          else if (t.progress === 0 || t.progress === 100) t.progress = 25;
-          t.updby = whoami(); render(); writeTask(t);
-        };
-        rng.oninput = function () { pv.textContent = rng.value + "%"; };
-        rng.onchange = function () {
-          t.progress = parseInt(rng.value, 10);
-          if (t.progress === 100) t.status = "done";
-          else if (t.progress === 0) t.status = "todo";
-          else if (t.status === "todo" || t.status === "done") t.status = "active";
-          t.updby = whoami(); render(); writeTask(t);
-        };
-        ta.onchange = function () { t.notes = ta.value; t.updby = whoami(); writeTask(t); };
-        wrap.appendChild(card);
-      });
+      if(!phaseTasks.length) wrap.appendChild(el("div","card",'<div class="hint">No tasks in this phase yet.</div>'));
+      phaseTasks.forEach(function(t){ wrap.appendChild(taskCard(t)); });
     });
     return wrap;
   }
 
   // ===================== VIEW: PLAN =====================
-  function viewPlan() {
-    var wrap = el("div");
+  function viewPlan(){
+    var wrap=el("div");
+    if(editor && (editor.type==="action"||editor.type==="decision")){
+      wrap.appendChild(editor.type==="action"?actionFormPanel():decisionFormPanel());
+    }
 
-    wrap.appendChild(el("div", "section-label", "Immediate actions — finish the planning phase"));
-    var doneN = data.actions.filter(function (a) { return a.done; }).length;
-    wrap.appendChild(el("div", "banner info", doneN + " of " + data.actions.length +
-      " planning actions complete. These close out the Planning &amp; Design phase before the build can start."));
-    data.actions.forEach(function (a) {
-      var row = el("div", "action" + (a.done ? " done" : ""));
-      row.innerHTML =
-        '<input type="checkbox"' + (a.done ? " checked" : "") + ' />' +
-        '<div class="atext">' + esc(a.text) +
-          (a.updby ? ' <span style="font-weight:500;color:var(--muted);font-size:11px">· ' + esc(a.updby) + '</span>' : '') +
-        '</div>' +
-        '<span class="badge own">' + memberName(a.owner) + '</span>';
-      var cb = row.querySelector("input");
-      cb.onchange = function () {
-        a.done = cb.checked; a.updby = whoami(); render(); writeAction(a);
+    var doneN=data.actions.filter(function(a){return a.done;}).length;
+    var al=el("div","section-label");
+    al.appendChild(el("span",null,"Immediate actions"));
+    al.appendChild(el("span","ln"));
+    var addA=el("button","btn sm sl-btn","+ Add action");
+    addA.onclick=function(){ openActionEditor(null); };
+    al.appendChild(addA);
+    wrap.appendChild(al);
+    wrap.appendChild(el("div","banner info",doneN+" of "+data.actions.length+" planning actions complete."));
+    if(!data.actions.length) wrap.appendChild(el("div","card",'<div class="hint">No actions yet — add the to-dos that close out the planning phase.</div>'));
+    data.actions.forEach(function(a){
+      var row=el("div","action"+(a.done?" done":""));
+      row.innerHTML='<input type="checkbox"'+(a.done?" checked":"")+' />'+
+        '<div class="atext">'+esc(a.text)+(a.updby?' <span style="font-weight:500;color:var(--muted);font-size:11px">· '+esc(a.updby)+'</span>':'')+'</div>'+
+        '<span class="badge own">'+memberName(a.owner)+'</span>'+
+        '<button class="iconbtn edit" title="Edit">\u270e</button>'+
+        '<button class="iconbtn del" title="Delete">\u2715</button>';
+      var cb=row.querySelector("input");
+      cb.onchange=function(){
+        if(!requireUser()){ cb.checked=a.done; return; }
+        a.done=cb.checked; a.updby=whoami(); render(); writeAction(a);
+      };
+      row.querySelector(".edit").onclick=function(){ openActionEditor(a.id); };
+      row.querySelector(".del").onclick=function(){
+        if(!requireUser())return;
+        if(!window.confirm("Delete this action?"))return;
+        data.actions=data.actions.filter(function(x){return x.id!==a.id;});
+        render(); removeAction(a.id);
       };
       wrap.appendChild(row);
     });
 
-    wrap.appendChild(el("div", "section-label", "Open design decisions"));
-    wrap.appendChild(el("div", "banner warn",
-      "These are unresolved choices that affect cost and feasibility. Discuss as a team, then mark resolved and record the decision."));
-    data.decisions.forEach(function (d) {
-      var card = el("div", "decision" + (d.status === "resolved" ? " resolved" : ""));
-      var head = el("div", "dhead");
-      head.innerHTML = '<span class="dtitle">' + esc(d.title) + '</span>' +
-        '<button class="pill-btn ' + d.status + '">' + (d.status === "resolved" ? "Resolved" : "Open") + '</button>';
+    var dl=el("div","section-label");
+    dl.appendChild(el("span",null,"Open design decisions"));
+    dl.appendChild(el("span","ln"));
+    var addD=el("button","btn sm sl-btn","+ Add decision");
+    addD.onclick=function(){ openDecisionEditor(null); };
+    dl.appendChild(addD);
+    wrap.appendChild(dl);
+    if(!data.decisions.length) wrap.appendChild(el("div","card",'<div class="hint">No decisions logged yet.</div>'));
+    data.decisions.forEach(function(d){
+      var card=el("div","decision"+(d.status==="resolved"?" resolved":""));
+      var head=el("div","dhead");
+      head.innerHTML='<span class="dtitle">'+esc(d.title)+'</span>'+
+        '<button class="pill-btn '+d.status+'">'+(d.status==="resolved"?"Resolved":"Open")+'</button>'+
+        '<button class="iconbtn edit" title="Edit">\u270e</button>'+
+        '<button class="iconbtn del" title="Delete">\u2715</button>';
       card.appendChild(head);
-      card.appendChild(el("div", "dctx", esc(d.ctx)));
-      var ta = el("textarea");
-      ta.placeholder = "Team's decision / resolution…";
-      ta.value = d.resolution;
+      card.appendChild(el("div","dctx",esc(d.ctx)));
+      var ta=el("textarea"); ta.placeholder="Team's decision / resolution…"; ta.value=d.resolution;
       card.appendChild(ta);
-      if (d.updby) card.appendChild(el("div", "updby", "Last updated by " + esc(d.updby)));
-
-      head.querySelector(".pill-btn").onclick = function () {
-        d.status = d.status === "resolved" ? "open" : "resolved";
-        d.updby = whoami(); render(); writeDecision(d);
+      if(d.updby) card.appendChild(el("div","updby","Last updated by "+esc(d.updby)));
+      head.querySelector(".pill-btn").onclick=function(){
+        if(!requireUser())return;
+        d.status=d.status==="resolved"?"open":"resolved"; d.updby=whoami(); render(); writeDecision(d);
       };
-      ta.onchange = function () { d.resolution = ta.value; d.updby = whoami(); writeDecision(d); };
+      head.querySelector(".edit").onclick=function(){ openDecisionEditor(d.id); };
+      head.querySelector(".del").onclick=function(){
+        if(!requireUser())return;
+        if(!window.confirm('Delete decision "'+d.title+'"?'))return;
+        data.decisions=data.decisions.filter(function(x){return x.id!==d.id;});
+        render(); removeDecision(d.id);
+      };
+      ta.onchange=function(){ if(!requireUser())return; d.resolution=ta.value; d.updby=whoami(); writeDecision(d); };
       wrap.appendChild(card);
     });
     return wrap;
   }
 
   // ===================== VIEW: BOM =====================
-  function viewBOM() {
-    var wrap = el("div");
-    var estTotal = data.bom.reduce(function (s, b) { return s + b.unit * b.qty; }, 0);
-    var spent = data.bom.reduce(function (s, b) {
-      if (!b.bought) return s;
-      return s + (b.actual != null ? b.actual : b.unit * b.qty);
-    }, 0);
-    var boughtN = data.bom.filter(function (b) { return b.bought; }).length;
+  function viewBOM(){
+    var wrap=el("div");
+    if(editor && editor.type==="bom") wrap.appendChild(bomFormPanel());
 
-    var sr = el("div", "stat-row");
-    sr.appendChild(el("div", "stat accent", '<div class="num">RM ' + estTotal + '</div><div class="lab">Estimated total</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num">RM ' + spent + '</div><div class="lab">Spent so far</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num">' + boughtN + '<span style="font-size:18px;color:var(--muted)">/' + data.bom.length + '</span></div><div class="lab">Items bought</div>'));
-    sr.appendChild(el("div", "stat", '<div class="num" style="color:' + (estTotal > 1000 ? "var(--coral)" : "var(--teal)") + '">RM ' + (estTotal - 1000) + '</div><div class="lab">vs RM1000 target</div>'));
+    var estTotal=data.bom.reduce(function(s,b){return s+b.unit*b.qty;},0);
+    var spent=data.bom.reduce(function(s,b){ if(!b.bought)return s; return s+(b.actual!=null?b.actual:b.unit*b.qty); },0);
+    var boughtN=data.bom.filter(function(b){return b.bought;}).length;
+
+    var sr=el("div","stat-row");
+    sr.appendChild(el("div","stat accent",'<div class="num">RM '+estTotal+'</div><div class="lab">Estimated total</div>'));
+    sr.appendChild(el("div","stat",'<div class="num">RM '+spent+'</div><div class="lab">Spent so far</div>'));
+    sr.appendChild(el("div","stat",'<div class="num">'+boughtN+'<span style="font-size:18px;color:var(--muted)">/'+data.bom.length+'</span></div><div class="lab">Items bought</div>'));
+    sr.appendChild(el("div","stat",'<div class="num" style="color:'+(estTotal>1000?"var(--coral)":"var(--teal)")+'">RM '+(estTotal-1000)+'</div><div class="lab">vs RM1000 target</div>'));
     wrap.appendChild(sr);
 
-    wrap.appendChild(el("div", "banner warn",
-      "Prices are estimated Malaysian retail figures — confirm at purchase. As specced this build is about RM" + estTotal +
-      "; a servo lift instead of a linear actuator, dropping the touchscreen, or a 2GB Pi each shave the cost toward the RM1000 target."));
+    var bl=el("div","section-label");
+    bl.appendChild(el("span",null,"Bill of materials"));
+    bl.appendChild(el("span","ln"));
+    var addB=el("button","btn sm sl-btn","+ Add item");
+    addB.onclick=function(){ openBomEditor(null); };
+    bl.appendChild(addB);
+    wrap.appendChild(bl);
+    wrap.appendChild(el("div","banner warn","Prices are estimated Malaysian retail figures — confirm at purchase. Costs total automatically as you add or edit items."));
 
-    var bwrap = el("div", "bom-wrap");
-    var table = el("table", "bom-table");
-    table.innerHTML = '<thead><tr>' +
-      '<th>Item</th><th class="num">Qty</th><th class="num">Est. RM</th>' +
-      '<th>Bought</th><th>Actual RM</th></tr></thead>';
-    var tbody = el("tbody");
-    var lastGrp = "";
-    data.bom.forEach(function (b) {
-      if (b.grp !== lastGrp) {
-        lastGrp = b.grp;
-        var gr = el("tr");
-        gr.innerHTML = '<td colspan="5" class="sub">' + esc(b.grp) + '</td>';
-        tbody.appendChild(gr);
-      }
-      var tr = el("tr", b.bought ? "bought" : "");
-      tr.innerHTML =
-        '<td>' + esc(b.item) + '</td>' +
-        '<td class="num">' + b.qty + '</td>' +
-        '<td class="num">' + (b.unit * b.qty) + '</td>' +
-        '<td><input type="checkbox"' + (b.bought ? " checked" : "") + '></td>' +
-        '<td><input class="actual" type="number" min="0" placeholder="—" value="' + (b.actual != null ? b.actual : "") + '"></td>';
-      var cb = tr.querySelector('input[type=checkbox]');
-      var ac = tr.querySelector('input.actual');
-      cb.onchange = function () { b.bought = cb.checked; b.updby = whoami(); render(); writeBom(b); };
-      ac.onchange = function () {
-        var v = ac.value.trim();
-        b.actual = v === "" ? null : Math.max(0, parseFloat(v) || 0);
-        b.updby = whoami(); writeBom(b);
+    var bw=el("div","bom-wrap");
+    var table=el("table","bom-table");
+    table.innerHTML='<thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Est. RM</th><th>Bought</th><th>Actual RM</th><th></th></tr></thead>';
+    var tbody=el("tbody");
+    var sorted=data.bom.slice().sort(function(a,b){ if(a.grp!==b.grp)return a.grp.localeCompare(b.grp); return a.id.localeCompare(b.id); });
+    var lastGrp="";
+    if(!sorted.length){
+      var er=el("tr"); er.innerHTML='<td colspan="6"><div class="hint">No items yet — add your first component.</div></td>'; tbody.appendChild(er);
+    }
+    sorted.forEach(function(b){
+      if(b.grp!==lastGrp){ lastGrp=b.grp; var gr=el("tr"); gr.innerHTML='<td colspan="6" class="sub">'+esc(b.grp)+'</td>'; tbody.appendChild(gr); }
+      var tr=el("tr",b.bought?"bought":"");
+      tr.innerHTML='<td>'+esc(b.item)+'</td><td class="num">'+b.qty+'</td><td class="num">'+(b.unit*b.qty)+'</td>'+
+        '<td><input type="checkbox"'+(b.bought?" checked":"")+'></td>'+
+        '<td><input class="actual" type="number" min="0" placeholder="—" value="'+(b.actual!=null?b.actual:"")+'"></td>'+
+        '<td style="white-space:nowrap"><button class="iconbtn edit" title="Edit">\u270e</button> <button class="iconbtn del" title="Delete">\u2715</button></td>';
+      var cb=tr.querySelector('input[type=checkbox]'), ac=tr.querySelector('input.actual');
+      cb.onchange=function(){ if(!requireUser()){cb.checked=b.bought;return;} b.bought=cb.checked; b.updby=whoami(); render(); writeBom(b); };
+      ac.onchange=function(){ if(!requireUser())return; var v=ac.value.trim(); b.actual=v===""?null:Math.max(0,parseFloat(v)||0); b.updby=whoami(); writeBom(b); };
+      tr.querySelector(".edit").onclick=function(){ openBomEditor(b.id); };
+      tr.querySelector(".del").onclick=function(){
+        if(!requireUser())return;
+        if(!window.confirm('Delete "'+b.item+'" from the BOM?'))return;
+        data.bom=data.bom.filter(function(x){return x.id!==b.id;});
+        render(); removeBom(b.id);
       };
       tbody.appendChild(tr);
     });
-    var foot = el("tr");
-    foot.innerHTML = '<td colspan="2" style="font-weight:800;font-family:var(--display)">TOTAL</td>' +
-      '<td class="num" style="font-weight:800;font-family:var(--display)">' + estTotal + '</td>' +
-      '<td></td><td class="num" style="font-weight:800;font-family:var(--display)">' + spent + '</td>';
+    var foot=el("tr");
+    foot.innerHTML='<td colspan="2" style="font-weight:800;font-family:var(--display)">TOTAL</td>'+
+      '<td class="num" style="font-weight:800;font-family:var(--display)">'+estTotal+'</td>'+
+      '<td></td><td class="num" style="font-weight:800;font-family:var(--display)">'+spent+'</td><td></td>';
     tbody.appendChild(foot);
     table.appendChild(tbody);
-    bwrap.appendChild(table);
-    var card = el("div", "card");
-    card.style.padding = "10px";
-    card.appendChild(bwrap);
+    bw.appendChild(table);
+    var card=el("div","card"); card.style.padding="10px"; card.appendChild(bw);
     wrap.appendChild(card);
     return wrap;
   }
 
   // ===================== VIEW: TEAM =====================
-  function viewTeam() {
-    var wrap = el("div", "grid");
-    wrap.style.gridTemplateColumns = "repeat(auto-fit, minmax(290px, 1fr))";
-    MEMBERS.filter(function (m) { return m.id !== "all"; }).forEach(function (m) {
-      var ts = data.tasks.filter(function (t) { return t.owner === m.id; });
-      var prog = memberProg(m.id);
-      var card = el("div", "member");
-      var head = '<div class="member-head">' +
-        '<div class="avatar">' + m.short.slice(0, 2).toUpperCase() + '</div>' +
-        '<div><div class="mn">' + m.name + '</div><div class="mr">' + m.role + '</div></div>' +
-        '<div class="mp">' + prog + '%</div></div>' +
-        '<div class="progbar"><div style="width:' + prog + '%"></div></div>';
-      var rows = "";
-      ts.forEach(function (t) {
-        var st = STATUS[t.status];
-        rows += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
-          '<span class="mt-name">' + esc(t.name) + '</span><span class="mt-st">' + t.progress + '%</span></div>';
-      });
-      card.innerHTML = head + (rows || '<div class="hint">No solo-owned tasks.</div>');
-      wrap.appendChild(card);
+  function teamTaskRow(t){
+    var st=STATUS[t.status];
+    var row=el("div","mtask");
+    row.innerHTML='<span class="sdot" style="background:'+st.color+'"></span>'+
+      '<span class="mt-name">'+esc(t.name)+'</span>'+
+      '<span class="badge wk">W'+t.sw+'–'+t.ew+'</span>'+
+      '<span class="mt-st">'+t.progress+'%</span>'+
+      '<button class="iconbtn edit" title="Edit">\u270e</button>'+
+      '<button class="iconbtn del" title="Delete">\u2715</button>';
+    row.querySelector(".edit").onclick=function(){ openTaskEditor(t.id); };
+    row.querySelector(".del").onclick=function(){
+      if(!requireUser())return;
+      if(!window.confirm('Delete task "'+t.name+'"?'))return;
+      data.tasks=data.tasks.filter(function(x){return x.id!==t.id;});
+      render(); removeTask(t.id);
+    };
+    return row;
+  }
+  function viewTeam(){
+    var wrap=el("div");
+    if(editor && editor.type==="task") wrap.appendChild(taskFormPanel());
+    var grid=el("div","grid");
+    grid.style.gridTemplateColumns="repeat(auto-fit, minmax(290px, 1fr))";
+    MEMBERS.filter(function(m){return m.id!=="all";}).forEach(function(m){
+      var ts=sortedTasks().filter(function(t){return t.owner===m.id;});
+      var card=el("div","member");
+      var head=el("div","member-head");
+      head.innerHTML='<div class="avatar">'+m.short.slice(0,2).toUpperCase()+'</div>'+
+        '<div><div class="mn">'+m.name+'</div><div class="mr">'+m.role+'</div></div>'+
+        '<div class="mp">'+memberProg(m.id)+'%</div>';
+      card.appendChild(head);
+      var pb=el("div","progbar"); pb.innerHTML='<div style="width:'+memberProg(m.id)+'%"></div>'; card.appendChild(pb);
+      if(!ts.length) card.appendChild(el("div","hint","No tasks assigned."));
+      ts.forEach(function(t){ card.appendChild(teamTaskRow(t)); });
+      var addB=el("button","btn sm ghost","+ Add task for "+m.short);
+      addB.style.marginTop="10px";
+      addB.onclick=function(){ openTaskEditor(null,{owner:m.id}); };
+      card.appendChild(addB);
+      grid.appendChild(card);
     });
-    var shared = data.tasks.filter(function (t) { return t.owner === "all"; });
-    var sc = el("div", "member");
-    sc.style.gridColumn = "1 / -1";
-    var srows = "";
-    shared.forEach(function (t) {
-      var st = STATUS[t.status];
-      srows += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
-        '<span class="mt-name">' + esc(t.name) + '</span><span class="badge wk">W' + t.sw + '–' + t.ew + '</span>' +
-        '<span class="mt-st">' + t.progress + '%</span></div>';
-    });
-    sc.innerHTML = '<div class="member-head"><div class="avatar" style="background:var(--coral)">ALL</div>' +
-      '<div><div class="mn">Whole-Team Tasks</div><div class="mr">Everyone contributes</div></div>' +
-      '<div class="mp">' + memberProg("all") + '%</div></div>' +
-      '<div class="progbar"><div style="width:' + memberProg("all") + '%;background:var(--coral)"></div></div>' + srows;
-    wrap.appendChild(sc);
+    // whole team
+    var ts=sortedTasks().filter(function(t){return t.owner==="all";});
+    var sc=el("div","member"); sc.style.gridColumn="1 / -1";
+    var sh=el("div","member-head");
+    sh.innerHTML='<div class="avatar" style="background:var(--coral)">ALL</div>'+
+      '<div><div class="mn">Whole-Team Tasks</div><div class="mr">Everyone contributes</div></div>'+
+      '<div class="mp">'+memberProg("all")+'%</div>';
+    sc.appendChild(sh);
+    var spb=el("div","progbar"); spb.innerHTML='<div style="width:'+memberProg("all")+'%;background:var(--coral)"></div>'; sc.appendChild(spb);
+    if(!ts.length) sc.appendChild(el("div","hint","No whole-team tasks."));
+    ts.forEach(function(t){ sc.appendChild(teamTaskRow(t)); });
+    var addAll=el("button","btn sm ghost","+ Add whole-team task");
+    addAll.style.marginTop="10px";
+    addAll.onclick=function(){ openTaskEditor(null,{owner:"all"}); };
+    sc.appendChild(addAll);
+    grid.appendChild(sc);
+    wrap.appendChild(grid);
     return wrap;
   }
 
-  // ===================== VIEW: MIND MAP (interactive) =====================
-  function drawConnectors() {
-    if (!mmSvg) return;
-    while (mmSvg.firstChild) mmSvg.removeChild(mmSvg.firstChild);
-    var ns = "http://www.w3.org/2000/svg";
-    var mm = data.mindmap;
-    Object.keys(mm).forEach(function (id) {
-      var n = mm[id];
-      if (!n.parent || !mm[n.parent]) return;
-      var p = mm[n.parent];
-      var path = document.createElementNS(ns, "path");
-      var mx = (p.x + n.x) / 2;
-      path.setAttribute("d", "M" + p.x + "," + p.y + " C" + mx + "," + p.y + " " + mx + "," + n.y + " " + n.x + "," + n.y);
-      path.setAttribute("stroke", n.color);
-      path.setAttribute("stroke-width", "2.4");
-      path.setAttribute("fill", "none");
-      path.setAttribute("opacity", "0.5");
+  // ===================== VIEW: MIND MAP =====================
+  function drawConnectors(){
+    if(!mmSvg)return;
+    while(mmSvg.firstChild)mmSvg.removeChild(mmSvg.firstChild);
+    var ns="http://www.w3.org/2000/svg", mm=data.mindmap;
+    Object.keys(mm).forEach(function(id){
+      var n=mm[id]; if(!n.parent||!mm[n.parent])return;
+      var p=mm[n.parent], path=document.createElementNS(ns,"path"), mx=(p.x+n.x)/2;
+      path.setAttribute("d","M"+p.x+","+p.y+" C"+mx+","+p.y+" "+mx+","+n.y+" "+n.x+","+n.y);
+      path.setAttribute("stroke",n.color); path.setAttribute("stroke-width","2.4");
+      path.setAttribute("fill","none"); path.setAttribute("opacity","0.5");
       mmSvg.appendChild(path);
     });
   }
-
-  function viewMap() {
-    var wrap = el("div");
-    wrap.appendChild(el("div", "banner info",
-      "Interactive mind map — <strong>drag</strong> any node to move it, <strong>+</strong> adds a child idea, " +
-      "<strong>×</strong> deletes a node (and its children), and <strong>double-click</strong> renames it. Changes sync to the whole team."));
-
-    var scroll = el("div", "mm-scroll");
-    var canvas = el("div", "mm-canvas");
-    var ns = "http://www.w3.org/2000/svg";
-    var svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("class", "conns");
-    svg.setAttribute("viewBox", "0 0 1600 1040");
-    canvas.appendChild(svg);
-    mmSvg = svg;
-
-    var mm = data.mindmap;
-    Object.keys(mm).forEach(function (id) {
-      var n = mm[id];
-      var node = el("div", "mm-node" + (n.kind === "center" ? " center" : ""));
-      node.setAttribute("data-id", id);
-      // styling by kind
-      if (n.kind === "leaf") {
-        node.style.background = "#fff";
-        node.style.color = "var(--ink)";
-        node.style.border = "2px solid " + n.color;
-      } else {
-        node.style.background = n.color;
-        node.style.color = "#fff";
-      }
-      node.style.left = (n.x - 76) + "px";
-      node.style.top = (n.y - 23) + "px";
-
-      var label = el("span");
-      label.textContent = n.text;
-      node.appendChild(label);
-
-      var btns = el("div", "mm-btns");
-      var addB = el("button", "mm-btn add", "+");
-      addB.title = "Add child idea";
-      btns.appendChild(addB);
-      if (n.kind !== "center") {
-        var delB = el("button", "mm-btn del", "\u00d7");
-        delB.title = "Delete this node";
-        btns.appendChild(delB);
-      }
+  function viewMap(){
+    var wrap=el("div");
+    wrap.appendChild(el("div","banner info",
+      "Interactive mind map — <strong>drag</strong> a node to move it, <strong>+</strong> adds a child, <strong>×</strong> deletes a node and its children, <strong>double-click</strong> renames. Changes sync to the team."));
+    var scroll=el("div","mm-scroll");
+    var canvas=el("div","mm-canvas");
+    var ns="http://www.w3.org/2000/svg";
+    var svg=document.createElementNS(ns,"svg");
+    svg.setAttribute("class","conns"); svg.setAttribute("viewBox","0 0 1600 1040");
+    canvas.appendChild(svg); mmSvg=svg;
+    var mm=data.mindmap;
+    Object.keys(mm).forEach(function(id){
+      var n=mm[id];
+      var node=el("div","mm-node"+(n.kind==="center"?" center":""));
+      node.setAttribute("data-id",id);
+      if(n.kind==="leaf"){ node.style.background="#fff"; node.style.color="var(--ink)"; node.style.border="2px solid "+n.color; }
+      else { node.style.background=n.color; node.style.color="#fff"; }
+      node.style.left=(n.x-76)+"px"; node.style.top=(n.y-23)+"px";
+      var label=el("span"); label.textContent=n.text; node.appendChild(label);
+      var btns=el("div","mm-btns");
+      var addB=el("button","mm-btn add","+"); addB.title="Add child"; btns.appendChild(addB);
+      if(n.kind!=="center"){ var delB=el("button","mm-btn del","\u00d7"); delB.title="Delete"; btns.appendChild(delB); }
       node.appendChild(btns);
-
-      // add child
-      addB.onclick = function (ev) {
+      addB.onclick=function(ev){
         ev.stopPropagation();
-        var txt = window.prompt("New idea under \"" + n.text + "\":", "");
-        if (txt == null) return;
-        txt = txt.trim();
-        if (!txt) return;
-        var nid = uid("n");
-        var kind = n.kind === "center" ? "branch" : "leaf";
-        var child = { text: txt, x: n.x + 180, y: n.y + 70, parent: id, color: n.color, kind: kind };
-        data.mindmap[nid] = child;
-        render();
-        writeMindNode(nid, child);
+        if(!requireUser())return;
+        var txt=window.prompt('New idea under "'+n.text+'":',""); if(txt==null)return;
+        txt=txt.trim(); if(!txt)return;
+        var nid=uid("n"), kind=n.kind==="center"?"branch":"leaf";
+        var child={text:txt,x:n.x+180,y:n.y+70,parent:id,color:n.color,kind:kind};
+        data.mindmap[nid]=child; render(); writeMindNode(nid,child);
       };
-      // delete node + descendants
-      if (n.kind !== "center") {
-        node.querySelector(".del").onclick = function (ev) {
+      if(n.kind!=="center"){
+        node.querySelector(".del").onclick=function(ev){
           ev.stopPropagation();
-          if (!window.confirm("Delete \"" + n.text + "\" and everything under it?")) return;
-          var doomed = [id], queue = [id];
-          while (queue.length) {
-            var cur = queue.shift();
-            Object.keys(data.mindmap).forEach(function (k) {
-              if (data.mindmap[k].parent === cur && doomed.indexOf(k) < 0) { doomed.push(k); queue.push(k); }
+          if(!requireUser())return;
+          if(!window.confirm('Delete "'+n.text+'" and everything under it?'))return;
+          var doomed=[id], queue=[id];
+          while(queue.length){
+            var cur=queue.shift();
+            Object.keys(data.mindmap).forEach(function(k){
+              if(data.mindmap[k].parent===cur && doomed.indexOf(k)<0){ doomed.push(k); queue.push(k); }
             });
           }
-          doomed.forEach(function (k) { delete data.mindmap[k]; });
-          render();
-          writeMindRemoval(doomed);
+          doomed.forEach(function(k){ delete data.mindmap[k]; });
+          render(); writeMindRemoval(doomed);
         };
       }
-      // rename
-      node.ondblclick = function (ev) {
-        if (ev.target.closest(".mm-btn")) return;
-        var txt = window.prompt("Rename node:", n.text);
-        if (txt == null) return;
-        txt = txt.trim();
-        if (!txt) return;
-        n.text = txt;
-        render();
-        writeMindNode(id, n);
+      node.ondblclick=function(ev){
+        if(ev.target.closest(".mm-btn"))return;
+        if(!requireUser())return;
+        var txt=window.prompt("Rename node:",n.text); if(txt==null)return;
+        txt=txt.trim(); if(!txt)return;
+        n.text=txt; render(); writeMindNode(id,n);
       };
-      // drag to move
-      node.addEventListener("pointerdown", function (ev) {
-        if (ev.target.closest(".mm-btn")) return;
+      node.addEventListener("pointerdown",function(ev){
+        if(ev.target.closest(".mm-btn"))return;
+        if(!requireUser())return;
         ev.preventDefault();
-        mmDragging = true;
-        node.classList.add("dragging");
-        var startX = ev.clientX, startY = ev.clientY;
-        var origX = n.x, origY = n.y;
-        function move(e) {
-          n.x = origX + (e.clientX - startX);
-          n.y = origY + (e.clientY - startY);
-          node.style.left = (n.x - 76) + "px";
-          node.style.top = (n.y - 23) + "px";
-          drawConnectors();
-        }
-        function up() {
-          window.removeEventListener("pointermove", move);
-          window.removeEventListener("pointerup", up);
-          node.classList.remove("dragging");
-          mmDragging = false;
-          n.x = Math.round(n.x); n.y = Math.round(n.y);
-          writeMindNode(id, n);
-        }
-        window.addEventListener("pointermove", move);
-        window.addEventListener("pointerup", up);
+        mmDragging=true; node.classList.add("dragging");
+        var sx=ev.clientX, sy=ev.clientY, ox=n.x, oy=n.y;
+        function move(e){ n.x=ox+(e.clientX-sx); n.y=oy+(e.clientY-sy);
+          node.style.left=(n.x-76)+"px"; node.style.top=(n.y-23)+"px"; drawConnectors(); }
+        function up(){ window.removeEventListener("pointermove",move); window.removeEventListener("pointerup",up);
+          node.classList.remove("dragging"); mmDragging=false;
+          n.x=Math.round(n.x); n.y=Math.round(n.y); writeMindNode(id,n); }
+        window.addEventListener("pointermove",move); window.addEventListener("pointerup",up);
       });
-
       canvas.appendChild(node);
     });
-
     scroll.appendChild(canvas);
     wrap.appendChild(scroll);
-    setTimeout(drawConnectors, 0);
+    setTimeout(drawConnectors,0);
     return wrap;
   }
 
   // ===================== VIEW: TIMELINE =====================
-  function viewTimeline() {
-    var wrap = el("div");
-    wrap.appendChild(el("div", "card", '<div class="hint">14-week schedule from the project Gantt chart. The boxed column marks the current project week. Coloured bars are phase-coded; opacity reflects status.</div>'));
-    var tl = el("div", "card");
-    tl.style.overflowX = "auto";
-    var inner = el("div");
-    inner.style.minWidth = "640px";
-
-    var hdr = el("div");
-    hdr.style.cssText = "display:grid;grid-template-columns:220px repeat(14,1fr);gap:2px;margin-bottom:6px;";
-    hdr.appendChild(el("div", null, ""));
-    for (var w = 1; w <= 14; w++) {
-      var cell = el("div", null, "W" + w);
-      cell.style.cssText = "font-family:var(--display);font-weight:700;font-size:10px;text-align:center;padding:4px 0;border-radius:5px;" +
-        (w === data.week ? "background:var(--ink);color:var(--paper);" : "color:var(--muted);");
+  function viewTimeline(){
+    var wrap=el("div");
+    wrap.appendChild(el("div","card",'<div class="hint">14-week schedule — automatically reflects every task and its weeks. The boxed column marks the current week. This view is read-only; edit tasks from the Tasks or Team tab.</div>'));
+    var tl=el("div","card"); tl.style.overflowX="auto";
+    var inner=el("div"); inner.style.minWidth="640px";
+    var hdr=el("div");
+    hdr.style.cssText="display:grid;grid-template-columns:220px repeat(14,1fr);gap:2px;margin-bottom:6px;";
+    hdr.appendChild(el("div",null,""));
+    for(var w=1;w<=14;w++){
+      var cell=el("div",null,"W"+w);
+      cell.style.cssText="font-family:var(--display);font-weight:700;font-size:10px;text-align:center;padding:4px 0;border-radius:5px;"+(w===data.week?"background:var(--ink);color:var(--paper);":"color:var(--muted);");
       hdr.appendChild(cell);
     }
     inner.appendChild(hdr);
-
-    PHASES.forEach(function (p) {
-      data.tasks.filter(function (t) { return t.ph === p.id; }).forEach(function (t) {
-        var row = el("div");
-        row.style.cssText = "display:grid;grid-template-columns:220px repeat(14,1fr);gap:2px;margin-bottom:2px;align-items:center;";
-        var label = el("div", null, esc(t.name));
-        label.style.cssText = "font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;";
-        row.appendChild(label);
-        for (var w = 1; w <= 14; w++) {
-          var c = el("div");
-          var inSpan = w >= t.sw && w <= t.ew;
-          var op = t.status === "done" ? 1 : t.status === "active" ? 0.7 : t.status === "blocked" ? 0.55 : 0.3;
-          c.style.cssText = "height:15px;border-radius:3px;" +
-            (inSpan ? "background:" + p.color + ";opacity:" + op + ";" : "background:transparent;") +
-            (w === data.week ? "box-shadow:inset 1px 0 0 var(--ink),inset -1px 0 0 var(--ink);" : "");
-          if (inSpan && t.status === "blocked") c.style.background = "var(--coral)";
-          row.appendChild(c);
-        }
-        inner.appendChild(row);
-      });
+    var tasks=sortedTasks();
+    if(!tasks.length) inner.appendChild(el("div","hint","No tasks to show."));
+    tasks.forEach(function(t){
+      var p=PHASES.filter(function(x){return x.id===t.ph;})[0]||PHASES[0];
+      var row=el("div");
+      row.style.cssText="display:grid;grid-template-columns:220px repeat(14,1fr);gap:2px;margin-bottom:2px;align-items:center;";
+      var label=el("div",null,esc(t.name));
+      label.style.cssText="font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;";
+      row.appendChild(label);
+      for(var w=1;w<=14;w++){
+        var c=el("div");
+        var inSpan=w>=t.sw&&w<=t.ew;
+        var op=t.status==="done"?1:t.status==="active"?0.7:t.status==="blocked"?0.55:0.3;
+        c.style.cssText="height:15px;border-radius:3px;"+(inSpan?"background:"+p.color+";opacity:"+op+";":"background:transparent;")+(w===data.week?"box-shadow:inset 1px 0 0 var(--ink),inset -1px 0 0 var(--ink);":"");
+        if(inSpan&&t.status==="blocked")c.style.background="var(--coral)";
+        row.appendChild(c);
+      }
+      inner.appendChild(row);
     });
     tl.appendChild(inner);
     wrap.appendChild(tl);
-
-    var lg = el("div", "map-legend");
-    lg.style.cssText = "display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;";
-    PHASES.forEach(function (p) {
-      var s = el("span", null, '<i style="width:11px;height:11px;border-radius:3px;display:inline-block;background:' + p.color + '"></i> ' + p.name);
-      s.style.cssText = "font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;";
+    var lg=el("div");
+    lg.style.cssText="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;";
+    PHASES.forEach(function(p){
+      var s=el("span",null,'<i style="width:11px;height:11px;border-radius:3px;display:inline-block;background:'+p.color+'"></i> '+p.name);
+      s.style.cssText="font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;";
       lg.appendChild(s);
     });
     wrap.appendChild(lg);
@@ -1052,110 +1255,91 @@
   }
 
   // ===================== RENDER =====================
-  function render() {
-    if (mmDragging) return;
-    var view = document.getElementById("view");
-    if (!view) return;
-    data.week = computeWeek();
-    var wd = document.getElementById("weekDisp");
-    if (wd) wd.textContent = "Week " + data.week + " / 14";
-    mmSvg = null;
-    view.innerHTML = "";
+  function render(){
+    if(mmDragging) return;
+    var view=document.getElementById("view");
+    if(!view) return;
+    data.week=computeWeek();
+    mmSvg=null;
+    view.innerHTML="";
 
-    if (connMode === "failed") {
-      view.appendChild(el("div", "banner warn",
-        "Couldn't reach the live database — the tracker still works, but edits stay on this device only. " +
-        "Make sure the page is opened from its web link (not a downloaded file) and that you're online."));
-    } else if (connMode === "offline") {
-      view.appendChild(el("div", "banner warn",
-        "You're offline. Your edits are saved and will sync automatically once the connection returns."));
-    }
+    if(connMode==="failed") view.appendChild(el("div","banner warn",
+      "Couldn't reach the live database — the tracker still works, but edits stay on this device only. Make sure the page is opened from its web link and you're online."));
+    else if(connMode==="offline") view.appendChild(el("div","banner warn",
+      "You're offline. Your edits are saved and will sync automatically once the connection returns."));
+
+    view.appendChild(weekStrip());
 
     var content;
-    if (currentTab === "overview") content = viewOverview();
-    else if (currentTab === "tasks") content = viewTasks();
-    else if (currentTab === "plan") content = viewPlan();
-    else if (currentTab === "bom") content = viewBOM();
-    else if (currentTab === "team") content = viewTeam();
-    else if (currentTab === "map") content = viewMap();
-    else content = viewTimeline();
+    if(currentTab==="overview") content=viewOverview();
+    else if(currentTab==="tasks") content=viewTasks();
+    else if(currentTab==="plan") content=viewPlan();
+    else if(currentTab==="bom") content=viewBOM();
+    else if(currentTab==="team") content=viewTeam();
+    else if(currentTab==="map") content=viewMap();
+    else content=viewTimeline();
     view.appendChild(content);
 
-    document.querySelectorAll(".tab").forEach(function (t) {
-      t.classList.toggle("on", t.getAttribute("data-id") === currentTab);
+    document.querySelectorAll(".tab").forEach(function(t){
+      t.classList.toggle("on",t.getAttribute("data-id")===currentTab);
     });
   }
+  function remoteRender(){ if(mmDragging||editor) return; render(); }
 
-  function buildChrome() {
-    var tabsEl = document.getElementById("tabs");
-    tabsEl.innerHTML = "";
-    TABS.forEach(function (t) {
-      var b = el("div", "tab", t.label);
-      b.setAttribute("data-id", t.id);
-      b.onclick = function () { currentTab = t.id; render(); };
+  function buildChrome(){
+    var tabsEl=document.getElementById("tabs");
+    tabsEl.innerHTML="";
+    TABS.forEach(function(t){
+      var b=el("div","tab",t.label);
+      b.setAttribute("data-id",t.id);
+      b.onclick=function(){ if(currentTab!==t.id){ editor=null; } currentTab=t.id; render(); };
       tabsEl.appendChild(b);
     });
-    var us = document.getElementById("userSel");
-    us.innerHTML = '<option value="">— pick your name —</option>';
-    MEMBERS.filter(function (m) { return m.id !== "all"; }).forEach(function (m) {
-      us.innerHTML += '<option value="' + m.id + '">' + m.name + '</option>';
-    });
-    us.onchange = function () { currentUser = us.value; };
-    var wd = document.getElementById("weekDisp");
-    if (wd) wd.textContent = "Week " + data.week + " / 14";
+    var uc=document.getElementById("userCtl");
+    if(uc) uc.onclick=showGate;
+    updateUserDisp();
   }
 
-  function firstPaint() {
-    if (firstRender) return;
-    firstRender = true;
+  function firstPaint(){
+    if(firstRender) return;
+    firstRender=true;
     buildChrome();
     render();
     updateStatus();
+    if(!currentUser) showGate();
   }
 
   // ===================== CONNECT =====================
-  function connect() {
+  function connect(){
+    currentUser=loadUser();
     Promise.all([
-      import(FB_BASE + "firebase-app.js"),
-      import(FB_BASE + "firebase-database.js")
-    ]).then(function (mods) {
-      var appMod = mods[0];
-      fb = mods[1];
-      var app = appMod.initializeApp({ databaseURL: DB_URL });
-      db = fb.getDatabase(app);
-
-      fb.onValue(fb.ref(db, "tracker"), function (snap) {
-        var needsSeed = applySnapshot(snap.val());
-        if (needsSeed && fbReady() && !mmSeedSent) { mmSeedSent = true; seedMindmap(); }
-        if (!firstRender) firstPaint();
-        else if (!mmDragging) render();
-      }, function () { connMode = "failed"; firstPaint(); });
-
-      fb.onValue(fb.ref(db, ".info/connected"), function (snap) {
-        connMode = snap.val() ? "live" : "offline";
+      import(FB_BASE+"firebase-app.js"),
+      import(FB_BASE+"firebase-database.js")
+    ]).then(function(mods){
+      fb=mods[1];
+      var app=mods[0].initializeApp({databaseURL:DB_URL});
+      db=fb.getDatabase(app);
+      fb.onValue(fb.ref(db,"tracker"),function(snap){
+        applySnapshot(snap.val());
+        if(!firstRender) firstPaint();
+        else remoteRender();
+        maybeSeed();
+      },function(){ connMode="failed"; firstPaint(); });
+      fb.onValue(fb.ref(db,".info/connected"),function(snap){
+        connMode=snap.val()?"live":"offline";
         updateStatus();
-        if (connMode === "offline" && !firstRender) { applySnapshot(null); firstPaint(); }
+        if(connMode==="offline"&&!firstRender){ applySnapshot(null); firstPaint(); }
       });
-    }).catch(function () {
-      connMode = "failed";
-      applySnapshot(null);
-      firstPaint();
+    }).catch(function(){
+      connMode="failed"; applySnapshot(null); firstPaint();
     });
-
-    setTimeout(function () {
-      if (!firstRender) {
-        if (connMode === "connecting") connMode = "failed";
-        applySnapshot(null);
-        firstPaint();
-      }
-    }, 9000);
+    setTimeout(function(){
+      if(!firstRender){ if(connMode==="connecting")connMode="failed"; applySnapshot(null); firstPaint(); }
+    },9000);
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", connect);
-  } else {
-    connect();
-  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",connect);
+  else connect();
 })();
 </script>
 </body>
