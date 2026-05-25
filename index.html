@@ -63,6 +63,7 @@
   .card h3 { font-family: var(--display); font-weight: 700; font-size: 15px; margin-bottom: 3px; }
   .card .hint { font-size: 11.5px; color: var(--muted); }
   .section-label { font-family: var(--display); font-weight: 800; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: var(--coral); margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label:first-child { margin-top: 4px; }
   .section-label::after { content: ''; flex: 1; height: 1.5px; background: var(--line); }
 
   .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
@@ -93,6 +94,7 @@
   .idea-add input:focus { border-color: var(--coral); }
   .btn { font-family: var(--display); font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 9px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; transition: transform .1s; }
   .btn:hover { transform: translateY(-1px); }
+  .btn.sm { padding: 6px 12px; font-size: 12px; }
   .idea { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; margin-bottom: 7px; background: var(--card); }
   .idea .bullet { color: var(--coral); font-weight: 800; }
   .idea .txt { flex: 1; font-size: 13px; }
@@ -119,6 +121,34 @@
   .task textarea:focus { border-color: var(--coral); }
   .task .updby { font-size: 10px; color: var(--muted); margin-top: 5px; }
 
+  /* Plan tab */
+  .action { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--card); margin-bottom: 8px; }
+  .action input[type=checkbox] { width: 19px; height: 19px; accent-color: var(--teal); cursor: pointer; margin-top: 1px; flex-shrink: 0; }
+  .action .atext { flex: 1; font-size: 13px; font-weight: 600; }
+  .action.done .atext { text-decoration: line-through; color: var(--muted); }
+  .decision { background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 15px; margin-bottom: 10px; border-left: 5px solid var(--amber); }
+  .decision.resolved { border-left-color: var(--teal); }
+  .decision .dhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .decision .dtitle { font-family: var(--display); font-weight: 700; font-size: 14px; flex: 1 1 200px; }
+  .decision .dctx { font-size: 12px; color: var(--muted); margin: 8px 0; line-height: 1.5; }
+  .decision textarea { width: 100%; font-family: var(--body); font-size: 12.5px; padding: 9px 11px; border: 1.5px solid var(--line); border-radius: 8px; resize: vertical; min-height: 46px; outline: none; }
+  .decision textarea:focus { border-color: var(--coral); }
+  .pill-btn { font-family: var(--display); font-weight: 700; font-size: 11px; padding: 5px 12px; border-radius: 999px; border: 1.5px solid; cursor: pointer; white-space: nowrap; }
+  .pill-btn.open { background: #fff3df; border-color: var(--amber); color: #9a6510; }
+  .pill-btn.resolved { background: var(--teal-soft); border-color: var(--teal); color: var(--teal); }
+
+  /* BOM tab */
+  .bom-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .bom-table th { font-family: var(--display); font-weight: 700; font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 8px; border-bottom: 2px solid var(--line); }
+  .bom-table td { padding: 8px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .bom-table tr.bought td { background: #f3faf8; }
+  .bom-table .sub { font-family: var(--display); font-weight: 800; font-size: 11px; color: var(--coral); text-transform: uppercase; letter-spacing: .04em; }
+  .bom-table input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--teal); cursor: pointer; }
+  .bom-table input.actual { width: 72px; font-family: var(--body); font-size: 12px; padding: 4px 6px; border: 1.5px solid var(--line); border-radius: 6px; outline: none; }
+  .bom-table input.actual:focus { border-color: var(--coral); }
+  .bom-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bom-wrap { overflow-x: auto; }
+
   .member { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px; }
   .member-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
   .avatar { width: 42px; height: 42px; border-radius: 11px; background: var(--ink); color: var(--paper); font-family: var(--display); font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; }
@@ -133,15 +163,26 @@
   .mtask .mt-name { flex: 1; }
   .mtask .mt-st { font-size: 10px; color: var(--muted); font-weight: 700; }
 
-  .map-wrap { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 8px; overflow-x: auto; }
-  .map-wrap svg { display: block; min-width: 760px; width: 100%; height: auto; }
-  .map-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; }
-  .map-legend span { font-size: 11.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-  .map-legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  /* Mind map */
+  .mm-scroll { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; overflow: auto; max-height: 660px; }
+  .mm-canvas { position: relative; width: 1600px; height: 1040px; }
+  .mm-canvas svg.conns { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .mm-node { position: absolute; width: 152px; min-height: 46px; border-radius: 11px; padding: 9px 30px 9px 11px;
+             font-size: 11.5px; font-weight: 600; cursor: grab; user-select: none; -webkit-user-select: none;
+             box-shadow: 0 2px 7px rgba(0,0,0,.13); display: flex; align-items: center; line-height: 1.3; }
+  .mm-node.dragging { cursor: grabbing; z-index: 60; box-shadow: 0 7px 18px rgba(0,0,0,.25); }
+  .mm-node.center { font-family: var(--display); font-weight: 800; font-size: 13px; }
+  .mm-btns { position: absolute; top: 3px; right: 3px; display: flex; gap: 3px; }
+  .mm-btn { width: 18px; height: 18px; border-radius: 5px; border: none; font-size: 12px; font-weight: 800;
+            cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,.85); color: #444; }
+  .mm-btn:hover { background: #fff; }
+  .mm-btn.del:hover { color: var(--coral); }
 
   .loading { text-align: center; padding: 80px 20px; color: var(--muted); font-family: var(--display); font-weight: 600; }
   .banner { border-radius: 11px; padding: 11px 14px; margin-bottom: 16px; font-size: 12.5px; font-weight: 600; line-height: 1.45; }
   .banner.warn { background: #fff3df; border: 1.5px solid var(--amber); color: #9a6510; }
+  .banner.info { background: var(--teal-soft); border: 1.5px solid var(--teal); color: #0f6f6a; }
 
   @media (max-width: 560px) {
     .controls { width: 100%; }
@@ -177,11 +218,10 @@
 (function () {
   "use strict";
 
-  // ===== Firebase database URL (from your Firebase console) =====
   var DB_URL = "https://gdp-avalon-default-rtdb.asia-southeast1.firebasedatabase.app";
   var FB_BASE = "https://www.gstatic.com/firebasejs/10.12.0/";
 
-  // ---------- Static reference data ----------
+  // ===================== STATIC REFERENCE DATA =====================
   var MEMBERS = [
     { id: "lee", name: "Lee Ming Huei", role: "Vision & Documentation Lead", short: "Lee" },
     { id: "jon", name: "Jonathan Aliwarga", role: "Navigation & Architecture", short: "Jon" },
@@ -242,22 +282,49 @@
     { wk: 14, name: "Poster Presentation",   meta: "Project showcase & submission" }
   ];
 
-  var MAP = {
-    branches: [
-      { name: "Mobility & Navigation", color: "#3f7bd6",
-        leaves: ["Differential drive", "Ultrasonic obstacle avoidance", "Wi-Fi RSSI localisation", "Patient-following logic"] },
-      { name: "Lifting Mechanism", color: "#2f9e54",
-        leaves: ["Scissor-lift actuator", "Pill dispenser delivery", "Water cup delivery", "Load & accuracy testing"] },
-      { name: "AI & Vision", color: "#7a55c9",
-        leaves: ["Fall detection (CV)", "Face recognition", "IMU sensor fusion", "Voice command engine"] },
-      { name: "Alerts & Dashboard", color: "#e9962f",
-        leaves: ["Emergency SMS / app alert", "Caregiver web dashboard", "Medication adherence log", "Activity & event history"] },
-      { name: "Power System", color: "#1aa7a0",
-        leaves: ["Battery sizing (8h runtime)", "Voltage regulation", "Auto-docking", "Low-power standby"] },
-      { name: "Project & Docs", color: "#f0432b",
-        leaves: ["Bill of Materials (<RM1000)", "Technical drawings", "EAC documentation", "Testing & evaluation"] }
-    ]
-  };
+  // Immediate actions — the "what must be done now" checklist
+  var ACTIONS = [
+    { id: "a1", text: "Complete the Bill of Materials — itemised, with RM prices", owner: "lee" },
+    { id: "a2", text: "Power budget calculation — size the battery and verify the 8-hour runtime claim", owner: "murt" },
+    { id: "a3", text: "Refined hardware / electrical block diagram (what connects to what)", owner: "jon" },
+    { id: "a4", text: "Technical drawings — lift mechanism CAD / dimensioned sketch", owner: "ali" },
+    { id: "a5", text: "Procurement — order long-lead components once the BOM is locked", owner: "murt" }
+  ];
+
+  // Open design decisions that still need resolving
+  var DECISIONS = [
+    { id: "d1", title: "Patient-following & localisation method",
+      ctx: "The Word doc says a GPS watch; the proposal says Wi-Fi RSSI. Wi-Fi RSSI indoor localisation is unreliable — room-level accuracy at best. Likely resolution: camera-based person-following for actually trailing the patient, with Wi-Fi RSSI used only for coarse room-level location." },
+    { id: "d2", title: "Lift actuation method",
+      ctx: "12V linear actuator (~RM130) vs a servo-driven scissor linkage (~RM35). The payload (a pill bottle plus a cup of water) is light — about 0.3 to 0.5 kg — so a servo linkage is likely sufficient and saves roughly RM95." },
+    { id: "d3", title: "Dedicated touchscreen vs dashboard-only",
+      ctx: "The concept art shows an onboard touch display (~RM60+). It may be droppable — a small OLED for status plus the caregiver web dashboard could cover the same need at lower cost." }
+  ];
+
+  // Bill of Materials — estimated Malaysian retail prices (verify at purchase)
+  var BOM = [
+    { id: "b1",  grp: "Compute & AI",        item: "Raspberry Pi 4 (4GB)",                       qty: 1, unit: 300 },
+    { id: "b2",  grp: "Compute & AI",        item: "MicroSD card 32GB",                          qty: 1, unit: 25 },
+    { id: "b3",  grp: "Compute & AI",        item: "USB camera (1080p webcam)",                  qty: 1, unit: 55 },
+    { id: "b4",  grp: "Control & Mobility",  item: "ESP32 dev board (motor / sensor control)",   qty: 1, unit: 30 },
+    { id: "b5",  grp: "Control & Mobility",  item: "4WD chassis + TT motors + wheels",           qty: 1, unit: 80 },
+    { id: "b6",  grp: "Control & Mobility",  item: "Motor driver set (L298N x2 / dual H-bridge)",qty: 1, unit: 25 },
+    { id: "b7",  grp: "Lifting Mechanism",   item: "12V linear actuator (100–150mm stroke)",     qty: 1, unit: 130 },
+    { id: "b8",  grp: "Lifting Mechanism",   item: "Lift platform, brackets, hardware",          qty: 1, unit: 55 },
+    { id: "b9",  grp: "Sensors",             item: "Ultrasonic sensor HC-SR04",                  qty: 5, unit: 6 },
+    { id: "b10", grp: "Sensors",             item: "IMU module (MPU6050)",                       qty: 1, unit: 13 },
+    { id: "b11", grp: "Sensors",             item: "IR cliff sensor",                            qty: 3, unit: 4 },
+    { id: "b12", grp: "Interaction",         item: "USB speaker",                                qty: 1, unit: 20 },
+    { id: "b13", grp: "Interaction",         item: "USB microphone",                             qty: 1, unit: 22 },
+    { id: "b14", grp: "Interaction",         item: "3.5\" touchscreen (optional)",               qty: 1, unit: 60 },
+    { id: "b15", grp: "Power",               item: "Battery pack (3S Li-ion, ~5000mAh)",         qty: 1, unit: 110 },
+    { id: "b16", grp: "Power",               item: "Buck converter (12V → 5V)",                  qty: 2, unit: 9 },
+    { id: "b17", grp: "Power",               item: "Charger module + balance charger",           qty: 1, unit: 40 },
+    { id: "b18", grp: "Power",               item: "Switch, fuse, wiring loom",                  qty: 1, unit: 30 },
+    { id: "b19", grp: "Fabrication & Misc",  item: "3D printing filament (1kg PLA)",             qty: 1, unit: 55 },
+    { id: "b20", grp: "Fabrication & Misc",  item: "Pill dispenser parts + servo",               qty: 1, unit: 30 },
+    { id: "b21", grp: "Fabrication & Misc",  item: "Jumper wires, perfboard, standoffs, connectors", qty: 1, unit: 40 }
+  ];
 
   var STATUS = {
     todo:    { label: "Not started", color: "#b4aaa0" },
@@ -269,21 +336,55 @@
   var TABS = [
     { id: "overview", label: "Overview" },
     { id: "tasks",    label: "Tasks" },
+    { id: "plan",     label: "Plan" },
+    { id: "bom",      label: "BOM" },
     { id: "team",     label: "Team" },
     { id: "map",      label: "Mind Map" },
     { id: "timeline", label: "Timeline" }
   ];
 
-  // ---------- State ----------
-  var data = { tasks: [], ideas: [], week: 1 };
+  // Default mind map (fixed IDs so concurrent seeding is harmless)
+  function defaultMindmap() {
+    var mm = {};
+    var cx = 800, cy = 510;
+    mm.c0 = { text: "AI Companion Robot", x: cx, y: cy, parent: null, color: "#1f1b18", kind: "center" };
+    var branches = [
+      { n: "Mobility & Navigation", c: "#3f7bd6", leaves: ["Differential drive", "Ultrasonic obstacle avoidance", "Wi-Fi RSSI localisation", "Patient-following logic"] },
+      { n: "Lifting Mechanism", c: "#2f9e54", leaves: ["Scissor-lift / actuator", "Pill dispenser delivery", "Water cup delivery", "Load & accuracy testing"] },
+      { n: "AI & Vision", c: "#7a55c9", leaves: ["Fall detection (CV)", "Face recognition", "IMU sensor fusion", "Voice command engine"] },
+      { n: "Alerts & Dashboard", c: "#e9962f", leaves: ["Emergency SMS / app alert", "Caregiver web dashboard", "Medication adherence log", "Activity & event history"] },
+      { n: "Power System", c: "#1aa7a0", leaves: ["Battery sizing (8h runtime)", "Voltage regulation", "Auto-docking", "Low-power standby"] },
+      { n: "Project & Docs", c: "#f0432b", leaves: ["Bill of Materials", "Technical drawings", "EAC documentation", "Testing & evaluation"] }
+    ];
+    var N = branches.length;
+    branches.forEach(function (b, i) {
+      var ang = (i / N) * 2 * Math.PI - Math.PI / 2;
+      var bx = cx + Math.cos(ang) * 300;
+      var by = cy + Math.sin(ang) * 235;
+      var bid = "b" + i;
+      mm[bid] = { text: b.n, x: Math.round(bx), y: Math.round(by), parent: "c0", color: b.c, kind: "branch" };
+      b.leaves.forEach(function (leaf, j) {
+        var la = ang + (j - (b.leaves.length - 1) / 2) * 0.55;
+        var lx = bx + Math.cos(la) * 215;
+        var ly = by + Math.sin(la) * 175;
+        mm[bid + "l" + j] = { text: leaf, x: Math.round(lx), y: Math.round(ly), parent: bid, color: b.c, kind: "leaf" };
+      });
+    });
+    return mm;
+  }
+
+  // ===================== STATE =====================
+  var data = { tasks: [], ideas: [], week: 1, actions: [], decisions: [], bom: [], mindmap: null };
   var currentUser = "";
   var currentTab = "overview";
   var firstRender = false;
-  var connMode = "connecting";   // connecting | live | offline | failed
-  var fb = null;                 // firebase database module
-  var db = null;                 // database instance
+  var connMode = "connecting";
+  var fb = null, db = null;
+  var mmSeedSent = false;
+  var mmDragging = false;
+  var mmSvg = null;
 
-  // ---------- Helpers ----------
+  // ===================== HELPERS =====================
   function el(tag, cls, html) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -308,25 +409,52 @@
   function esc(s) { return (s || "").replace(/[&<>"]/g, function (c) {
     return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function whoami() { return currentUser ? memberName(currentUser) : "someone"; }
+  function uid(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
-  // ---------- Build local data from a Firebase snapshot ----------
+  // ===================== SNAPSHOT -> LOCAL DATA =====================
   function buildTasks(stateMap) {
     stateMap = stateMap || {};
     return DEFAULT_TASKS.map(function (d) {
       var s = stateMap[d.id] || {};
-      return {
-        id: d.id, ph: d.ph, name: d.name, owner: d.owner, sw: d.sw, ew: d.ew,
-        status: s.status || "todo",
-        progress: typeof s.progress === "number" ? s.progress : 0,
-        notes: s.notes || "",
-        updby: s.updby || ""
-      };
+      return { id: d.id, ph: d.ph, name: d.name, owner: d.owner, sw: d.sw, ew: d.ew,
+               status: s.status || "todo",
+               progress: typeof s.progress === "number" ? s.progress : 0,
+               notes: s.notes || "", updby: s.updby || "" };
+    });
+  }
+  function buildActions(stateMap) {
+    stateMap = stateMap || {};
+    return ACTIONS.map(function (a) {
+      var s = stateMap[a.id] || {};
+      return { id: a.id, text: a.text, owner: a.owner, done: !!s.done, updby: s.updby || "" };
+    });
+  }
+  function buildDecisions(stateMap) {
+    stateMap = stateMap || {};
+    return DECISIONS.map(function (d) {
+      var s = stateMap[d.id] || {};
+      return { id: d.id, title: d.title, ctx: d.ctx,
+               status: s.status === "resolved" ? "resolved" : "open",
+               resolution: s.resolution || "", updby: s.updby || "" };
+    });
+  }
+  function buildBom(stateMap) {
+    stateMap = stateMap || {};
+    return BOM.map(function (b) {
+      var s = stateMap[b.id] || {};
+      return { id: b.id, grp: b.grp, item: b.item, qty: b.qty, unit: b.unit,
+               bought: !!s.bought,
+               actual: typeof s.actual === "number" ? s.actual : null,
+               updby: s.updby || "" };
     });
   }
   function applySnapshot(val) {
     val = val || {};
     data.week = typeof val.week === "number" ? val.week : 1;
     data.tasks = buildTasks(val.tasks);
+    data.actions = buildActions(val.actions);
+    data.decisions = buildDecisions(val.decisions);
+    data.bom = buildBom(val.bom);
     var ideas = [];
     var io = val.ideas || {};
     Object.keys(io).forEach(function (k) {
@@ -335,21 +463,32 @@
     });
     ideas.sort(function (a, b) { return b.at - a.at; });
     data.ideas = ideas;
+    data.mindmap = (val.mindmap && Object.keys(val.mindmap).length) ? val.mindmap : defaultMindmap();
+    return !(val.mindmap && Object.keys(val.mindmap).length); // true => needs seeding
   }
 
-  // ---------- Writes ----------
+  // ===================== WRITES =====================
   function fbReady() { return !!(fb && db); }
   function writeTask(t) {
     if (!fbReady()) return;
-    fb.set(fb.ref(db, "tracker/tasks/" + t.id), {
-      status: t.status, progress: t.progress, notes: t.notes, updby: t.updby
-    });
+    fb.set(fb.ref(db, "tracker/tasks/" + t.id), { status: t.status, progress: t.progress, notes: t.notes, updby: t.updby });
   }
   function writeWeek(w) { if (fbReady()) fb.set(fb.ref(db, "tracker/week"), w); }
   function writeIdea(key, obj) { if (fbReady()) fb.set(fb.ref(db, "tracker/ideas/" + key), obj); }
   function deleteIdea(key) { if (fbReady()) fb.remove(fb.ref(db, "tracker/ideas/" + key)); }
+  function writeAction(a) { if (fbReady()) fb.set(fb.ref(db, "tracker/actions/" + a.id), { done: a.done, updby: a.updby }); }
+  function writeDecision(d) { if (fbReady()) fb.set(fb.ref(db, "tracker/decisions/" + d.id), { status: d.status, resolution: d.resolution, updby: d.updby }); }
+  function writeBom(b) { if (fbReady()) fb.set(fb.ref(db, "tracker/bom/" + b.id), { bought: b.bought, actual: b.actual, updby: b.updby }); }
+  function writeMindNode(id, n) { if (fbReady()) fb.set(fb.ref(db, "tracker/mindmap/" + id), n); }
+  function writeMindRemoval(ids) {
+    if (!fbReady()) return;
+    var patch = {};
+    ids.forEach(function (i) { patch[i] = null; });
+    fb.update(fb.ref(db, "tracker/mindmap"), patch);
+  }
+  function seedMindmap() { if (fbReady()) fb.set(fb.ref(db, "tracker/mindmap"), data.mindmap); }
 
-  // ---------- Status chip ----------
+  // ===================== STATUS CHIP =====================
   function updateStatus() {
     var dot = document.getElementById("saveDot");
     var txt = document.getElementById("saveTxt");
@@ -360,7 +499,6 @@
     else                            { dot.className = "dot saving";txt.textContent = "Connecting…"; }
   }
 
-  // ---------- Ring ----------
   function ring(pct, color) {
     var r = 38, c = 2 * Math.PI * r, off = c * (1 - pct / 100);
     return '<div class="ring"><svg width="92" height="92" viewBox="0 0 92 92">' +
@@ -370,7 +508,7 @@
       '</svg><div class="pct">' + pct + '%</div></div>';
   }
 
-  // ---------- Views ----------
+  // ===================== VIEW: OVERVIEW =====================
   function viewOverview() {
     var wrap = el("div");
     var done = data.tasks.filter(function (t) { return t.status === "done"; }).length;
@@ -401,8 +539,7 @@
       var d = el("div", "milestone");
       var cls = m.wk < data.week ? "past" : (m.wk === data.week ? "now" : "");
       var diff = m.wk - data.week;
-      var cd = diff > 0 ? (diff + " week" + (diff > 1 ? "s" : "") + " away")
-              : diff === 0 ? "This week" : "Passed";
+      var cd = diff > 0 ? (diff + " week" + (diff > 1 ? "s" : "") + " away") : diff === 0 ? "This week" : "Passed";
       d.innerHTML = '<div class="wk ' + cls + '">W' + m.wk + '</div>' +
         '<div><div class="mname">' + m.name + '</div><div class="mmeta">' + m.meta + '</div></div>' +
         '<div class="countdown">' + cd + '</div>';
@@ -411,9 +548,7 @@
     wrap.appendChild(mwrap);
 
     wrap.appendChild(el("div", "section-label", "Active this week (W" + data.week + ")"));
-    var nowTasks = data.tasks.filter(function (t) {
-      return t.sw <= data.week && t.ew >= data.week && t.status !== "done";
-    });
+    var nowTasks = data.tasks.filter(function (t) { return t.sw <= data.week && t.ew >= data.week && t.status !== "done"; });
     var nowCard = el("div", "card");
     if (!nowTasks.length) {
       nowCard.innerHTML = '<div class="hint">No open tasks scheduled for week ' + data.week + '. Adjust the project week selector at the top right.</div>';
@@ -453,17 +588,17 @@
     setTimeout(function () {
       var inp = document.getElementById("ideaInput");
       var btn = document.getElementById("ideaBtn");
-      function add() {
+      function addIt() {
         var v = inp.value.trim();
         if (!v) return;
-        var key = "k" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        var key = uid("k");
         var obj = { text: v, by: whoami(), at: Date.now() };
         data.ideas.unshift({ key: key, text: obj.text, by: obj.by, at: obj.at });
         render();
         writeIdea(key, obj);
       }
-      if (btn) btn.onclick = add;
-      if (inp) inp.onkeydown = function (e) { if (e.key === "Enter") add(); };
+      if (btn) btn.onclick = addIt;
+      if (inp) inp.onkeydown = function (e) { if (e.key === "Enter") addIt(); };
       list.querySelectorAll(".x").forEach(function (x) {
         x.onclick = function () {
           var key = x.getAttribute("data-key");
@@ -473,10 +608,10 @@
         };
       });
     }, 0);
-
     return wrap;
   }
 
+  // ===================== VIEW: TASKS =====================
   function viewTasks() {
     var wrap = el("div");
     PHASES.forEach(function (p) {
@@ -518,9 +653,7 @@
           if (t.status === "done") t.progress = 100;
           else if (t.status === "todo") t.progress = 0;
           else if (t.progress === 0 || t.progress === 100) t.progress = 25;
-          t.updby = whoami();
-          render();
-          writeTask(t);
+          t.updby = whoami(); render(); writeTask(t);
         };
         rng.oninput = function () { pv.textContent = rng.value + "%"; };
         rng.onchange = function () {
@@ -528,21 +661,131 @@
           if (t.progress === 100) t.status = "done";
           else if (t.progress === 0) t.status = "todo";
           else if (t.status === "todo" || t.status === "done") t.status = "active";
-          t.updby = whoami();
-          render();
-          writeTask(t);
+          t.updby = whoami(); render(); writeTask(t);
         };
-        ta.onchange = function () {
-          t.notes = ta.value;
-          t.updby = whoami();
-          writeTask(t);
-        };
+        ta.onchange = function () { t.notes = ta.value; t.updby = whoami(); writeTask(t); };
         wrap.appendChild(card);
       });
     });
     return wrap;
   }
 
+  // ===================== VIEW: PLAN =====================
+  function viewPlan() {
+    var wrap = el("div");
+
+    wrap.appendChild(el("div", "section-label", "Immediate actions — finish the planning phase"));
+    var doneN = data.actions.filter(function (a) { return a.done; }).length;
+    wrap.appendChild(el("div", "banner info", doneN + " of " + data.actions.length +
+      " planning actions complete. These close out the Planning &amp; Design phase before the build can start."));
+    data.actions.forEach(function (a) {
+      var row = el("div", "action" + (a.done ? " done" : ""));
+      row.innerHTML =
+        '<input type="checkbox"' + (a.done ? " checked" : "") + ' />' +
+        '<div class="atext">' + esc(a.text) +
+          (a.updby ? ' <span style="font-weight:500;color:var(--muted);font-size:11px">· ' + esc(a.updby) + '</span>' : '') +
+        '</div>' +
+        '<span class="badge own">' + memberName(a.owner) + '</span>';
+      var cb = row.querySelector("input");
+      cb.onchange = function () {
+        a.done = cb.checked; a.updby = whoami(); render(); writeAction(a);
+      };
+      wrap.appendChild(row);
+    });
+
+    wrap.appendChild(el("div", "section-label", "Open design decisions"));
+    wrap.appendChild(el("div", "banner warn",
+      "These are unresolved choices that affect cost and feasibility. Discuss as a team, then mark resolved and record the decision."));
+    data.decisions.forEach(function (d) {
+      var card = el("div", "decision" + (d.status === "resolved" ? " resolved" : ""));
+      var head = el("div", "dhead");
+      head.innerHTML = '<span class="dtitle">' + esc(d.title) + '</span>' +
+        '<button class="pill-btn ' + d.status + '">' + (d.status === "resolved" ? "Resolved" : "Open") + '</button>';
+      card.appendChild(head);
+      card.appendChild(el("div", "dctx", esc(d.ctx)));
+      var ta = el("textarea");
+      ta.placeholder = "Team's decision / resolution…";
+      ta.value = d.resolution;
+      card.appendChild(ta);
+      if (d.updby) card.appendChild(el("div", "updby", "Last updated by " + esc(d.updby)));
+
+      head.querySelector(".pill-btn").onclick = function () {
+        d.status = d.status === "resolved" ? "open" : "resolved";
+        d.updby = whoami(); render(); writeDecision(d);
+      };
+      ta.onchange = function () { d.resolution = ta.value; d.updby = whoami(); writeDecision(d); };
+      wrap.appendChild(card);
+    });
+    return wrap;
+  }
+
+  // ===================== VIEW: BOM =====================
+  function viewBOM() {
+    var wrap = el("div");
+    var estTotal = data.bom.reduce(function (s, b) { return s + b.unit * b.qty; }, 0);
+    var spent = data.bom.reduce(function (s, b) {
+      if (!b.bought) return s;
+      return s + (b.actual != null ? b.actual : b.unit * b.qty);
+    }, 0);
+    var boughtN = data.bom.filter(function (b) { return b.bought; }).length;
+
+    var sr = el("div", "stat-row");
+    sr.appendChild(el("div", "stat accent", '<div class="num">RM ' + estTotal + '</div><div class="lab">Estimated total</div>'));
+    sr.appendChild(el("div", "stat", '<div class="num">RM ' + spent + '</div><div class="lab">Spent so far</div>'));
+    sr.appendChild(el("div", "stat", '<div class="num">' + boughtN + '<span style="font-size:18px;color:var(--muted)">/' + data.bom.length + '</span></div><div class="lab">Items bought</div>'));
+    sr.appendChild(el("div", "stat", '<div class="num" style="color:' + (estTotal > 1000 ? "var(--coral)" : "var(--teal)") + '">RM ' + (estTotal - 1000) + '</div><div class="lab">vs RM1000 target</div>'));
+    wrap.appendChild(sr);
+
+    wrap.appendChild(el("div", "banner warn",
+      "Prices are estimated Malaysian retail figures — confirm at purchase. As specced this build is about RM" + estTotal +
+      "; a servo lift instead of a linear actuator, dropping the touchscreen, or a 2GB Pi each shave the cost toward the RM1000 target."));
+
+    var bwrap = el("div", "bom-wrap");
+    var table = el("table", "bom-table");
+    table.innerHTML = '<thead><tr>' +
+      '<th>Item</th><th class="num">Qty</th><th class="num">Est. RM</th>' +
+      '<th>Bought</th><th>Actual RM</th></tr></thead>';
+    var tbody = el("tbody");
+    var lastGrp = "";
+    data.bom.forEach(function (b) {
+      if (b.grp !== lastGrp) {
+        lastGrp = b.grp;
+        var gr = el("tr");
+        gr.innerHTML = '<td colspan="5" class="sub">' + esc(b.grp) + '</td>';
+        tbody.appendChild(gr);
+      }
+      var tr = el("tr", b.bought ? "bought" : "");
+      tr.innerHTML =
+        '<td>' + esc(b.item) + '</td>' +
+        '<td class="num">' + b.qty + '</td>' +
+        '<td class="num">' + (b.unit * b.qty) + '</td>' +
+        '<td><input type="checkbox"' + (b.bought ? " checked" : "") + '></td>' +
+        '<td><input class="actual" type="number" min="0" placeholder="—" value="' + (b.actual != null ? b.actual : "") + '"></td>';
+      var cb = tr.querySelector('input[type=checkbox]');
+      var ac = tr.querySelector('input.actual');
+      cb.onchange = function () { b.bought = cb.checked; b.updby = whoami(); render(); writeBom(b); };
+      ac.onchange = function () {
+        var v = ac.value.trim();
+        b.actual = v === "" ? null : Math.max(0, parseFloat(v) || 0);
+        b.updby = whoami(); writeBom(b);
+      };
+      tbody.appendChild(tr);
+    });
+    var foot = el("tr");
+    foot.innerHTML = '<td colspan="2" style="font-weight:800;font-family:var(--display)">TOTAL</td>' +
+      '<td class="num" style="font-weight:800;font-family:var(--display)">' + estTotal + '</td>' +
+      '<td></td><td class="num" style="font-weight:800;font-family:var(--display)">' + spent + '</td>';
+    tbody.appendChild(foot);
+    table.appendChild(tbody);
+    bwrap.appendChild(table);
+    var card = el("div", "card");
+    card.style.padding = "10px";
+    card.appendChild(bwrap);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  // ===================== VIEW: TEAM =====================
   function viewTeam() {
     var wrap = el("div", "grid");
     wrap.style.gridTemplateColumns = "repeat(auto-fit, minmax(290px, 1fr))";
@@ -550,9 +793,8 @@
       var ts = data.tasks.filter(function (t) { return t.owner === m.id; });
       var prog = memberProg(m.id);
       var card = el("div", "member");
-      var initials = m.short.slice(0, 2).toUpperCase();
       var head = '<div class="member-head">' +
-        '<div class="avatar">' + initials + '</div>' +
+        '<div class="avatar">' + m.short.slice(0, 2).toUpperCase() + '</div>' +
         '<div><div class="mn">' + m.name + '</div><div class="mr">' + m.role + '</div></div>' +
         '<div class="mp">' + prog + '%</div></div>' +
         '<div class="progbar"><div style="width:' + prog + '%"></div></div>';
@@ -560,13 +802,11 @@
       ts.forEach(function (t) {
         var st = STATUS[t.status];
         rows += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
-          '<span class="mt-name">' + esc(t.name) + '</span>' +
-          '<span class="mt-st">' + t.progress + '%</span></div>';
+          '<span class="mt-name">' + esc(t.name) + '</span><span class="mt-st">' + t.progress + '%</span></div>';
       });
       card.innerHTML = head + (rows || '<div class="hint">No solo-owned tasks.</div>');
       wrap.appendChild(card);
     });
-
     var shared = data.tasks.filter(function (t) { return t.owner === "all"; });
     var sc = el("div", "member");
     sc.style.gridColumn = "1 / -1";
@@ -585,94 +825,153 @@
     return wrap;
   }
 
+  // ===================== VIEW: MIND MAP (interactive) =====================
+  function drawConnectors() {
+    if (!mmSvg) return;
+    while (mmSvg.firstChild) mmSvg.removeChild(mmSvg.firstChild);
+    var ns = "http://www.w3.org/2000/svg";
+    var mm = data.mindmap;
+    Object.keys(mm).forEach(function (id) {
+      var n = mm[id];
+      if (!n.parent || !mm[n.parent]) return;
+      var p = mm[n.parent];
+      var path = document.createElementNS(ns, "path");
+      var mx = (p.x + n.x) / 2;
+      path.setAttribute("d", "M" + p.x + "," + p.y + " C" + mx + "," + p.y + " " + mx + "," + n.y + " " + n.x + "," + n.y);
+      path.setAttribute("stroke", n.color);
+      path.setAttribute("stroke-width", "2.4");
+      path.setAttribute("fill", "none");
+      path.setAttribute("opacity", "0.5");
+      mmSvg.appendChild(path);
+    });
+  }
+
   function viewMap() {
     var wrap = el("div");
-    var W = 1000, H = 620, cx = W / 2, cy = H / 2;
+    wrap.appendChild(el("div", "banner info",
+      "Interactive mind map — <strong>drag</strong> any node to move it, <strong>+</strong> adds a child idea, " +
+      "<strong>×</strong> deletes a node (and its children), and <strong>double-click</strong> renames it. Changes sync to the whole team."));
+
+    var scroll = el("div", "mm-scroll");
+    var canvas = el("div", "mm-canvas");
     var ns = "http://www.w3.org/2000/svg";
     var svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("class", "conns");
+    svg.setAttribute("viewBox", "0 0 1600 1040");
+    canvas.appendChild(svg);
+    mmSvg = svg;
 
-    function wrapText(s, max) {
-      if (s.length <= max) return s;
-      var words = s.split(" "), line = "", out = [];
-      words.forEach(function (w) {
-        if ((line + " " + w).trim().length > max) { out.push(line.trim()); line = w; }
-        else line += " " + w;
+    var mm = data.mindmap;
+    Object.keys(mm).forEach(function (id) {
+      var n = mm[id];
+      var node = el("div", "mm-node" + (n.kind === "center" ? " center" : ""));
+      node.setAttribute("data-id", id);
+      // styling by kind
+      if (n.kind === "leaf") {
+        node.style.background = "#fff";
+        node.style.color = "var(--ink)";
+        node.style.border = "2px solid " + n.color;
+      } else {
+        node.style.background = n.color;
+        node.style.color = "#fff";
+      }
+      node.style.left = (n.x - 76) + "px";
+      node.style.top = (n.y - 23) + "px";
+
+      var label = el("span");
+      label.textContent = n.text;
+      node.appendChild(label);
+
+      var btns = el("div", "mm-btns");
+      var addB = el("button", "mm-btn add", "+");
+      addB.title = "Add child idea";
+      btns.appendChild(addB);
+      if (n.kind !== "center") {
+        var delB = el("button", "mm-btn del", "\u00d7");
+        delB.title = "Delete this node";
+        btns.appendChild(delB);
+      }
+      node.appendChild(btns);
+
+      // add child
+      addB.onclick = function (ev) {
+        ev.stopPropagation();
+        var txt = window.prompt("New idea under \"" + n.text + "\":", "");
+        if (txt == null) return;
+        txt = txt.trim();
+        if (!txt) return;
+        var nid = uid("n");
+        var kind = n.kind === "center" ? "branch" : "leaf";
+        var child = { text: txt, x: n.x + 180, y: n.y + 70, parent: id, color: n.color, kind: kind };
+        data.mindmap[nid] = child;
+        render();
+        writeMindNode(nid, child);
+      };
+      // delete node + descendants
+      if (n.kind !== "center") {
+        node.querySelector(".del").onclick = function (ev) {
+          ev.stopPropagation();
+          if (!window.confirm("Delete \"" + n.text + "\" and everything under it?")) return;
+          var doomed = [id], queue = [id];
+          while (queue.length) {
+            var cur = queue.shift();
+            Object.keys(data.mindmap).forEach(function (k) {
+              if (data.mindmap[k].parent === cur && doomed.indexOf(k) < 0) { doomed.push(k); queue.push(k); }
+            });
+          }
+          doomed.forEach(function (k) { delete data.mindmap[k]; });
+          render();
+          writeMindRemoval(doomed);
+        };
+      }
+      // rename
+      node.ondblclick = function (ev) {
+        if (ev.target.closest(".mm-btn")) return;
+        var txt = window.prompt("Rename node:", n.text);
+        if (txt == null) return;
+        txt = txt.trim();
+        if (!txt) return;
+        n.text = txt;
+        render();
+        writeMindNode(id, n);
+      };
+      // drag to move
+      node.addEventListener("pointerdown", function (ev) {
+        if (ev.target.closest(".mm-btn")) return;
+        ev.preventDefault();
+        mmDragging = true;
+        node.classList.add("dragging");
+        var startX = ev.clientX, startY = ev.clientY;
+        var origX = n.x, origY = n.y;
+        function move(e) {
+          n.x = origX + (e.clientX - startX);
+          n.y = origY + (e.clientY - startY);
+          node.style.left = (n.x - 76) + "px";
+          node.style.top = (n.y - 23) + "px";
+          drawConnectors();
+        }
+        function up() {
+          window.removeEventListener("pointermove", move);
+          window.removeEventListener("pointerup", up);
+          node.classList.remove("dragging");
+          mmDragging = false;
+          n.x = Math.round(n.x); n.y = Math.round(n.y);
+          writeMindNode(id, n);
+        }
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", up);
       });
-      if (line.trim()) out.push(line.trim());
-      return out.join("\n");
-    }
-    function node(x, y, w, h, fill, stroke, text, fs, fw, tc) {
-      var g = document.createElementNS(ns, "g");
-      var rect = document.createElementNS(ns, "rect");
-      rect.setAttribute("x", x - w / 2); rect.setAttribute("y", y - h / 2);
-      rect.setAttribute("width", w); rect.setAttribute("height", h);
-      rect.setAttribute("rx", 11);
-      rect.setAttribute("fill", fill);
-      rect.setAttribute("stroke", stroke);
-      rect.setAttribute("stroke-width", "2");
-      g.appendChild(rect);
-      var lines = text.split("\n");
-      lines.forEach(function (ln, i) {
-        var tx = document.createElementNS(ns, "text");
-        tx.setAttribute("x", x);
-        tx.setAttribute("y", y + (i - (lines.length - 1) / 2) * (fs + 2) + fs / 3);
-        tx.setAttribute("text-anchor", "middle");
-        tx.setAttribute("font-family", "DM Sans, sans-serif");
-        tx.setAttribute("font-size", fs);
-        tx.setAttribute("font-weight", fw);
-        tx.setAttribute("fill", tc);
-        tx.textContent = ln;
-        g.appendChild(tx);
-      });
-      return g;
-    }
-    function curve(x1, y1, x2, y2, color) {
-      var p = document.createElementNS(ns, "path");
-      var mx = (x1 + x2) / 2;
-      p.setAttribute("d", "M" + x1 + "," + y1 + " C" + mx + "," + y1 + " " + mx + "," + y2 + " " + x2 + "," + y2);
-      p.setAttribute("fill", "none");
-      p.setAttribute("stroke", color);
-      p.setAttribute("stroke-width", "2.4");
-      return p;
-    }
 
-    var n = MAP.branches.length;
-    MAP.branches.forEach(function (b, i) {
-      var ang = (i / n) * 2 * Math.PI - Math.PI / 2;
-      var bx = cx + Math.cos(ang) * 235;
-      var by = cy + Math.sin(ang) * 190;
-      svg.appendChild(curve(cx, cy, bx, by, b.color));
-      b.leaves.forEach(function (leaf, j) {
-        var la = ang + (j - (b.leaves.length - 1) / 2) * (0.85 / b.leaves.length);
-        var ldist = 150;
-        var leafX = bx + Math.cos(la) * ldist;
-        var leafY = by + Math.sin(la) * (ldist * 0.62);
-        svg.appendChild(curve(bx, by, leafX, leafY, b.color + "99"));
-        svg.appendChild(node(leafX, leafY, 132, 38, "#fff", b.color + "55", wrapText(leaf, 18), 9.5, "500", "#3a342f"));
-      });
+      canvas.appendChild(node);
     });
-    MAP.branches.forEach(function (b, i) {
-      var ang = (i / n) * 2 * Math.PI - Math.PI / 2;
-      var bx = cx + Math.cos(ang) * 235;
-      var by = cy + Math.sin(ang) * 190;
-      svg.appendChild(node(bx, by, 156, 44, b.color, b.color, b.name, 12, "700", "#fff"));
-    });
-    svg.appendChild(node(cx, cy, 168, 70, "#1f1b18", "#1f1b18", "AI COMPANION\nROBOT", 15, "800", "#fbf6f0"));
 
-    var mw = el("div", "map-wrap");
-    mw.appendChild(svg);
-    wrap.appendChild(mw);
-
-    var lg = el("div", "map-legend");
-    MAP.branches.forEach(function (b) {
-      lg.appendChild(el("span", null, '<i style="background:' + b.color + '"></i>' + b.name));
-    });
-    wrap.appendChild(lg);
-    wrap.appendChild(el("div", "card", '<div class="hint">This map mirrors the six working subsystems of the robot. Use it to check that every branch has an owner and a matching task in the <strong>Tasks</strong> tab — if a leaf has no task, it is a gap.</div>'));
+    scroll.appendChild(canvas);
+    wrap.appendChild(scroll);
+    setTimeout(drawConnectors, 0);
     return wrap;
   }
 
+  // ===================== VIEW: TIMELINE =====================
   function viewTimeline() {
     var wrap = el("div");
     wrap.appendChild(el("div", "card", '<div class="hint">14-week schedule from the project Gantt chart. The boxed column marks the current project week. Coloured bars are phase-coded; opacity reflects status.</div>'));
@@ -716,22 +1015,28 @@
     wrap.appendChild(tl);
 
     var lg = el("div", "map-legend");
-    PHASES.forEach(function (p) { lg.appendChild(el("span", null, '<i style="background:' + p.color + '"></i>' + p.name)); });
-    lg.appendChild(el("span", null, '<i style="background:var(--coral)"></i>Blocked task'));
+    lg.style.cssText = "display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;";
+    PHASES.forEach(function (p) {
+      var s = el("span", null, '<i style="width:11px;height:11px;border-radius:3px;display:inline-block;background:' + p.color + '"></i> ' + p.name);
+      s.style.cssText = "font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;";
+      lg.appendChild(s);
+    });
     wrap.appendChild(lg);
     return wrap;
   }
 
-  // ---------- Render ----------
+  // ===================== RENDER =====================
   function render() {
+    if (mmDragging) return;
     var view = document.getElementById("view");
     if (!view) return;
+    mmSvg = null;
     view.innerHTML = "";
 
     if (connMode === "failed") {
       view.appendChild(el("div", "banner warn",
         "Couldn't reach the live database — the tracker still works, but edits stay on this device only. " +
-        "Check your internet connection, or make sure the page is opened from its web link (not a downloaded file)."));
+        "Make sure the page is opened from its web link (not a downloaded file) and that you're online."));
     } else if (connMode === "offline") {
       view.appendChild(el("div", "banner warn",
         "You're offline. Your edits are saved and will sync automatically once the connection returns."));
@@ -740,6 +1045,8 @@
     var content;
     if (currentTab === "overview") content = viewOverview();
     else if (currentTab === "tasks") content = viewTasks();
+    else if (currentTab === "plan") content = viewPlan();
+    else if (currentTab === "bom") content = viewBOM();
     else if (currentTab === "team") content = viewTeam();
     else if (currentTab === "map") content = viewMap();
     else content = viewTimeline();
@@ -761,23 +1068,17 @@
       b.onclick = function () { currentTab = t.id; render(); };
       tabsEl.appendChild(b);
     });
-
     var us = document.getElementById("userSel");
     us.innerHTML = '<option value="">— pick your name —</option>';
     MEMBERS.filter(function (m) { return m.id !== "all"; }).forEach(function (m) {
       us.innerHTML += '<option value="' + m.id + '">' + m.name + '</option>';
     });
     us.onchange = function () { currentUser = us.value; };
-
     var ws = document.getElementById("weekSel");
     ws.innerHTML = "";
     for (var w = 1; w <= 14; w++) ws.innerHTML += '<option value="' + w + '">Week ' + w + '</option>';
     ws.value = data.week;
-    ws.onchange = function () {
-      data.week = parseInt(ws.value, 10);
-      render();
-      writeWeek(data.week);
-    };
+    ws.onchange = function () { data.week = parseInt(ws.value, 10); render(); writeWeek(data.week); };
   }
 
   function firstPaint() {
@@ -788,7 +1089,7 @@
     updateStatus();
   }
 
-  // ---------- Connect to Firebase ----------
+  // ===================== CONNECT =====================
   function connect() {
     Promise.all([
       import(FB_BASE + "firebase-app.js"),
@@ -800,18 +1101,15 @@
       db = fb.getDatabase(app);
 
       fb.onValue(fb.ref(db, "tracker"), function (snap) {
-        applySnapshot(snap.val());
+        var needsSeed = applySnapshot(snap.val());
+        if (needsSeed && fbReady() && !mmSeedSent) { mmSeedSent = true; seedMindmap(); }
         if (!firstRender) firstPaint();
-        else render();
-      }, function () {
-        connMode = "failed";
-        firstPaint();
-      });
+        else if (!mmDragging) render();
+      }, function () { connMode = "failed"; firstPaint(); });
 
       fb.onValue(fb.ref(db, ".info/connected"), function (snap) {
         connMode = snap.val() ? "live" : "offline";
         updateStatus();
-        // if we connected but the tracker listener hasn't painted yet, paint defaults
         if (connMode === "offline" && !firstRender) { applySnapshot(null); firstPaint(); }
       });
     }).catch(function () {
@@ -820,7 +1118,6 @@
       firstPaint();
     });
 
-    // backstop: never leave the user staring at a loading screen
     setTimeout(function () {
       if (!firstRender) {
         if (connMode === "connecting") connMode = "failed";
