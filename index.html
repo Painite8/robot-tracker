@@ -205,7 +205,7 @@
       </div>
       <div class="ctl">
         <label>Project week</label>
-        <select id="weekSel"></select>
+        <div id="weekDisp" style="font-weight:700;font-size:13px;font-family:var(--display)">Week —</div>
       </div>
       <div class="savechip"><span class="dot saving" id="saveDot"></span><span id="saveTxt">Connecting…</span></div>
     </div>
@@ -220,6 +220,14 @@
 
   var DB_URL = "https://gdp-avalon-default-rtdb.asia-southeast1.firebasedatabase.app";
   var FB_BASE = "https://www.gstatic.com/firebasejs/10.12.0/";
+
+  // Project Week 1 began Monday 11 May 2026; weeks run Mon–Sun.
+  // (If your real Week 1 started on a different date, change this line.)
+  var PROJECT_START = new Date(2026, 4, 11);
+  function computeWeek() {
+    var wk = Math.floor((Date.now() - PROJECT_START.getTime()) / (7 * 24 * 3600 * 1000)) + 1;
+    return Math.max(1, Math.min(14, wk));
+  }
 
   // ===================== STATIC REFERENCE DATA =====================
   var MEMBERS = [
@@ -450,7 +458,7 @@
   }
   function applySnapshot(val) {
     val = val || {};
-    data.week = typeof val.week === "number" ? val.week : 1;
+    data.week = computeWeek();
     data.tasks = buildTasks(val.tasks);
     data.actions = buildActions(val.actions);
     data.decisions = buildDecisions(val.decisions);
@@ -473,7 +481,6 @@
     if (!fbReady()) return;
     fb.set(fb.ref(db, "tracker/tasks/" + t.id), { status: t.status, progress: t.progress, notes: t.notes, updby: t.updby });
   }
-  function writeWeek(w) { if (fbReady()) fb.set(fb.ref(db, "tracker/week"), w); }
   function writeIdea(key, obj) { if (fbReady()) fb.set(fb.ref(db, "tracker/ideas/" + key), obj); }
   function deleteIdea(key) { if (fbReady()) fb.remove(fb.ref(db, "tracker/ideas/" + key)); }
   function writeAction(a) { if (fbReady()) fb.set(fb.ref(db, "tracker/actions/" + a.id), { done: a.done, updby: a.updby }); }
@@ -547,11 +554,30 @@
     });
     wrap.appendChild(mwrap);
 
+    var overdue = data.tasks.filter(function (t) { return t.ew < data.week && t.status !== "done"; });
+    if (overdue.length) {
+      wrap.appendChild(el("div", "section-label", "Overdue — behind schedule (" + overdue.length + ")"));
+      var odCard = el("div", "card");
+      odCard.style.borderColor = "var(--coral)";
+      var odHtml = "";
+      overdue.forEach(function (t) {
+        var st = STATUS[t.status];
+        var late = data.week - t.ew;
+        odHtml += '<div class="mtask"><span class="sdot" style="background:' + st.color + '"></span>' +
+          '<span class="mt-name">' + esc(t.name) + '</span>' +
+          '<span class="badge own">' + memberName(t.owner) + '</span>' +
+          '<span class="badge wk" style="border-color:var(--coral);color:var(--coral)">' + late + ' wk late</span>' +
+          '<span class="mt-st">' + st.label + '</span></div>';
+      });
+      odCard.innerHTML = odHtml;
+      wrap.appendChild(odCard);
+    }
+
     wrap.appendChild(el("div", "section-label", "Active this week (W" + data.week + ")"));
     var nowTasks = data.tasks.filter(function (t) { return t.sw <= data.week && t.ew >= data.week && t.status !== "done"; });
     var nowCard = el("div", "card");
     if (!nowTasks.length) {
-      nowCard.innerHTML = '<div class="hint">No open tasks scheduled for week ' + data.week + '. Adjust the project week selector at the top right.</div>';
+      nowCard.innerHTML = '<div class="hint">No open tasks scheduled for week ' + data.week + '.</div>';
     } else {
       var html = "";
       nowTasks.forEach(function (t) {
@@ -1030,6 +1056,9 @@
     if (mmDragging) return;
     var view = document.getElementById("view");
     if (!view) return;
+    data.week = computeWeek();
+    var wd = document.getElementById("weekDisp");
+    if (wd) wd.textContent = "Week " + data.week + " / 14";
     mmSvg = null;
     view.innerHTML = "";
 
@@ -1055,8 +1084,6 @@
     document.querySelectorAll(".tab").forEach(function (t) {
       t.classList.toggle("on", t.getAttribute("data-id") === currentTab);
     });
-    var ws = document.getElementById("weekSel");
-    if (ws && ws.value != data.week) ws.value = data.week;
   }
 
   function buildChrome() {
@@ -1074,11 +1101,8 @@
       us.innerHTML += '<option value="' + m.id + '">' + m.name + '</option>';
     });
     us.onchange = function () { currentUser = us.value; };
-    var ws = document.getElementById("weekSel");
-    ws.innerHTML = "";
-    for (var w = 1; w <= 14; w++) ws.innerHTML += '<option value="' + w + '">Week ' + w + '</option>';
-    ws.value = data.week;
-    ws.onchange = function () { data.week = parseInt(ws.value, 10); render(); writeWeek(data.week); };
+    var wd = document.getElementById("weekDisp");
+    if (wd) wd.textContent = "Week " + data.week + " / 14";
   }
 
   function firstPaint() {
