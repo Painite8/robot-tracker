@@ -228,7 +228,7 @@
 <div id="app">
   <div class="masthead">
     <div class="brand">
-      <div class="eyebrow">Group Design Project &middot; Command Centre</div>
+      <div class="eyebrow">Final Year Project &middot; Command Centre</div>
       <h1 class="title">AI Companion <em>Robot</em></h1>
       <div class="subtitle">Autonomous patient-monitoring robot with assistive lifting mechanism. Live shared tracker &mdash; everyone's edits sync in real time.</div>
     </div>
@@ -376,7 +376,7 @@
   };
   var TABS = [
     {id:"overview",label:"Overview"},{id:"tasks",label:"Tasks"},{id:"plan",label:"Plan"},
-    {id:"bom",label:"BOM"},{id:"team",label:"Team"},{id:"map",label:"Mind Map"},{id:"timeline",label:"Timeline"}
+    {id:"bom",label:"BOM"},{id:"team",label:"Team"},{id:"meetings",label:"Meetings"},{id:"map",label:"Mind Map"},{id:"timeline",label:"Timeline"}
   ];
 
   function defaultMindmap() {
@@ -404,7 +404,7 @@
   }
 
   // ===================== STATE =====================
-  var data = { week:1, tasks:[], actions:[], decisions:[], bom:[], ideas:[], mindmap:null, needsSeed:false, needsFlag:false };
+  var data = { week:1, tasks:[], actions:[], decisions:[], bom:[], ideas:[], meetings:[], mindmap:null, needsSeed:false, needsFlag:false };
   var currentUser = "";
   var currentTab = "overview";
   var firstRender = false;
@@ -492,6 +492,12 @@
     ideas.sort(function(a,b){return b.at-a.at;});
     data.ideas = ideas;
 
+    var mtgs=[], mo=val.meetings||{};
+    Object.keys(mo).forEach(function(k){ var v=mo[k]||{};
+      mtgs.push({id:k, date:v.date||"", start:v.start||"", end:v.end||"", topic:v.topic||"", notes:v.notes||"", attendees:v.attendees||"", updby:v.updby||""}); });
+    mtgs.sort(function(a,b){ return (b.date||"").localeCompare(a.date||"") || (b.start||"").localeCompare(a.start||""); });
+    data.meetings = mtgs;
+
     data.mindmap = (val.mindmap && Object.keys(val.mindmap).length) ? val.mindmap : defaultMindmap();
   }
 
@@ -508,6 +514,8 @@
   function removeBom(id){ if(fbReady()) fb.remove(ref("tracker/bom/"+id)); }
   function writeIdea(k,o){ if(fbReady()) fb.set(ref("tracker/ideas/"+k),o); }
   function removeIdea(k){ if(fbReady()) fb.remove(ref("tracker/ideas/"+k)); }
+  function writeMeeting(m){ if(fbReady()) fb.set(ref("tracker/meetings/"+m.id),{date:m.date,start:m.start,end:m.end,topic:m.topic,notes:m.notes,attendees:m.attendees,updby:m.updby}); }
+  function removeMeeting(id){ if(fbReady()) fb.remove(ref("tracker/meetings/"+id)); }
   function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
   function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
 
@@ -740,6 +748,53 @@
     if(id){ var d=data.decisions.filter(function(x){return x.id===id;})[0]; if(!d)return;
       editor={type:"decision",id:id,draft:{title:d.title,ctx:d.ctx,status:d.status,resolution:d.resolution}}; }
     else editor={type:"decision",id:null,draft:{title:"",ctx:"",status:"open",resolution:""}};
+    render();
+  }
+  function meetingFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit meeting":"New meeting"));
+    var grid=el("div","ef-grid");
+    var dateI=el("input","fin"); dateI.type="date"; dateI.value=d.date;
+    var startI=el("input","fin"); startI.type="time"; startI.value=d.start;
+    var endI=el("input","fin"); endI.type="time"; endI.value=d.end;
+    var topicI=el("input","fin"); topicI.type="text"; topicI.value=d.topic; topicI.placeholder="Topic / purpose";
+    var attI=el("input","fin"); attI.type="text"; attI.value=d.attendees; attI.placeholder="e.g. Lee, Jon, Ali";
+    var notesT=el("textarea","fin"); notesT.value=d.notes; notesT.placeholder="Notes / decisions / action items";
+    grid.appendChild(field("Date",dateI));
+    grid.appendChild(field("Start",startI));
+    grid.appendChild(field("End",endI));
+    grid.appendChild(field("Topic",topicI,true));
+    grid.appendChild(field("Attendees",attI,true));
+    grid.appendChild(field("Notes",notesT,true));
+    panel.appendChild(grid);
+    var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save meeting");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+    dateI.oninput=function(){d.date=dateI.value;};
+    startI.oninput=function(){d.start=startI.value;};
+    endI.oninput=function(){d.end=endI.value;};
+    topicI.oninput=function(){d.topic=topicI.value;};
+    attI.oninput=function(){d.attendees=attI.value;};
+    notesT.oninput=function(){d.notes=notesT.value;};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.date){ err.textContent="Pick a date."; err.style.display="block"; return; }
+      var m={ id:editor.id||uid("m"), date:d.date, start:d.start||"", end:d.end||"",
+        topic:(d.topic||"").trim(), attendees:(d.attendees||"").trim(), notes:(d.notes||"").trim(), updby:whoami() };
+      editor=null; render(); writeMeeting(m);
+    };
+    return panel;
+  }
+  function openMeetingEditor(id){
+    if(!requireUser())return;
+    if(id){ var m=data.meetings.filter(function(x){return x.id===id;})[0]; if(!m)return;
+      editor={type:"meeting",id:id,draft:{date:m.date,start:m.start,end:m.end,topic:m.topic,attendees:m.attendees,notes:m.notes}}; }
+    else { var td=new Date(); var pad=function(n){return (n<10?"0":"")+n;};
+      editor={type:"meeting",id:null,draft:{date:td.getFullYear()+"-"+pad(td.getMonth()+1)+"-"+pad(td.getDate()),start:"",end:"",topic:"",attendees:"",notes:""}}; }
     render();
   }
 
@@ -1207,6 +1262,82 @@
     return wrap;
   }
 
+  // ===================== VIEW: MEETINGS =====================
+  function fmtDur(s,e){
+    if(!s||!e) return "";
+    var a=s.split(":"), b=e.split(":");
+    var mins=(parseInt(b[0],10)*60+parseInt(b[1],10))-(parseInt(a[0],10)*60+parseInt(a[1],10));
+    if(isNaN(mins)||mins<=0) return "";
+    var h=Math.floor(mins/60), m=mins%60;
+    return (h?h+"h":"")+(m?" "+m+"m":"");
+  }
+  function exportMeetingsCSV(){
+    var rows=[["Date","Start","End","Duration","Topic","Attendees","Notes","Logged by"]];
+    data.meetings.slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"")||(a.start||"").localeCompare(b.start||"");}).forEach(function(m){
+      rows.push([m.date,m.start,m.end,fmtDur(m.start,m.end),m.topic,m.attendees,m.notes,m.updby]);
+    });
+    var csv=rows.map(function(r){ return r.map(function(c){ c=(c==null?"":""+c); return '"'+c.replace(/"/g,'""')+'"'; }).join(","); }).join("\r\n");
+    var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download="meeting_log.csv"; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+  function viewMeetings(){
+    var wrap=el("div");
+    if(editor && editor.type==="meeting") wrap.appendChild(meetingFormPanel());
+
+    var totalMin=0;
+    data.meetings.forEach(function(m){ if(m.start&&m.end){ var a=m.start.split(":"),b=m.end.split(":");
+      var d=(parseInt(b[0],10)*60+parseInt(b[1],10))-(parseInt(a[0],10)*60+parseInt(a[1],10)); if(d>0)totalMin+=d; } });
+    var th=Math.floor(totalMin/60), tm=totalMin%60;
+    var sr=el("div","stat-row");
+    sr.appendChild(el("div","stat accent",'<div class="num">'+data.meetings.length+'</div><div class="lab">Meetings logged</div>'));
+    sr.appendChild(el("div","stat",'<div class="num">'+th+'<span style="font-size:18px;color:var(--muted)">h '+tm+'m</span></div><div class="lab">Total time</div>'));
+    wrap.appendChild(sr);
+
+    var hl=el("div","section-label");
+    hl.appendChild(el("span",null,"Meeting log"));
+    hl.appendChild(el("span","ln"));
+    var addB=el("button","btn sm sl-btn","+ Log meeting");
+    addB.onclick=function(){ openMeetingEditor(null); };
+    hl.appendChild(addB);
+    var exB=el("button","btn sm ghost"); exB.textContent="Export CSV"; exB.style.marginLeft="6px";
+    exB.onclick=exportMeetingsCSV;
+    hl.appendChild(exB);
+    wrap.appendChild(hl);
+
+    var bw=el("div","bom-wrap");
+    var table=el("table","bom-table");
+    table.innerHTML='<thead><tr><th>Date</th><th>Time</th><th>Duration</th><th>Topic</th><th>Attendees</th><th></th></tr></thead>';
+    var tbody=el("tbody");
+    if(!data.meetings.length){
+      var er=el("tr"); er.innerHTML='<td colspan="6"><div class="hint">No meetings yet — log your first one.</div></td>'; tbody.appendChild(er);
+    }
+    data.meetings.forEach(function(m){
+      var tr=el("tr");
+      var timeTxt=(m.start||"")+(m.end?"–"+m.end:"");
+      tr.innerHTML='<td style="white-space:nowrap">'+esc(m.date)+'</td>'+
+        '<td style="white-space:nowrap">'+esc(timeTxt)+'</td>'+
+        '<td style="white-space:nowrap">'+esc(fmtDur(m.start,m.end))+'</td>'+
+        '<td>'+esc(m.topic)+(m.notes?'<div style="font-size:10.5px;color:var(--muted);margin-top:3px">'+esc(m.notes)+'</div>':'')+'</td>'+
+        '<td>'+esc(m.attendees)+'</td>'+
+        '<td style="white-space:nowrap"><button class="iconbtn edit" title="Edit">\u270e</button> <button class="iconbtn del" title="Delete">\u2715</button></td>';
+      tr.querySelector(".edit").onclick=function(){ openMeetingEditor(m.id); };
+      tr.querySelector(".del").onclick=function(){
+        if(!requireUser())return;
+        if(!window.confirm("Delete this meeting log?"))return;
+        data.meetings=data.meetings.filter(function(x){return x.id!==m.id;});
+        render(); removeMeeting(m.id);
+      };
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    bw.appendChild(table);
+    var card=el("div","card"); card.style.padding="10px"; card.appendChild(bw);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
   // ===================== VIEW: TIMELINE =====================
   function viewTimeline(){
     var wrap=el("div");
@@ -1276,6 +1407,7 @@
     else if(currentTab==="plan") content=viewPlan();
     else if(currentTab==="bom") content=viewBOM();
     else if(currentTab==="team") content=viewTeam();
+    else if(currentTab==="meetings") content=viewMeetings();
     else if(currentTab==="map") content=viewMap();
     else content=viewTimeline();
     view.appendChild(content);
