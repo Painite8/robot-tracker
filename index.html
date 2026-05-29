@@ -376,7 +376,7 @@
   };
   var TABS = [
     {id:"overview",label:"Overview"},{id:"tasks",label:"Tasks"},{id:"plan",label:"Plan"},
-    {id:"bom",label:"BOM"},{id:"team",label:"Team"},{id:"meetings",label:"Meetings"},{id:"map",label:"Mind Map"},{id:"timeline",label:"Timeline"}
+    {id:"bom",label:"BOM"},{id:"shopping",label:"Shopping"},{id:"team",label:"Team"},{id:"meetings",label:"Meetings"},{id:"map",label:"Mind Map"},{id:"timeline",label:"Timeline"}
   ];
 
   function defaultMindmap() {
@@ -404,7 +404,7 @@
   }
 
   // ===================== STATE =====================
-  var data = { week:1, tasks:[], actions:[], decisions:[], bom:[], ideas:[], meetings:[], mindmap:null, needsSeed:false, needsFlag:false };
+  var data = { week:1, tasks:[], actions:[], decisions:[], bom:[], ideas:[], meetings:[], shopping:[], mindmap:null, needsSeed:false, needsFlag:false };
   var currentUser = "";
   var currentTab = "overview";
   var firstRender = false;
@@ -498,6 +498,17 @@
     mtgs.sort(function(a,b){ return (b.date||"").localeCompare(a.date||"") || (b.start||"").localeCompare(a.start||""); });
     data.meetings = mtgs;
 
+    var shop=[], so=val.shopping||{};
+    Object.keys(so).forEach(function(k){ var v=so[k]||{};
+      shop.push({id:k, name:v.name||"", url:v.url||"", source:v.source||"", price:typeof v.price==="number"?v.price:null,
+        status:v.status||"todo", buyer:v.buyer||"", notes:v.notes||"", bomId:v.bomId||"", updby:v.updby||"", at:v.at||0}); });
+    shop.sort(function(a,b){
+      var rank={todo:0,ordered:1,received:2};
+      if(rank[a.status]!==rank[b.status]) return rank[a.status]-rank[b.status];
+      return (b.at||0)-(a.at||0);
+    });
+    data.shopping = shop;
+
     data.mindmap = (val.mindmap && Object.keys(val.mindmap).length) ? val.mindmap : defaultMindmap();
   }
 
@@ -516,6 +527,8 @@
   function removeIdea(k){ if(fbReady()) fb.remove(ref("tracker/ideas/"+k)); }
   function writeMeeting(m){ if(fbReady()) fb.set(ref("tracker/meetings/"+m.id),{date:m.date,start:m.start,end:m.end,topic:m.topic,notes:m.notes,attendees:m.attendees,updby:m.updby}); }
   function removeMeeting(id){ if(fbReady()) fb.remove(ref("tracker/meetings/"+id)); }
+  function writeShop(s){ if(fbReady()) fb.set(ref("tracker/shopping/"+s.id),{name:s.name,url:s.url,source:s.source,price:s.price,status:s.status,buyer:s.buyer,notes:s.notes,bomId:s.bomId,updby:s.updby,at:s.at}); }
+  function removeShop(id){ if(fbReady()) fb.remove(ref("tracker/shopping/"+id)); }
   function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
   function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
 
@@ -795,6 +808,73 @@
       editor={type:"meeting",id:id,draft:{date:m.date,start:m.start,end:m.end,topic:m.topic,attendees:m.attendees,notes:m.notes}}; }
     else { var td=new Date(); var pad=function(n){return (n<10?"0":"")+n;};
       editor={type:"meeting",id:null,draft:{date:td.getFullYear()+"-"+pad(td.getMonth()+1)+"-"+pad(td.getDate()),start:"",end:"",topic:"",attendees:"",notes:""}}; }
+    render();
+  }
+  function shopFormPanel(){
+    var d=editor.draft;
+    var panel=el("div","editform");
+    panel.appendChild(el("div","ef-title",editor.id?"Edit shopping link":"New shopping link"));
+    var grid=el("div","ef-grid");
+    var nameI=el("input","fin"); nameI.type="text"; nameI.value=d.name; nameI.placeholder="What to buy"; nameI.setAttribute("list","shopBomList");
+    var dl=el("datalist"); dl.id="shopBomList";
+    data.bom.forEach(function(b){ var o=el("option"); o.value=b.item; o.setAttribute("data-bomid",b.id); dl.appendChild(o); });
+    var urlI=el("input","fin"); urlI.type="url"; urlI.value=d.url; urlI.placeholder="https://shopee.com.my/...";
+    var srcOpts=[{value:"",label:"— pick —"},{value:"Shopee",label:"Shopee"},{value:"Lazada",label:"Lazada"},{value:"Cytron",label:"Cytron"},{value:"Mr.DIY",label:"Mr.DIY"},{value:"Other",label:"Other"}];
+    var srcS=selectEl(srcOpts,d.source);
+    var priceI=el("input","fin"); priceI.type="number"; priceI.min="0"; priceI.step="0.01"; priceI.value=d.price!=null?d.price:""; priceI.placeholder="RM";
+    var statusS=selectEl([{value:"todo",label:"To buy"},{value:"ordered",label:"Ordered"},{value:"received",label:"Received"}],d.status);
+    var buyerS=selectEl(MEMBERS.map(function(m){return {value:m.id,label:m.name};}),d.buyer||"all");
+    var notesT=el("textarea","fin"); notesT.value=d.notes; notesT.placeholder="Variant, colour, stock, shipping…";
+    grid.appendChild(field("Item",nameI,true));
+    grid.appendChild(field("Link (URL)",urlI,true));
+    grid.appendChild(field("Source",srcS));
+    grid.appendChild(field("Price (RM)",priceI));
+    grid.appendChild(field("Status",statusS));
+    grid.appendChild(field("Buyer",buyerS));
+    grid.appendChild(field("Notes",notesT,true));
+    panel.appendChild(grid);
+    panel.appendChild(dl);
+    var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
+    var act=el("div","ef-actions");
+    var save=el("button","btn sm","Save link");
+    var cancel=el("button","btn sm ghost","Cancel");
+    act.appendChild(save); act.appendChild(cancel);
+    panel.appendChild(act);
+    nameI.oninput=function(){
+      d.name=nameI.value;
+      var match=data.bom.filter(function(b){return b.item===nameI.value;})[0];
+      d.bomId=match?match.id:"";
+      if(match && !d.price) priceI.value=match.unit;
+    };
+    urlI.oninput=function(){
+      d.url=urlI.value;
+      if(!d.source){
+        if(/shopee/i.test(d.url)){ d.source="Shopee"; srcS.value="Shopee"; }
+        else if(/lazada/i.test(d.url)){ d.source="Lazada"; srcS.value="Lazada"; }
+        else if(/cytron/i.test(d.url)){ d.source="Cytron"; srcS.value="Cytron"; }
+      }
+    };
+    srcS.onchange=function(){d.source=srcS.value;};
+    priceI.oninput=function(){ var v=priceI.value.trim(); d.price=v===""?null:Math.max(0,parseFloat(v)||0); };
+    statusS.onchange=function(){d.status=statusS.value;};
+    buyerS.onchange=function(){d.buyer=buyerS.value;};
+    notesT.oninput=function(){d.notes=notesT.value;};
+    cancel.onclick=function(){ editor=null; render(); };
+    save.onclick=function(){
+      if(!d.name.trim()){ err.textContent="Item name can't be empty."; err.style.display="block"; return; }
+      if(!d.url.trim()){ err.textContent="Add a link — that's the whole point."; err.style.display="block"; return; }
+      var s={ id:editor.id||uid("s"), name:d.name.trim(), url:d.url.trim(), source:d.source||"",
+        price:typeof d.price==="number"?d.price:null, status:d.status||"todo",
+        buyer:d.buyer||"all", notes:(d.notes||"").trim(), bomId:d.bomId||"", updby:whoami(), at:editor.id?d.at||Date.now():Date.now() };
+      editor=null; render(); writeShop(s);
+    };
+    return panel;
+  }
+  function openShopEditor(id){
+    if(!requireUser())return;
+    if(id){ var s=data.shopping.filter(function(x){return x.id===id;})[0]; if(!s)return;
+      editor={type:"shop",id:id,draft:{name:s.name,url:s.url,source:s.source,price:s.price,status:s.status,buyer:s.buyer,notes:s.notes,bomId:s.bomId,at:s.at}}; }
+    else editor={type:"shop",id:null,draft:{name:"",url:"",source:"",price:null,status:"todo",buyer:"all",notes:"",bomId:""}};
     render();
   }
 
@@ -1338,6 +1418,70 @@
     return wrap;
   }
 
+  // ===================== VIEW: SHOPPING =====================
+  function viewShopping(){
+    var wrap=el("div");
+    if(editor && editor.type==="shop") wrap.appendChild(shopFormPanel());
+
+    var counts={todo:0,ordered:0,received:0};
+    data.shopping.forEach(function(s){ if(counts[s.status]!=null)counts[s.status]++; });
+    var sr=el("div","stat-row");
+    sr.appendChild(el("div","stat accent",'<div class="num">'+data.shopping.length+'</div><div class="lab">Links saved</div>'));
+    sr.appendChild(el("div","stat",'<div class="num" style="color:var(--coral)">'+counts.todo+'</div><div class="lab">To buy</div>'));
+    sr.appendChild(el("div","stat",'<div class="num" style="color:var(--amber)">'+counts.ordered+'</div><div class="lab">Ordered</div>'));
+    sr.appendChild(el("div","stat",'<div class="num" style="color:var(--teal)">'+counts.received+'</div><div class="lab">Received</div>'));
+    wrap.appendChild(sr);
+
+    var hl=el("div","section-label");
+    hl.appendChild(el("span",null,"Shopping links"));
+    hl.appendChild(el("span","ln"));
+    var addB=el("button","btn sm sl-btn","+ Add link");
+    addB.onclick=function(){ openShopEditor(null); };
+    hl.appendChild(addB);
+    wrap.appendChild(hl);
+    wrap.appendChild(el("div","banner info",
+      "Save Shopee / Lazada / Cytron links so whoever's buying can find them in one click. Item names auto-suggest from the BOM — pick one to link the shopping entry to a BOM row."));
+
+    var bw=el("div","bom-wrap");
+    var table=el("table","bom-table");
+    table.innerHTML='<thead><tr><th>Item</th><th>Source</th><th class="num">Price</th><th>Status</th><th>Buyer</th><th>Notes</th><th></th></tr></thead>';
+    var tbody=el("tbody");
+    if(!data.shopping.length){
+      var er=el("tr"); er.innerHTML='<td colspan="7"><div class="hint">No shopping links yet — add the first one.</div></td>'; tbody.appendChild(er);
+    }
+    var statusCol={todo:"var(--coral)",ordered:"var(--amber)",received:"var(--teal)"};
+    var statusLab={todo:"To buy",ordered:"Ordered",received:"Received"};
+    data.shopping.forEach(function(s){
+      var tr=el("tr", s.status==="received"?"bought":"");
+      var linkBtn = s.url ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener" style="font-family:var(--display);font-weight:700;font-size:11px;text-decoration:none;padding:3px 9px;border-radius:6px;background:var(--ink);color:var(--paper)">Open &#8599;</a>' : '';
+      tr.innerHTML='<td><div style="font-weight:600">'+esc(s.name)+'</div>'+(linkBtn?'<div style="margin-top:4px">'+linkBtn+'</div>':'')+'</td>'+
+        '<td>'+esc(s.source||"—")+'</td>'+
+        '<td class="num">'+(s.price!=null?"RM "+s.price:"—")+'</td>'+
+        '<td><span class="badge" style="background:transparent;border:1.5px solid '+statusCol[s.status]+';color:'+statusCol[s.status]+'">'+statusLab[s.status]+'</span></td>'+
+        '<td>'+esc(memberName(s.buyer||"all"))+'</td>'+
+        '<td style="font-size:11.5px;color:var(--muted);max-width:240px">'+esc(s.notes||"")+'</td>'+
+        '<td style="white-space:nowrap"><button class="iconbtn cyc" title="Cycle status">\u21bb</button> <button class="iconbtn edit" title="Edit">\u270e</button> <button class="iconbtn del" title="Delete">\u2715</button></td>';
+      tr.querySelector(".cyc").onclick=function(){
+        if(!requireUser())return;
+        s.status = s.status==="todo" ? "ordered" : s.status==="ordered" ? "received" : "todo";
+        s.updby=whoami(); render(); writeShop(s);
+      };
+      tr.querySelector(".edit").onclick=function(){ openShopEditor(s.id); };
+      tr.querySelector(".del").onclick=function(){
+        if(!requireUser())return;
+        if(!window.confirm('Delete shopping link for "'+s.name+'"?'))return;
+        data.shopping=data.shopping.filter(function(x){return x.id!==s.id;});
+        render(); removeShop(s.id);
+      };
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    bw.appendChild(table);
+    var card=el("div","card"); card.style.padding="10px"; card.appendChild(bw);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
   // ===================== VIEW: TIMELINE =====================
   function viewTimeline(){
     var wrap=el("div");
@@ -1408,6 +1552,7 @@
     else if(currentTab==="bom") content=viewBOM();
     else if(currentTab==="team") content=viewTeam();
     else if(currentTab==="meetings") content=viewMeetings();
+    else if(currentTab==="shopping") content=viewShopping();
     else if(currentTab==="map") content=viewMap();
     else content=viewTimeline();
     view.appendChild(content);
