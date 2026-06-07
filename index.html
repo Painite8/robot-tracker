@@ -529,31 +529,35 @@
   function removeMeeting(id){ if(fbReady()) fb.remove(ref("tracker/meetings/"+id)); }
   function writeShop(s){
     if(fbReady()) fb.set(ref("tracker/shopping/"+s.id),{name:s.name,url:s.url,source:s.source,price:s.price,status:s.status,buyer:s.buyer,notes:s.notes,bomId:s.bomId,updby:s.updby,at:s.at});
-    // Sync to linked BOM item: price -> actual, "received" -> bought=true
-    if(s.bomId){
-      var b=data.bom.filter(function(x){return x.id===s.bomId;})[0];
-      if(b){
-        var changed=false;
-        if(s.price!=null && b.actual!==s.price){ b.actual=s.price; changed=true; }
-        if(s.status==="received" && !b.bought){ b.bought=true; changed=true; }
-        if(changed){ b.updby=whoami(); writeBom(b); }
-      }
-    }
   }
   function removeShop(id){ if(fbReady()) fb.remove(ref("tracker/shopping/"+id)); }
-  // Push prices/received-status from ALL linked shopping entries onto their BOM rows.
-  // Self-terminating: once values match, no further writes occur.
+  // The BOM mirrors the Shopping list: each shopping entry owns a BOM row (id "shop_<id>").
+  // Manual BOM items (other ids) are left alone. Self-terminating once values match.
   function reconcileShopBom(){
     if(!fbReady()) return;
+    var shopIds={};
     data.shopping.forEach(function(s){
-      if(!s.bomId) return;
-      var b=data.bom.filter(function(x){return x.id===s.bomId;})[0];
-      if(!b) return;
-      var changed=false;
-      if(s.price!=null && b.actual!==s.price){ b.actual=s.price; changed=true; }
-      if(s.status==="received" && !b.bought){ b.bought=true; changed=true; }
-      if(changed){ b.updby=s.updby||"auto-sync"; writeBom(b); }
+      shopIds[s.id]=1;
+      var bid="shop_"+s.id;
+      var b=data.bom.filter(function(x){return x.id===bid;})[0];
+      var item=s.name||"(unnamed)", grp=s.source||"Shopping",
+          unit=(s.price!=null?s.price:0), bought=(s.status==="received");
+      if(!b){
+        b={id:bid,grp:grp,item:item,qty:1,unit:unit,bought:bought,actual:null,updby:s.updby||"auto"};
+        data.bom.push(b); writeBom(b);
+      } else {
+        var changed=false;
+        if(b.item!==item){b.item=item;changed=true;}
+        if(b.grp!==grp){b.grp=grp;changed=true;}
+        if(b.unit!==unit){b.unit=unit;changed=true;}
+        if(b.bought!==bought){b.bought=bought;changed=true;}
+        if(changed){ b.updby=s.updby||"auto"; writeBom(b); }
+      }
     });
+    // Remove BOM rows whose source shopping entry was deleted
+    var orphans=data.bom.filter(function(b){ return b.id.indexOf("shop_")===0 && !shopIds[b.id.slice(5)]; });
+    orphans.forEach(function(b){ removeBom(b.id); });
+    if(orphans.length) data.bom=data.bom.filter(function(b){ return !(b.id.indexOf("shop_")===0 && !shopIds[b.id.slice(5)]); });
   }
   function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
   function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
@@ -563,8 +567,7 @@
     var tasks={}; DEFAULT_TASKS.forEach(function(d){ tasks[d.id]={ph:d.ph,name:d.name,owner:d.owner,sw:d.sw,ew:d.ew,status:"todo",progress:0,notes:"",updby:""}; });
     var actions={}; DEFAULT_ACTIONS.forEach(function(d){ actions[d.id]={text:d.text,owner:d.owner,done:false,updby:""}; });
     var decisions={}; DEFAULT_DECISIONS.forEach(function(d){ decisions[d.id]={title:d.title,ctx:d.ctx,status:"open",resolution:"",updby:""}; });
-    var bom={}; DEFAULT_BOM.forEach(function(d){ bom[d.id]={grp:d.grp,item:d.item,qty:d.qty,unit:d.unit,bought:false,actual:null,updby:""}; });
-    fb.update(ref("tracker"),{ tasks:tasks, actions:actions, decisions:decisions, bom:bom, mindmap:defaultMindmap(), meta:{seeded:true} });
+    fb.update(ref("tracker"),{ tasks:tasks, actions:actions, decisions:decisions, mindmap:defaultMindmap(), meta:{seeded:true} });
   }
   function maybeSeed(){
     if(!fbReady()) return;
@@ -1195,22 +1198,20 @@
     var addB=el("button","btn sm sl-btn","+ Add item");
     addB.onclick=function(){ openBomEditor(null); };
     bl.appendChild(addB);
-    var restB=el("button","btn sm ghost","Restore defaults"); restB.style.marginLeft="6px";
+    var restB=el("button","btn sm ghost","Remove default items"); restB.style.marginLeft="6px";
     restB.onclick=function(){
       if(!requireUser())return;
       var have={}; data.bom.forEach(function(b){have[b.id]=1;});
-      var missing=DEFAULT_BOM.filter(function(d){return !have[d.id];});
-      if(!missing.length){ window.alert("All 21 default items are already present."); return; }
-      if(!window.confirm("Add "+missing.length+" missing default item(s) to the BOM? Existing items are untouched."))return;
-      missing.forEach(function(d){
-        var b={id:d.id,grp:d.grp,item:d.item,qty:d.qty,unit:d.unit,bought:false,actual:null,updby:whoami()};
-        data.bom.push(b); writeBom(b);
-      });
+      var present=DEFAULT_BOM.filter(function(d){return have[d.id];});
+      if(!present.length){ window.alert("No default items present."); return; }
+      if(!window.confirm("Remove "+present.length+" default item(s)? Your shopping-linked and manual items stay."))return;
+      present.forEach(function(d){ removeBom(d.id); });
+      data.bom=data.bom.filter(function(b){ return !DEF_BOM[b.id]; });
       render();
     };
     bl.appendChild(restB);
     wrap.appendChild(bl);
-    wrap.appendChild(el("div","banner warn","Prices are estimated Malaysian retail figures — confirm at purchase. Costs total automatically as you add or edit items."));
+    wrap.appendChild(el("div","banner info","This BOM mirrors your Shopping list — every shopping entry appears here automatically, and its price/status stays in sync. Edit those rows from the Shopping tab. Use \u201c+ Add item\u201d only for parts not bought online."));
 
     var bw=el("div","bom-wrap");
     var table=el("table","bom-table");
