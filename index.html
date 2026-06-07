@@ -1195,6 +1195,20 @@
     var addB=el("button","btn sm sl-btn","+ Add item");
     addB.onclick=function(){ openBomEditor(null); };
     bl.appendChild(addB);
+    var restB=el("button","btn sm ghost","Restore defaults"); restB.style.marginLeft="6px";
+    restB.onclick=function(){
+      if(!requireUser())return;
+      var have={}; data.bom.forEach(function(b){have[b.id]=1;});
+      var missing=DEFAULT_BOM.filter(function(d){return !have[d.id];});
+      if(!missing.length){ window.alert("All 21 default items are already present."); return; }
+      if(!window.confirm("Add "+missing.length+" missing default item(s) to the BOM? Existing items are untouched."))return;
+      missing.forEach(function(d){
+        var b={id:d.id,grp:d.grp,item:d.item,qty:d.qty,unit:d.unit,bought:false,actual:null,updby:whoami()};
+        data.bom.push(b); writeBom(b);
+      });
+      render();
+    };
+    bl.appendChild(restB);
     wrap.appendChild(bl);
     wrap.appendChild(el("div","banner warn","Prices are estimated Malaysian retail figures — confirm at purchase. Costs total automatically as you add or edit items."));
 
