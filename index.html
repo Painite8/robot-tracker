@@ -228,7 +228,7 @@
 <div id="app">
   <div class="masthead">
     <div class="brand">
-      <div class="eyebrow">Group Design Project &middot; Command Centre</div>
+      <div class="eyebrow">Final Year Project &middot; Command Centre</div>
       <h1 class="title">AI Companion <em>Robot</em></h1>
       <div class="subtitle">Autonomous patient-monitoring robot with assistive lifting mechanism. Live shared tracker &mdash; everyone's edits sync in real time.</div>
     </div>
@@ -527,7 +527,19 @@
   function removeIdea(k){ if(fbReady()) fb.remove(ref("tracker/ideas/"+k)); }
   function writeMeeting(m){ if(fbReady()) fb.set(ref("tracker/meetings/"+m.id),{date:m.date,start:m.start,end:m.end,topic:m.topic,notes:m.notes,attendees:m.attendees,updby:m.updby}); }
   function removeMeeting(id){ if(fbReady()) fb.remove(ref("tracker/meetings/"+id)); }
-  function writeShop(s){ if(fbReady()) fb.set(ref("tracker/shopping/"+s.id),{name:s.name,url:s.url,source:s.source,price:s.price,status:s.status,buyer:s.buyer,notes:s.notes,bomId:s.bomId,updby:s.updby,at:s.at}); }
+  function writeShop(s){
+    if(fbReady()) fb.set(ref("tracker/shopping/"+s.id),{name:s.name,url:s.url,source:s.source,price:s.price,status:s.status,buyer:s.buyer,notes:s.notes,bomId:s.bomId,updby:s.updby,at:s.at});
+    // Sync to linked BOM item: price -> actual, "received" -> bought=true
+    if(s.bomId){
+      var b=data.bom.filter(function(x){return x.id===s.bomId;})[0];
+      if(b){
+        var changed=false;
+        if(s.price!=null && b.actual!==s.price){ b.actual=s.price; changed=true; }
+        if(s.status==="received" && !b.bought){ b.bought=true; changed=true; }
+        if(changed){ b.updby=whoami(); writeBom(b); }
+      }
+    }
+  }
   function removeShop(id){ if(fbReady()) fb.remove(ref("tracker/shopping/"+id)); }
   function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
   function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
@@ -646,18 +658,34 @@
     panel.appendChild(el("div","ef-title",editor.id?"Edit BOM item":"New BOM item"));
     var grid=el("div","ef-grid");
     var itemI=el("input","fin"); itemI.type="text"; itemI.value=d.item; itemI.placeholder="Component name";
-    var grpI=el("input","fin"); grpI.type="text"; grpI.value=d.grp; grpI.placeholder="Group (e.g. Sensors)"; grpI.setAttribute("list","bomgroups");
-    var dl=el("datalist"); dl.id="bomgroups";
-    var grps={}; data.bom.forEach(function(b){grps[b.grp]=1;});
-    Object.keys(grps).forEach(function(g){ var o=el("option"); o.value=g; dl.appendChild(o); });
+
+    // Group: select with "+ New group..." option that reveals a text input
+    var grpWrap=el("div");
+    var grpS=el("select","fin");
+    var existing={}; data.bom.forEach(function(b){ if(b.grp) existing[b.grp]=1; });
+    var grpList=Object.keys(existing).sort();
+    var hasCurrent = d.grp && existing[d.grp];
+    grpList.forEach(function(g){
+      var o=el("option"); o.value=g; o.textContent=g;
+      if(g===d.grp) o.selected=true;
+      grpS.appendChild(o);
+    });
+    var newOpt=el("option"); newOpt.value="__new__"; newOpt.textContent="+ New group…";
+    grpS.appendChild(newOpt);
+    if(!hasCurrent) newOpt.selected=true;
+    grpWrap.appendChild(grpS);
+    var newI=el("input","fin"); newI.type="text"; newI.placeholder="New group name"; newI.style.marginTop="6px";
+    newI.value = hasCurrent ? "" : (d.grp||"");
+    newI.style.display = hasCurrent ? "none" : "block";
+    grpWrap.appendChild(newI);
+
     var qtyI=el("input","fin"); qtyI.type="number"; qtyI.min="1"; qtyI.value=d.qty;
     var unitI=el("input","fin"); unitI.type="number"; unitI.min="0"; unitI.value=d.unit;
     grid.appendChild(field("Item",itemI,true));
-    grid.appendChild(field("Group",grpI));
+    grid.appendChild(field("Group",grpWrap));
     grid.appendChild(field("Quantity",qtyI));
     grid.appendChild(field("Unit cost (RM)",unitI));
     panel.appendChild(grid);
-    panel.appendChild(dl);
     var err=el("div","ef-err"); err.style.display="none"; panel.appendChild(err);
     var act=el("div","ef-actions");
     var save=el("button","btn sm","Save item");
@@ -666,13 +694,18 @@
     panel.appendChild(act);
 
     itemI.oninput=function(){d.item=itemI.value;};
-    grpI.oninput=function(){d.grp=grpI.value;};
+    grpS.onchange=function(){
+      if(grpS.value==="__new__"){ newI.style.display="block"; d.grp=newI.value.trim(); newI.focus(); }
+      else { newI.style.display="none"; d.grp=grpS.value; }
+    };
+    newI.oninput=function(){ if(grpS.value==="__new__") d.grp=newI.value; };
     qtyI.oninput=function(){d.qty=Math.max(1,parseInt(qtyI.value,10)||1);};
     unitI.oninput=function(){d.unit=Math.max(0,parseFloat(unitI.value)||0);};
     cancel.onclick=function(){ editor=null; render(); };
     save.onclick=function(){
       if(!d.item.trim()){ err.textContent="Item name can't be empty."; err.style.display="block"; return; }
-      var b={ id:editor.id||uid("b"), grp:(d.grp.trim()||"Misc"), item:d.item.trim(),
+      var grp = (d.grp||"").trim() || "Misc";
+      var b={ id:editor.id||uid("b"), grp:grp, item:d.item.trim(),
         qty:d.qty, unit:d.unit, bought:!!d.bought, actual:typeof d.actual==="number"?d.actual:null, updby:whoami() };
       editor=null; render(); writeBom(b);
     };
@@ -1156,6 +1189,7 @@
     table.innerHTML='<thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Est. RM</th><th>Bought</th><th>Actual RM</th><th></th></tr></thead>';
     var tbody=el("tbody");
     var sorted=data.bom.slice().sort(function(a,b){ if(a.grp!==b.grp)return a.grp.localeCompare(b.grp); return a.id.localeCompare(b.id); });
+    var shopByBom={}; data.shopping.forEach(function(s){ if(s.bomId) shopByBom[s.bomId]=s; });
     var lastGrp="";
     if(!sorted.length){
       var er=el("tr"); er.innerHTML='<td colspan="6"><div class="hint">No items yet — add your first component.</div></td>'; tbody.appendChild(er);
@@ -1163,7 +1197,9 @@
     sorted.forEach(function(b){
       if(b.grp!==lastGrp){ lastGrp=b.grp; var gr=el("tr"); gr.innerHTML='<td colspan="6" class="sub">'+esc(b.grp)+'</td>'; tbody.appendChild(gr); }
       var tr=el("tr",b.bought?"bought":"");
-      tr.innerHTML='<td>'+esc(b.item)+'</td><td class="num">'+b.qty+'</td><td class="num">'+(b.unit*b.qty)+'</td>'+
+      var linked=shopByBom[b.id];
+      var linkBtn = (linked && linked.url) ? ' <a href="'+esc(linked.url)+'" target="_blank" rel="noopener" style="font-family:var(--display);font-weight:700;font-size:10px;text-decoration:none;padding:2px 7px;border-radius:5px;background:var(--ink);color:var(--paper);vertical-align:middle">Open &#8599;</a>' : '';
+      tr.innerHTML='<td>'+esc(b.item)+linkBtn+'</td><td class="num">'+b.qty+'</td><td class="num">'+(b.unit*b.qty)+'</td>'+
         '<td><input type="checkbox"'+(b.bought?" checked":"")+'></td>'+
         '<td><input class="actual" type="number" min="0" placeholder="—" value="'+(b.actual!=null?b.actual:"")+'"></td>'+
         '<td style="white-space:nowrap"><button class="iconbtn edit" title="Edit">\u270e</button> <button class="iconbtn del" title="Delete">\u2715</button></td>';
