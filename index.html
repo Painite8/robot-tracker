@@ -541,6 +541,20 @@
     }
   }
   function removeShop(id){ if(fbReady()) fb.remove(ref("tracker/shopping/"+id)); }
+  // Push prices/received-status from ALL linked shopping entries onto their BOM rows.
+  // Self-terminating: once values match, no further writes occur.
+  function reconcileShopBom(){
+    if(!fbReady()) return;
+    data.shopping.forEach(function(s){
+      if(!s.bomId) return;
+      var b=data.bom.filter(function(x){return x.id===s.bomId;})[0];
+      if(!b) return;
+      var changed=false;
+      if(s.price!=null && b.actual!==s.price){ b.actual=s.price; changed=true; }
+      if(s.status==="received" && !b.bought){ b.bought=true; changed=true; }
+      if(changed){ b.updby=s.updby||"auto-sync"; writeBom(b); }
+    });
+  }
   function writeMindNode(id,n){ if(fbReady()) fb.set(ref("tracker/mindmap/"+id),n); }
   function writeMindRemoval(ids){ if(!fbReady())return; var p={}; ids.forEach(function(i){p[i]=null;}); fb.update(ref("tracker/mindmap"),p); }
 
@@ -1634,6 +1648,7 @@
       db=fb.getDatabase(app);
       fb.onValue(fb.ref(db,"tracker"),function(snap){
         applySnapshot(snap.val());
+        reconcileShopBom();
         if(!firstRender) firstPaint();
         else remoteRender();
         maybeSeed();
